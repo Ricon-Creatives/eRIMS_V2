@@ -37,7 +37,7 @@ const register = (e) => {
         }
       }
 
-    axios.post('', data,options)
+    axios.post('api/user/register', data,options)
     .then((res) => {
         console.log(res.data)
     })
