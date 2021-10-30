@@ -26,10 +26,10 @@ router.get('/daily', (req, res) => {
 
 
 //@route POST api/payments/new
-//@desc REGISTERS NEW PAYEES
+//@desc RECORDS NEW PAYMENT
 //@access Private*
 router.post('/new', auth, (req, res) => {
-    const newPayment = req.body.paymentData;
+    const newPayment = req.body;
     console.log(newPayment);
     Payments.create({
         date: newPayment.date,
@@ -37,6 +37,8 @@ router.post('/new', auth, (req, res) => {
         reference_no: newPayment.ref_no,
         tel_no: newPayment.tel_no,
         payee_name: newPayment.payee_name,
+        payment_type:newPayment.payment_type,
+        reason:newPayment.reason,
         amount: newPayment.amount,
         email: newPayment.email,
         collector: newPayment.collector
@@ -44,7 +46,7 @@ router.post('/new', auth, (req, res) => {
     })
     .then( entry => {
         if(!entry){
-            res.status(400).json('registration failed')
+            res.status(400).json('payment failed')
             console.log(entry);
             }else{
             res.status(200).json(entry)

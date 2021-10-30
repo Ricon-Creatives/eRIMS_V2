@@ -24,12 +24,22 @@ router.post('/', (req, res) => {
         }
     }).then(user=>{
         if(!user){
-            return res.status(400).json("User Does Not Exist")
+            return res.status(400).json({
+                auth:false,
+                token:null,
+                user:{},
+                message:"User does not exist"
+            })
         }
         //Validate Password
         bcrypt.compare( password, user.password )
         .then(isMatch =>{
-            if(!isMatch) return res.status(400).json({ msg:"Invalid Credentials"});
+            if(!isMatch) return res.status(400).json({
+                auth:false,
+                token:null,
+                user:{},
+                 msg:"Invalid Credentials"
+                });
             jwt.sign(
                 {id:user.user_id},
                 config.get('jwtSecret'),
@@ -37,6 +47,7 @@ router.post('/', (req, res) => {
                 (err, token) =>{
                     if(err) throw err;
                     res.status(200).json({
+                        auth:true,
                         token,
                         user :{
                             id:user.user_id,
@@ -44,7 +55,8 @@ router.post('/', (req, res) => {
                             phone: user.tel_no,
                             userlevel: user.user_rank,
                             last_seen: user.last_seen                                  
-                        }
+                        },
+                        message:"Logged in successfully"
                     });
 
                 }

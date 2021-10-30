@@ -37,6 +37,14 @@ const Payments = db.define('transactions', {
         type:Sequelize.STRING,
         allowNull: false
     },
+    payment_type:{
+        type:Sequelize.STRING,
+        allowNull: false
+    },
+    reason:{
+        type:Sequelize.STRING,
+        allowNull: false
+    },
 
     amount:{
         type:Sequelize.STRING,
@@ -45,7 +53,7 @@ const Payments = db.define('transactions', {
 
     email:{
         type:Sequelize.STRING,
-        allowNull: false
+        allowNull: true
     },
 
     collector:{

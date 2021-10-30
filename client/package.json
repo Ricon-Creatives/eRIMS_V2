@@ -20,7 +20,9 @@
     "reactstrap": "^8.10.0",
     "tabler-react": "^2.0.0-alpha.1",
     "uuid": "^8.3.2",
-    "web-vitals": "^1.1.2"
+    "web-vitals": "^1.1.2",
+    "jquery": "^3.6.0",
+    "popper.js": "^1.16.1"
   },
   "scripts": {
     "start": "react-scripts start",

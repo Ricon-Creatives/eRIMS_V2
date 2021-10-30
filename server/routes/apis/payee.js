@@ -25,7 +25,7 @@ router.get('/', auth, (req, res) => {
 //@desc REGISTERS NEW PAYEES
 //@access Private*
 router.post('/register', auth, (req, res) => {
-    const newPayee = req.body.payeeData;
+    const newPayee = req.body;
     console.log(newPayee);
     const full_name = newPayee.firstname + ' ' + newPayee.surname;
     console.log(full_name)
@@ -46,7 +46,8 @@ router.post('/register', auth, (req, res) => {
         location: newPayee.address,
         customer_type: newPayee.customertype,
         tax_type:newPayee.tax_type,
-        dob:newPayee.dob    })
+        dob:newPayee.dob    
+    })
         .then( confirmation => {
             if(!confirmation){
                 res.status(400).json('registration failed')

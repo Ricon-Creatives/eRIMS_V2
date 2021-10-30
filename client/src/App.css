@@ -1,0 +1,38 @@
+
+.logo {
+  height: 50;
+}
+.brand{
+height: 70px;
+width: 100%;
+}
+
+.btn-classic{
+  color: #fff;
+    background-color: #483248;
+    border-color: #483248;
+}
+
+.btn-classic:active{
+  color: #fff;
+}
+.btn-classic:hover{
+color: #fff;
+}
+
+.bg{
+  height:100% ;
+  width: 100%;
+ background-position:center;
+background-size:cover;
+background-repeat:no-repeat;
+opacity: 0.9;
+}
+
+.bg-classic{
+  background-color: #483248;
+  color: #fff;
+}
+.form-control:focus{
+box-shadow: none !important;
+}
