@@ -220,7 +220,7 @@ const PaymentsTable = () => {
                     </div>
                     <button type="button" className="btn btn-sm btn-primary" onClick={FilterData}>
                        
-                    <i className="fas fa-search"></i>Search</button>
+                    Search</button>
                   </form>
                 </div>
 
