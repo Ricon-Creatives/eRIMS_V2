@@ -9,7 +9,7 @@ const YearlyPaymentsUI = () => {
             <Card.Title>Revenue Collected This Year</Card.Title>
             </Card.Header>
             <Card.Body>
-            <a href="#"><h1>2354</h1></a>
+            <a href="#"><h1>GH₵ 2354</h1></a>
             <h4>Recorded Transactions </h4>
             </Card.Body>
         </Card>

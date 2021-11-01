@@ -1,18 +1,15 @@
 const express = require('express');
 const router = express.Router();
 const Payments = require('../../models/Payments');
+const Agent = require('../../models/Agents')
 const auth = require('../../middleware/auth')
 
 
 //@route GET api/payee
 //@desc Gets all tax payers registered in the system
 //@access Private*
-router.get('/daily', (req, res) => {
-    const date = new Date()
-    const today = req
-    Payments.findAll({
-        where 
-    })
+router.get('/', (req, res) => {
+    Payments.findAll()
     .then(payments=>{
         if(!payments){
             res.status(404).json("There was an unknown error")
@@ -23,6 +20,44 @@ router.get('/daily', (req, res) => {
     })
    
 });
+
+
+
+
+//@route GET api/payments/daily
+//@desc Gets all transaction registered to a particular Agent
+//@access Private*
+router.get('/daily', auth, (req, res) => {
+    const id = req.query.id;
+    const date = req.query.date;
+    Agent.findOne({
+        attributes:['full_name'],
+        where:{
+            agent_id : id
+        }
+    }).then(agent =>{
+        const collector = agent.dataValues.full_name
+        console.log(agent.dataValues.full_name)
+        Payments.findAll({
+            where : {
+                date,
+                collector
+            }
+        })
+        .then(revenue=>{
+            if(!revenue){
+                res.status(404).json("There was an unknown error")
+            }else{
+                console.log(revenue);
+                res.status(200).json(revenue)
+            }        
+        })
+    })
+   
+});
+
+
+
 
 
 //@route POST api/payments/new

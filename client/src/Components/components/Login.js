@@ -1,15 +1,26 @@
-import React,{useState,useEffect} from 'react'
+import React,{useState,useEffect} from 'react';
 import logo from "../../logo-03.png";
 import axios from 'axios'
 import { useHistory } from 'react-router-dom';
 
 const Login = () => {
   const history = useHistory();
+  const [queryMessage, setQueryMessage] = useState('');
 
 const [telNo, setTelNo] = useState('')
 const [pass, setPass] = useState('')
 
-const [authenticated, setAuthenticated] = useState(false)
+const [authenticated, setAuthenticated] = useState(false);
+
+const refresh = () =>{  
+  window.location.reload(false)
+}
+
+useEffect(() => {
+
+}, []);
+
+
 
  const login = (e) =>{
    e.preventDefault();
@@ -45,7 +56,12 @@ const [authenticated, setAuthenticated] = useState(false)
         console.log(checker)
 
         history.push("/dashboard");
+        window.location.reload(false)
       } 
+
+      else{
+          setQueryMessage(message)
+      }
 
     })
  }
@@ -72,6 +88,7 @@ const [authenticated, setAuthenticated] = useState(false)
                         <button type="submit" className="btn btn-classic btn-sm my-4" onClick={login}>Login</button>
                       </div>
                         </div>
+                        <h5 className="centered text">{queryMessage}</h5>
                     </div>
                 </div>
             </div>

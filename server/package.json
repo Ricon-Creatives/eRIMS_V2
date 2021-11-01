@@ -13,6 +13,9 @@
   "license": "MIT",
   "dependencies": {
     "@auth0/auth0-react": "^1.8.0",
+    "@emotion/react": "^11.5.0",
+    "@emotion/styled": "^11.3.0",
+    "@mui/material": "^5.0.6",
     "axios": "^0.23.0",
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.19.0",
@@ -20,8 +23,10 @@
     "config": "^3.3.6",
     "express": "^4.17.1",
     "jsonwebtoken": "^8.5.1",
+    "moment": "^2.29.1",
     "mysql2": "^2.3.2",
     "nodemon": "^2.0.14",
-    "sequelize": "^6.7.0"
+    "sequelize": "^6.7.0",
+    "uuid": "^8.3.2"
   }
 }

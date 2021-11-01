@@ -5,8 +5,10 @@ import bars from '../icons8-menu-white.svg'
 import { slide as Menu } from 'react-burger-menu';
 import LoginButton from './LoginButton';
 import LogoutButton from './LogoutButton';
+import AdminLoginButtion from './AdminLoginButton'
 import MainFormButton from './MainFormButton';
 import TransactionFormButton from './TransactionFormButton';
+import ProfileBadge from './ProfileBadge';
 
 
 class MainMenu extends React.Component {
@@ -18,10 +20,11 @@ class MainMenu extends React.Component {
     return (
         <div className="menu_icon">   
             <Menu  right customBurgerIcon={ <img src={bars} /> }>
+                <ProfileBadge />
                 <MainFormButton />
                 <TransactionFormButton />
-                <LoginButton />
                 <LogoutButton />
+                <AdminLoginButtion />
             </Menu>
         </div> 
     );

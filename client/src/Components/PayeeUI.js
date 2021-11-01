@@ -4,7 +4,9 @@ import { Card, Button } from "tabler-react";
 
 
 
-const PayeeUI = () => {
+const PayeeUI = (props) => {
+    const { payeeCount } = props;
+    console.log(payeeCount);
     
     return (
         <Card>
@@ -12,7 +14,7 @@ const PayeeUI = () => {
             <Card.Title>Registered Tax Payers</Card.Title>
             </Card.Header>
             <Card.Body>
-                <a href="#"><h1>54</h1></a>
+                <a href="/payee-table"><h1>{payeeCount}</h1></a>
                 <h4>Registered Users</h4>
             
             </Card.Body>

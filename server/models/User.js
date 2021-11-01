@@ -11,12 +11,7 @@ const User = db.define('users', {
         autoIncrement: true
     },
 
-    first_name:{
-        type:Sequelize.STRING,
-        allowNull: false
-    },
-
-    last_name:{
+    fullname:{
         type:Sequelize.STRING,
         allowNull: false
     },

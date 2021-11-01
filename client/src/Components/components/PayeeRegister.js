@@ -20,6 +20,7 @@ const PayeeRegister = () => {
   const [email, setEmail] = useState('')
   const [education, setEducation] = useState('')
   const [taxId, setTaxId] = useState('')
+  const [taxType, setTaxType] = useState('')
   const [customerType, setCustomerType] = useState('')
   const [payeeType, setPayeeType] = useState('')
   const [sector, setSector] = useState('')
@@ -27,16 +28,19 @@ const PayeeRegister = () => {
 
   const register = (e) => {
     e.preventDefault();
-    const token = JSON.parse(localStorage.getItem('token'))
+    const token = JSON.parse(localStorage.getItem('token'));
+    const agent = JSON.parse(localStorage.getItem('agent'));
+    const {id, name, phone, level, see} = agent;
 
     const data = {
       tel1:phone1,    tel2:phone2,
       firstname,    surname,
         dob,         maritalstat:maritalStatus,
         idType,      address:address,
-        idNumber,     educ:education,
-        gender,       taxId, customertype:customerType, 
-        payeeType,   busisect:sector,  marketseg:segment
+        idNumber,    agent_id:id,
+        email,     educ:education,
+        gender,       tin_no: taxId, customertype:customerType, 
+        payee_type:payeeType,   busisect:sector,  marketseg:segment
       }
 
       const options = {
@@ -48,6 +52,8 @@ const PayeeRegister = () => {
     axios.post('api/payee/register', data,options)
     .then((res) => {
         console.log(res.data)
+
+        history.push('/payee-table');
     })
 
 }
@@ -78,25 +84,25 @@ const PayeeRegister = () => {
                     
                     <div className="row mb-3">
                         <div className="col">
-                            <input type="text" id="surname" placeholder="Surname" value={surname} className="form-control border-0 border-bottom" 
+                            <input type="text" id="surname" placeholder="Surname" value={surname} className="myInput form-control  border-bottom" 
                             onChange={e => setSurname(e.target.value)}/>
                         </div>
                         <div className="col">
-                            <input type="text" id="firstname" placeholder="First Name" value={firstname} className="form-control border-0 border-bottom"
+                            <input type="text" id="firstname" placeholder="First Name" value={firstname} className="myInput form-control border-bottom"
                              onChange={e => setFirstname(e.target.value)}/>
                         </div>
                     </div>
                    
                     <div className="mb-3">
-                        <input type="date" id="dob" name="dob" value={dob} className="form-control border-0 border-bottom" onChange={e => setDob(e.target.value)}/>
+                        <input type="date" id="dob" name="dob" value={dob} className="myInput form-control border-0 border-bottom" onChange={e => setDob(e.target.value)}/>
                     </div>
                     <div className="row mb-3">
                         <div className="col">
-                            <input type="tel" id="phone1" value={phone1} placeholder="(+233) Mobile Number1" className="form-control border-0 border-bottom" 
+                            <input type="tel" id="phone1" value={phone1} placeholder="(+233) Mobile Number1" className="myInput form-control  border-bottom" 
                              onChange={e => setPhone1(e.target.value)}/>
                         </div>
                         <div className="col">
-                            <input type="tel" id="phone2" value={phone2} placeholder="(+233) Mobile Number1" className="form-control border-0 border-bottom"
+                            <input type="tel" id="phone2" value={phone2} placeholder="(+233) Mobile Number1" className="myInput form-control  border-bottom"
                               onChange={e => setPhone2(e.target.value)}/>
                         </div>
                     </div>
@@ -104,67 +110,70 @@ const PayeeRegister = () => {
                     <div className="row mb-3">
                     <div className="col">
                         <select className="form-select form-select-sm" value={idType}  onChange={e => setIdType(e.target.value)}>
-                            <option value="">ID Type</option>
-                            <option value="1">One</option>
-                            <option value="2">Two</option>
-                            <option value="3">Three</option>
+                            <option value="" disabled> ID Type</option>
+                            <option value="passport">Passport</option>
+                            <option value="ghana_card">Ghana Card</option>
+                            <option value="voters_id">Voter's ID</option>
+                            <option value="drivers_license">Driver's License</option>
                         </select>
                     </div>
                     <div className="col">
-                        <input type="text" className="form-control border-0 border-bottom" placeholder="ID Number" value={idNumber}
+                        <input type="text" className="myInput form-control border-bottom" placeholder="ID Number" value={idNumber}
                           onChange={e => setIdNumber(e.target.value)}/>
                     </div>
                     </div>
                     <div className="row mb-3">
                     <div className="col">
                       <select className="form-select form-select-sm" value={gender}  onChange={e => setGender(e.target.value)}>
-                        <option value="">Gender</option>
+                        <option value="" disabled>Gender</option>
                         <option value="male">Male</option>
                         <option value="female">Female</option>
                       </select>
                     </div>
                     <div className="col">
-                        <input type="email" className="form-control border-0 border-bottom" placeholder="Email" value={email} 
+                        <input type="email" className="myInput form-control border-bottom" placeholder="Email" value={email} 
                           onChange={e => setEmail(e.target.value)}/>
                     </div>
                     </div>
                     <div className="row mb-3">
                     <div className="col">
                       <select className="form-select form-select-sm" value={maritalStatus}  onChange={e => setMaritalStatus(e.target.value)}>
-                        <option value="">Marital Status</option>
+                        <option value="" disabled>Marital Status</option>
                         <option value="1">Single</option>
                         <option value="2">Married</option>
                       </select>
                     </div>
                     <div className="col">
-                        <input type="address" className="form-control border-0 border-bottom" placeholder="Address" value={address} 
+                        <input type="address" className="myInput form-control border-bottom" placeholder="Address" value={address} 
                         onChange={e => setAddress(e.target.value)}/>
                     </div>
                     </div>
                     <div className="row mb-3">
                     <div className="col">
                       <select className="form-select form-select-sm" value={education} onChange={e => setEducation(e.target.value)}>
-                        <option value="">Education</option>
-                        <option value="1">Student</option>
-                        <option value="2">Female</option>
+                        <option value="" disabled>Level of Education</option>
+                        <option value="no_formal">No Formal</option>
+                        <option value="primary">Primary</option>
+                        <option value="secondary">Secondary</option>
+                        <option value="tetiary">Tetiary</option>
                       </select>
                     </div>
                     <div className="col">
-                        <input type="text" className="form-control border-0 border-bottom" placeholder="Tax ID No." value={taxId} 
+                        <input type="text" className="myInput form-control border-bottom" placeholder="Tax ID No." value={taxId} 
                         onChange={e => setTaxId(e.target.value)}/>
                     </div>
                     </div>
                     <div className="row mb-3">
                     <div className="col">
                       <select className="form-select form-select-sm" value={customerType} onChange={e => setCustomerType(e.target.value)}>
-                        <option value="">Customer Type</option>
+                        <option value="" disabled>Customer Type</option>
                         <option value="1">Male</option>
                         <option value="2">Female</option>
                       </select>
                     </div>
                     <div className="col">
                     <select className="form-select form-select-sm" value={payeeType} onChange={e => setPayeeType(e.target.value)}>
-                        <option value="">Payee Type</option>
+                        <option value="" disabled>Payee Type</option>
                         <option value="1">Male</option>
                         <option value="2">Female</option>
                       </select>
@@ -173,14 +182,14 @@ const PayeeRegister = () => {
                     <div className="row mb-3">
                     <div className="col">
                       <select className="form-select form-select-sm" value={sector} onChange={e => setSector(e.target.value)}>
-                        <option value="">Business Sector</option>
+                        <option value="" disabled>Business Sector</option>
                         <option value="1">Male</option>
                         <option value="2">Female</option>
                       </select>
                     </div>
                     <div className="col">
                     <select className="form-select form-select-sm" value={segment} onChange={e => setSegment(e.target.value)}>
-                        <option value="">Market Segment</option>
+                        <option value="" disabled>Market Segment</option>
                         <option value="1">Male</option>
                         <option value="2">Female</option>
                       </select>

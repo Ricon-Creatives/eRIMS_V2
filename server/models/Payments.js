@@ -39,11 +39,11 @@ const Payments = db.define('transactions', {
     },
     payment_type:{
         type:Sequelize.STRING,
-        allowNull: false
+        allowNull: true
     },
     reason:{
         type:Sequelize.STRING,
-        allowNull: false
+        allowNull: true
     },
 
     amount:{

@@ -7,6 +7,9 @@ import AgentRegister from './Components/components/AgentRegister'
 import PayeeRegister from './Components/components/PayeeRegister'
 import Checkout from './Components/components/Checkout'
 import CheckoutPage from './Components/CheckoutPage'
+import Dashboard from './Components/Dashboard';
+import PayeeTable from './Components/PayeeTable';
+import PaymentsTable from './Components/PaymentsTable';
 
 function App() {
 
@@ -23,6 +26,9 @@ function App() {
             < Route exact path='/payee-register' component = {PayeeRegister} />
             < Route exact path='/checkout' component = {Checkout} />
             < Route exact path='/paygate' component = {CheckoutPage} />
+            < Route exact path='/dashboard' component = {Dashboard} />
+            < Route exact path='/payee-table' component = {PayeeTable} />
+            < Route exact path='/payment-table' component = {PaymentsTable} />
             </Switch>
         </main>
       </div>

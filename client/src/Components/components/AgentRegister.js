@@ -15,20 +15,24 @@ const [idNumber, setIdNumber] = useState('')
 const [gender, setGender] = useState('')
 const [device, setDevice] = useState('')
 const [area, setArea] = useState('')
+const [userMessage, setUserMessage] = useState('');
 
 const register = (e) => {
     e.preventDefault();
     const token = JSON.parse(localStorage.getItem('token'))
-
+    const agent = JSON.parse(localStorage.getItem('agent'))
+    const superagent = agent.name;
+    console.log(superagent);
     const data = {
-        phone,
+        tel_no:phone,
         fullname,
         dob,
         idType,
         idNumber,
         gender,
         device,
-        area
+        area,
+        superagent
       }
 
       const options = {
@@ -39,7 +43,15 @@ const register = (e) => {
 
     axios.post('api/user/register', data,options)
     .then((res) => {
-        console.log(res.data)
+        console.log(res.data);
+        const response = res.data;
+
+        if(response.success === false){
+          setUserMessage('Something went wrong, please try again later');
+        }else{
+          setUserMessage(`${fullname} has been registered successfully`);
+        }
+
     })
 
 }
@@ -68,28 +80,29 @@ const register = (e) => {
 
                     
                     <div className="mb-3">
-                        <input type="text" id="name" value={fullname} placeholder="Full Name" className="form-control border-0 border-bottom"
+                        <input type="text" id="name" value={fullname} placeholder="Full Name" className="myInput form-control border-bottom"
                          onChange={e => setName(e.target.value)}/>
                     </div>
                     <div className="mb-3">
-                        <input type="date" id="dob" name="dob" value={dob} className="form-control border-0 border-bottom"  
-                        onChange={e => setDob(e.target.value)}/>
+                        <input type="date" id="dob" name="dob" value={dob} className="myInput form-control border-bottom"  
+                        onChange={e => setDob(e.target.value)} placeholder="Date of Birth"/>
                     </div>
                     <div className="mb-3">
-                        <input type="tel" id="phone" name="phone" value={phone} placeholder="+233" className="form-control border-0 border-bottom"
+                        <input type="tel" id="phone" name="phone" value={phone} placeholder="+233" className="myInput form-control border-bottom"
                           onChange={e => setPhone(e.target.value)}/>
                     </div>
                     <div className="row mb-3">
                     <div className="col">
                         <select className="form-select form-select-sm" value={idType}  onChange={e => setIdType(e.target.value)}>
-                            <option value="">ID Type</option>
-                            <option value="1">One</option>
-                            <option value="2">Two</option>
-                            <option value="3">Three</option>
+                            <option value="" disabled>ID Type</option>
+                            <option value="passport">Passport</option>
+                            <option value="ghana_card">Ghana Card</option>
+                            <option value="voters_id">Voter's ID Card</option>
+                            <option value="drivers_license">Driver's License</option>
                         </select>
                     </div>
                     <div className="col">
-                        <input type="text" className="form-control border-0 border-bottom" value={idNumber} placeholder="ID Number" 
+                        <input type="text" className="myInput form-control border-bottom" value={idNumber} placeholder="ID Number" 
                          onChange={e => setIdNumber(e.target.value)}/>
                     </div>
                     </div>
@@ -97,18 +110,29 @@ const register = (e) => {
                     <div className="col">
                       <select className="form-select form-select-sm" value={gender}  onChange={e => setGender(e.target.value)}>
                         <option selected>Gender</option>
-                        <option value="1">Male</option>
-                        <option value="2">Female</option>
+                        <option value="male">Male</option>
+                        <option value="female">Female</option>
                       </select>
                     </div>
                     <div className="col">
-                        <input type="text" className="form-control border-0 border-bottom" placeholder="Assigned Device" value={device} 
+                        <input type="text" className="myInput form-contro border-bottom" placeholder="Assigned Device" value={device} 
                           onChange={e => setDevice(e.target.value)}/>
                     </div>
                     </div>
                     <div className="mb-3">
-                        <input type="text" id="assign-area" placeholder="Assigned Area" className="form-control border-0 border-bottom" value={area}
-                         onChange={e => setArea(e.target.value)}/>
+                      <select className="myInput select form-control border-bottom" value={area} onChange={e => setArea(e.target.value)} >
+                      <option value="" disabled>Assigned Area</option>
+                        <option value="biakoye">Biakoye</option>
+                        <option value="jasikan">Jasikan</option>
+                        <option value="kajebi">Kadjebi</option>
+                        <option value="krachi_nchumuru">Krachi Nchumuru</option>
+                        <option value="kete_krachi">Kete Krachi</option>
+                        <option value="kpassa">Kpassa</option>
+                        <option value="chinderi">Chinderi</option>
+                        <option value="nkonya_ahenkro">Nkonya Ahenkro</option>
+                        <option value="dambai">Dambai</option>
+                        <option value="nkwanta">Nkwanta</option>
+                      </select>
                     </div>
 
                     <div className="d-grid text-center">
@@ -120,6 +144,7 @@ const register = (e) => {
                 </div>
 
                 </div>
+                <h6>{userMessage}</h6>
             </div>
 
             </div>

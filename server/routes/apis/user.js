@@ -6,6 +6,7 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const config = require('config');
 const auth = require('../../middleware/auth');
+const moment = require('moment');
 
 
 //@route GET api/user
@@ -20,14 +21,26 @@ router.get('/', auth, (req, res) => {
 //@desc REGISTERS NEW Agent
 //@access Public*
 router.post('/register', auth, (req, res) => {
-    const {first_name, last_name, username, email, tel_no, password, user_rank, 
-           age, ids, gender, assigned_device, assigned_areas, superagent} = req.body;
-
-    const full_name = first_name + ' ' + last_name;
+    const {fullname, tel_no, dob, idType, idNumber, gender, device, area, superagent} = req.body;
+    console.log(dob)
     //validate input
-    if(!first_name || !last_name || !tel_no || !password || !user_rank || !age || !gender || !assigned_device || !assigned_areas ){
+    if( !fullname || !tel_no || !dob || !idType || !idNumber || !gender || !device || !area || !superagent ){
         return res.status(400).json("Please Provide All Required Registration Details")
     }
+    const uname = fullname.split(" ").pop();
+    const tail = Math.floor(Math.random() * 600) + 1;
+    const byear = Number(dob.split("-")[0]);
+    console.log(byear)
+    const curryear = moment().year()
+    console.log(curryear);
+    const age = curryear-byear;
+    console.log(age);
+    const password = "12345";
+    const ids  = `${idType} :: ${idNumber}`;
+    const user_rank = "Agent";
+    const username = `@${uname}${tail}`;
+    console.log(username)
+    
     //check for already existing user
     User.findOne({
         where :{
@@ -40,10 +53,8 @@ router.post('/register', auth, (req, res) => {
 
         //if user doesnt exist continue and register
         const newUser = new User({
-            first_name,
-            last_name,
+            fullname,
             username,
-            email,
             tel_no,
             password,
             user_rank
@@ -60,13 +71,13 @@ router.post('/register', auth, (req, res) => {
                     //Dealing with all the data that belongs in the agent table
                     const newAgent = new Agent({
                         agent_id: user.user_id,
-                        full_name: full_name,
+                        full_name: fullname,
                         age: age,
                         tel_no: user.tel_no,
                         ids: ids,
                         gender: gender,
-                        assigned_device: assigned_device,
-                        assigned_areas: assigned_areas,
+                        assigned_device: device,
+                        assigned_areas: area,
                         average_collection_ytd: null,
                         agent_or_superagent: superagent
                     });
