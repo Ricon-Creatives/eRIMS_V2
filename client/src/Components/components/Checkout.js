@@ -81,6 +81,8 @@ axios.post('api/payments/new',newPayment,options).then((res) =>{
                             <option selected>Payment Type</option>
                             <option value="cash">Cash</option>
                             <option value="momo">Momo</option>
+                            <option value="bank">Bank</option>
+                            <option value="qr-code">Qr-code</option>
                         </select>
                       </div>
 
