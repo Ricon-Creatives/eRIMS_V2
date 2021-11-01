@@ -2,7 +2,7 @@ import React,{useState,useEffect} from 'react'
 import background from '../../background.png'
 import axios from 'axios'
 import { useHistory } from 'react-router-dom';
-
+import swal from 'sweetalert';
 
 const AgentRegister = () => {
     const history = useHistory();
@@ -19,6 +19,7 @@ const [userMessage, setUserMessage] = useState('');
 
 const register = (e) => {
     e.preventDefault();
+
     const token = JSON.parse(localStorage.getItem('token'))
     const agent = JSON.parse(localStorage.getItem('agent'))
     const superagent = agent.name;
@@ -47,9 +48,18 @@ const register = (e) => {
         const response = res.data;
 
         if(response.success === false){
-          setUserMessage('Something went wrong, please try again later');
+          swal("Something went wrong", "please try again later", "warning");
         }else{
-          setUserMessage(`${fullname} has been registered successfully`);
+          setName('');
+          setPhone('');
+          setDob('');
+          setIdType('');
+          setIdNumber('');
+          setGender('');
+          setDevice('');
+          setArea('');
+
+          swal(`${fullname} `, "has been registered successfully", "success");
         }
 
     })
@@ -144,7 +154,7 @@ const register = (e) => {
                 </div>
 
                 </div>
-                <h6>{userMessage}</h6>
+
             </div>
 
             </div>
