@@ -1,23 +1,28 @@
 import React from 'react';
-import { useAuth0 } from '@auth0/auth0-react';
 import { useHistory } from 'react-router-dom';
+import { useState, useEffect } from 'react';
 import '../Styles/Home.css';
 
 
 
 const TransactionFormButton = () => {
-    const { isAuthenticated } = useAuth0();
+    const [isAuthenticated, setIsAuthenticated ] = useState(false);
     const history = useHistory();
 
     const fire = () =>{
-        history.push("/transactions");
+        history.push("/payment-table");
     }
+
+    useEffect(() => {
+        const token = localStorage.getItem('token');
+        if(!token) setIsAuthenticated(true)
+    }, []);
 
 
     return (
-        isAuthenticated && (
+        !isAuthenticated && (
             <button className="sleek" onClick = {fire}>
-                Initiate Tax-Payment Transaction
+                Initiate Payment
             </button>
         )
     )

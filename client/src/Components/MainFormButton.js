@@ -1,21 +1,26 @@
 import React from 'react';
-import { useAuth0 } from '@auth0/auth0-react';
 import { useHistory } from 'react-router-dom';
+import { useState, useEffect } from 'react';
 import '../Styles/Home.css';
 
 
 
 const MainFormButton = () => {
-    const { isAuthenticated } = useAuth0();
+    const [isAuthenticated, setIsAuthenticated ] = useState(false);
     const history = useHistory();
 
-    const fire = () =>{
-        history.push("/register");
-    }
+    useEffect(() => {
+        const token = localStorage.getItem('token');
+        if(!token) setIsAuthenticated(true)
+    }, []);
     
+    const fire = () =>{
+        history.push("/payee-table");
+    }    
+
 
     return (
-        isAuthenticated && (
+        !isAuthenticated && (
             <button className="sleek" onClick = {fire}>
                 Register A Payee
             </button>

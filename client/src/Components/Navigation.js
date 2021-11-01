@@ -18,7 +18,7 @@ function Navigation(){
         
         <nav className="navbar navbar-expand-lg navbar-light bg-classic">
         <div className="container-fluid">
-          <a className="navbar-brand" href="#">
+          <a className="navbar-brand" href="/dashboard">
           <img className="brand" src={Logo} alt={"RMS"}/>
           </a>
         

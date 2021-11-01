@@ -1,62 +1,63 @@
 import React,{useState,useEffect} from 'react'
 import logo from "../../logo-03.png";
-import axios from 'axios'
+import axios from 'axios';
 import { useHistory } from 'react-router-dom';
 import {v1 as uuid} from "uuid";
-import moment from 'moment'
+import moment from 'moment';
 
 const Checkout = () => {
   const history = useHistory();
 
-const [momoNumber, setMomo] = useState('')
-const [fullname, setFullname] = useState('')
-const [payType, setPayType] = useState('')
-const [reason, setReason] = useState('')
-const [amount, setAmount] = useState('')
+  const [momoNumber, setMomo] = useState('')
+  const [fullname, setFullname] = useState('')
+  const [payType, setPayType] = useState('')
+  const [reason, setReason] = useState('')
+  const [amount, setAmount] = useState('')
 
-const submit = (e) =>{
-e.preventDefault();
+  const submit = (e) =>{
+  e.preventDefault();
+  const validAmount = amount *100;
 
-const today = moment();
-const now = moment(today).format("hh:mm:ss a");
-console.log(`date: ${today} and time: ${now}`)
-const reference_no = uuid()
+  const today = moment();
+  const now = moment(today).format("hh:mm:ss a");
+  console.log(`date: ${today} and time: ${now}`)
+  const reference_no = uuid()
 
-const token = JSON.parse(localStorage.getItem('token'))
-const agent = JSON.parse(localStorage.getItem('agent'))
-console.log(token)
+  const token = JSON.parse(localStorage.getItem('token'))
+  const agent = JSON.parse(localStorage.getItem('agent'))
+  console.log(token)
 
-const collector = agent.name
+  const collector = agent.name
 
-const newPayment = {
-  date:today,
-  time:now,
- tel_no:momoNumber,
- payee_name:fullname,
- payment_type:payType,
- ref_no:reference_no,
- reason,
- amount,
- collector
-}
-
-const options = {
-  headers:{
-    'x-auth-token':token
+  const newPayment = {
+    date:today,
+    time:now,
+    tel_no:momoNumber,
+    payee_name:fullname,
+    payment_type:payType,
+    ref_no:reference_no,
+    reason,
+    amount:validAmount,
+    collector
   }
-}
 
-localStorage.removeItem('payeedata')
+  const options = {
+    headers:{
+      'x-auth-token':token
+    }
+  }
 
-axios.post('api/payments/new',newPayment,options).then((res) =>{
-  console.log(res.data)
-  const payeeData = res.data
-  localStorage.setItem('payeedata',JSON.stringify(payeeData))
+  localStorage.removeItem('payeedata')
 
-  history.push("/paygate");
+  axios.post('api/payments/new',newPayment,options).then((res) =>{
+    console.log(res.data)
+    const payeeData = res.data
+    localStorage.setItem('payeedata',JSON.stringify(payeeData))
 
-})
-}
+    history.push("/paygate");
+
+  })
+  }
 
 
     return (

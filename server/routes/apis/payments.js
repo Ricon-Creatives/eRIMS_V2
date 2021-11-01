@@ -1,14 +1,77 @@
 const express = require('express');
 const router = express.Router();
 const Payments = require('../../models/Payments');
-const Agent = require('../../models/Agents')
-const auth = require('../../middleware/auth')
+const Agent = require('../../models/Agents');
+const auth = require('../../middleware/auth');
 
 
-//@route GET api/payee
+
+//@route GET api/payments/verify
 //@desc Gets all tax payers registered in the system
 //@access Private*
-router.get('/', (req, res) => {
+router.get('/verify', auth, (req, res) =>{
+    const email = req.query.email;
+    const amount = req.query.amount;
+    const phone = req.query.phone;
+    console.log(`${phone},${email},${amount}`)
+    const https = require('https')
+    const params = JSON.stringify({
+        "email": email,
+        "amount": amount,
+        "phone": phone
+    })
+
+    const options = {
+        hostname: 'api.paystack.co',
+        port: 443,
+        path: '/transaction/initialize',
+        method: 'POST',
+        headers: {
+            Authorization: 'sk_test_1d93b2656eb99d3c3334977538d638cfe0dab00d',
+            'Content-Type': 'application/json'
+        }
+    }
+
+    const request = https.request(options, response => {
+    let data = ''
+    response.on('data', (chunk) => {
+        data += chunk
+    });
+    response.on('end', () => {
+        console.log(data);
+        //const tel_no = data.customer.phone;
+        if(data.status === 'success'){
+            Payments.update({ remark: "paid" }, {
+                where: {
+                  tel_no
+                }
+            })
+            console.log(JSON.parse(data));
+            res.status(200).json({
+                msg:'Payment:successful and remark:Paid',
+                data
+            })
+        }else{
+            res.json({
+                msg: 'Payment:Incomplete and remark unchanged'
+            })
+        }
+    })
+    }).on('error', error => {
+        console.error(error)
+    })
+    request.write(params)
+    request.end()
+});
+
+
+
+
+
+//@route GET api/payments
+//@desc Gets all tax payers registered in the system
+//@access Private*
+router.get('/', auth, (req, res) => {
     Payments.findAll()
     .then(payments=>{
         if(!payments){

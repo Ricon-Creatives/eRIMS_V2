@@ -4,17 +4,21 @@ import { PaystackButton } from 'react-paystack';
 import Logo from '../logo-03.png'
 import '../Styles/FormMain.css'
 import { Col, Form, FormGroup, Label, Input, Container } from 'reactstrap';
+import axios from 'axios';
+import { useHistory } from 'react-router-dom';
 
 
 
 const CheckoutPage = () => {
-        
+    const token = JSON.parse(localStorage.getItem('token'));
+    const history = useHistory();
     const publicKey = "pk_test_ea56daae18789f1cdf60d1e3efeddd18a412b9d8";
-    
+    const currency = 'GHS';
+    const channels = ['card', 'bank', 'ussd', 'qr', 'mobile_money', 'bank_transfer']
     const [amount, setAmount] = useState("");
     const [payee_name, setName] = useState("");
     const [tel_no, setPhone] = useState("");
-    const [email, setEmail] = useState("andreakumah@gmail.com");
+    const [email, setEmail] = useState("gibbsdarko@gmail.com");
 
     const fetchPayeeDeets = () =>{
         const payeeDeets = JSON.parse(localStorage.getItem('payeedata'));
@@ -28,6 +32,38 @@ const CheckoutPage = () => {
         console.log(`${payee_name}, ${amount}, ${tel_no}`);    
     }
 
+    const verifyPayment = () =>{
+        console.log('running verified payment function');
+        const email = email;
+        const amount = amount;
+        const phone = tel_no;
+
+        const options={
+            params: {
+                email,
+                amount,
+                phone
+            },
+            headers:{
+                'x-auth-token':token
+            }
+        }
+
+        axios.get('api/payments/verify', options)
+        .then((res) =>{
+            console.log(res.data)
+            const msg = res.data.msg;
+            console.log(msg)
+            const payeeData = res.data
+            localStorage.setItem('payeedata',JSON.stringify(payeeData))
+            alert(msg);
+            history.push("/dasboard");
+        })
+
+    }
+
+
+
 
     useEffect(() =>{
         fetchPayeeDeets();
@@ -37,16 +73,18 @@ const CheckoutPage = () => {
 
     const componentProps = {
         email:'andreakumah@gmail.com',    
-        amount,    
+        amount,
+        currency,
+        channels,
         metadata: {    
           payee_name,    
-          tel_no
+          tel_no          
         },    
         publicKey,    
         text: "Pay Now",  
         className:"btn btn-classic btn-sm my-4",  
-        onSuccess: () =>    
-            alert("Thanks for doing business with us! Come back soon!!"),    
+        onSuccess: () => 
+            verifyPayment(),
         onClose: () => 
             alert("Transaction failed, Please try again"),    
       }

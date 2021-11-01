@@ -1,6 +1,7 @@
 import React from 'react';
 import { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
+import profilepic from '../chidispf.jpg';
 
 const ProfileBadge = () => {
     const history = useHistory(); 
@@ -39,10 +40,16 @@ const ProfileBadge = () => {
 
     return (
         isAuthenticated && (
-            <div>
-                <h3>Welcome Back</h3>
-                <h4>{name}</h4>
-                
+            <div className="profile-badge">
+                <div className="greeting col-md-8">
+                    <h5>Welcome Back</h5>
+                    <h2>{name}</h2>
+                </div>
+                <div className="greeting col-md-4">
+                    <a href="javascript:;" class="profile-pic">
+                        <img className="profile-pic" alt="" src={profilepic} />
+                    </a>
+                </div>
             </div>
         )
     )

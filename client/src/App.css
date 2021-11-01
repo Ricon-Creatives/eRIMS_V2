@@ -137,9 +137,24 @@ input.myInputSearch{
 
 }
 
+.profile-badge{
+  display:flex;
+  width: 120%;
+  height: fit-content;
+  margin-left: -1.5rem;
+  margin-bottom: 5rem;
+  padding:0px;
+}
 
+.greeting {
+  margin: 0px !important;
+}
 
-
+.profile-pic{
+  width: 8rem;
+  height: 5rem;
+  border-radius: 3.5rem;
+}
 
 .container {
   display: flex;
