@@ -5,6 +5,7 @@ import { useState } from 'react';
 import { Collapse, Navbar, NavbarToggler, Nav, NavbarBrand, NavItem, NavLink } from 'reactstrap';
 import Navigate from './Navigate';
 import { slide as Menu } from 'react-burger-menu'
+import Logo from "../logo-02.png";
 
 function Navigation(){ 
         const {user} = useAuth0();
@@ -15,13 +16,19 @@ function Navigation(){
 
     return(
         
-        <nav>
-            <Navbar dark>
-            <div href="/" className="mr-auto"> <img className="brand" src={LogoMain} alt={"RMS"} height="70px"   width="70px"/> </div>
+        <nav className="navbar navbar-expand-lg navbar-light bg-classic">
+        <div className="container-fluid">
+          <a className="navbar-brand" href="/dashboard">
+          <img className="brand" src={Logo} alt={"RMS"}/>
+          </a>
+        
+          <div className="collapse navbar-collapse" id="navbarNavDropdown">
+            <ul className="navbar-nav">
             
-                
-            </Navbar>
-        </nav>
+            </ul>
+          </div>
+        </div>
+      </nav>
     )
 
 }

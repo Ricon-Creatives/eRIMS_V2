@@ -77,13 +77,18 @@ const Payee = db.define('tax_payee_customer', {
         allowNull: false
     },
 
-    tax_type:{
+    payee_type:{
         type:Sequelize.INTEGER,
         allowNull: false
     },
 
     mkt_group:{
         type:Sequelize.STRING,
+        allowNull: true
+    },
+
+    agent_id:{
+        type:Sequelize.NUMBER,
         allowNull: true
     },
 

@@ -9,7 +9,7 @@ const MonthlyPaymentsUI = () => {
             <Card.Title>Revenue Collected This Month</Card.Title>
             </Card.Header>
             <Card.Body>
-            <a href="#"><h1>203</h1></a>
+            <a href="#"><h1>GH₵ 203</h1></a>
             <h4>Recorded Transactions </h4>
             </Card.Body>
         </Card>

@@ -4,10 +4,14 @@ const jwt = require('jsonwebtoken');
 
 
 function auth(req, res, next){
+   
     const token = req.header('x-auth-token');
 
     //Check for token
-    if(!token)  res.status(400).json({msg: "No token: User Unauthorized"})
+    if(!token)  res.status(200).json({
+        msg: "No token: User Unauthorized",
+        auth: false
+    })
     //Verify token if one is found    
     try {
     const decoded = jwt.verify(token, config.get('jwtSecret'));
