@@ -5,7 +5,13 @@ import { useHistory } from 'react-router';
 
 
 const PayeeTable = () => {
-    const [payees, setPayees] = useState([]);
+    const [payees, setPayees] = useState([{full_name: "Gabriel Ahado",
+    tel: "02768594056, 0244586901",
+    location: "E14 Comm. 4, Tema",
+    last_payment_date: "2021-10-01"}]
+        	);
+    const [data, setData] = useState([]);
+    const [search, setSearch] = useState([]);
     const token = JSON.parse(localStorage.getItem('token'));
     const agent = JSON.parse(localStorage.getItem('agent'));
     const {id, name, phone, level, see} = agent;
@@ -39,9 +45,25 @@ const PayeeTable = () => {
                 const count = clients.length;
                 console.log(count);
                 setPayees(clients);
+                setData(payees)
             }
         })
     }
+
+    const FilterData = (e) => {
+        e.preventDefault();
+        let arrData = payees
+        
+        let arr = payees.filter((item) => {
+            if (search == item.full_name || search ==  item.tel || search == item.tel_no ||search ==  item.location || 
+                search == item.last_payment_date){
+                    return item
+                } 
+            })
+            console.log(arr)
+            setData(arr)
+            if (search =="") setData(arrData)
+  }
 
 
     useEffect(()=>{
@@ -57,21 +79,20 @@ const PayeeTable = () => {
 
             <div className="row">
                 <div className="col-sm-6">
-                    <button className="btn-classical" onClick={proceed}>
+                    <button className="btn btn-classic" onClick={proceed}>
                         Add New Payee
                     </button>
                 </div>
 
-                <div className="col-sm-3"></div>
-
-                <div className="col-sm-3">
-                <form class="form-inline mt-2 ml-2">
+                <div className="col-sm-6">
+                <form class="form-inline mt-2 ml-2 float-right">
                     <div class="form-group">
-                      <input class="myInput form-control w-100" type="text" placeholder="Search" />
+                      <input class="myInput form-control" type="text" placeholder="Search" value={search} 
+                        onChange = {e => setSearch(e.target.value)}/>
                     </div>
-                    <button class="btn btn-sm btn-primary ml-2 mr-0 mb-md-0 mb-4 px-2">
+                    <button class="btn btn-sm btn-primary" onClick={FilterData}>
                        
-                    <i class="fas fa-search"></i></button>
+                    <i class="fas fa-search"></i>Search</button>
                   </form>
                 </div>
 
@@ -101,7 +122,7 @@ const PayeeTable = () => {
                     <th>LAST PAYMENT DATE</th> 
                 </thead>
                 <tbody>
-                    {payees.map((payee) => (
+                    {data.map((payee) => (
                         <tr className="">
                             <td className="">
                                 <input className="form-check-input" type="checkbox" value="" id="flexCheckDefault" />
