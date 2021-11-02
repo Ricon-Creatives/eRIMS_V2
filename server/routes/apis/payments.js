@@ -128,8 +128,10 @@ router.get('/daily', auth, (req, res) => {
 //@access Private*
 router.post('/new', auth, (req, res) => {
     const newPayment = req.body;
+    const paytype = newPayment.payment_type;
     console.log(newPayment);
-    Payments.create({
+
+    const momoPayment = {
         date: newPayment.date,
         time: newPayment.time,
         reference_no: newPayment.ref_no,
@@ -139,18 +141,49 @@ router.post('/new', auth, (req, res) => {
         reason:newPayment.reason,
         amount: newPayment.amount,
         email: newPayment.email,
-        collector: newPayment.collector
+        collector: newPayment.collector,
+        remark: 'pending-payment'
+    };
 
+    const cashPayment = {
+        date: newPayment.date,
+        time: newPayment.time,
+        reference_no: newPayment.ref_no,
+        tel_no: newPayment.tel_no,
+        payee_name: newPayment.payee_name,
+        payment_type:newPayment.payment_type,
+        reason:newPayment.reason,
+        amount: newPayment.amount,
+        email: newPayment.email,
+        collector: newPayment.collector,
+        remark: 'paid'
+    };
+
+    if(paytype === 'cash'){
+        Payments.create(cashPayment)
+        .then( entry => {
+            if(!entry){
+                res.status(400).json('payment failed')
+                console.log(entry);
+                }else{
+                res.status(200).json(entry)
+                console.log(entry);
+            }
+        })
+    }else{
+        Payments.create(momoPayment)
+        .then( entry => {
+            if(!entry){
+                res.status(400).json('payment failed')
+                console.log(entry);
+                }else{
+                res.status(200).json(entry)
+                console.log(entry);
+            }
     })
-    .then( entry => {
-        if(!entry){
-            res.status(400).json('payment failed')
-            console.log(entry);
-            }else{
-            res.status(200).json(entry)
-            console.log(entry);
-        }
-    })
+
+    }
+    
    
 });
 

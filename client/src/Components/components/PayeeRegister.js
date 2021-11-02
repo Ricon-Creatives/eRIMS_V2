@@ -2,12 +2,14 @@ import React,{useState,useEffect} from 'react'
 import background from '../../background.png'
 import axios from 'axios'
 import { useHistory } from 'react-router-dom';
+import moment from 'moment';
 import swal from 'sweetalert';
 
 
 const PayeeRegister = () => {
   const history = useHistory();
-
+  const today = moment();
+  const now = moment(today).format("hh:mm:ss a");
   const [surname, setSurname] = useState('')
   const [firstname, setFirstname] = useState('')
   const [phone1, setPhone1] = useState('')
@@ -27,6 +29,33 @@ const PayeeRegister = () => {
   const [sector, setSector] = useState('')
   const [segment, setSegment] = useState('')
 
+
+
+  const clearFields = () =>{
+    setSurname('')
+      setFirstname('')
+      setPhone1('')
+      setPhone2('')
+      setDob('')
+      setIdType('') 
+      setIdNumber('')
+      setGender('')
+      setMaritalStatus('')
+      setAddress('')
+      setEmail('')
+      setEducation('')
+      setTaxId('')
+      setTaxType('')
+      setCustomerType('')
+      setPayeeType('')
+      setSector('')
+      setSegment('')
+      
+  }
+
+
+
+
   const register = (e) => {
     e.preventDefault();
     const token = JSON.parse(localStorage.getItem('token'));
@@ -34,14 +63,16 @@ const PayeeRegister = () => {
     const {id, name, phone, level, see} = agent;
 
     const data = {
-      tel1:phone1,    tel2:phone2,
-      firstname,    surname,
-        dob,         maritalstat:maritalStatus,
-        idType,      address:address,
-        idNumber,    agent_id:id,
-        email,     educ:education,
-        gender,       tin_no: taxId, customertype:customerType, 
-        payee_type:payeeType,   busisect:sector,  marketseg:segment
+      tel1:phone1,                tel2:phone2,
+      firstname,                  surname,
+        dob,                      maritalstat:maritalStatus,
+        idType,                   address:address,
+        idNumber,                 agent_id:id,
+        email,                    educ:education,
+        gender,                   tin_no: taxId, 
+        customertype:customerType, date:today,
+        payee_type:payeeType,     busisect:sector,  
+        marketseg:segment
       }
 
       const options = {
@@ -52,26 +83,11 @@ const PayeeRegister = () => {
 
     axios.post('api/payee/register', data,options)
     .then((res) => {
-        console.log(res.data)
-        setSurname('')
-        setFirstname('')
-        setPhone1('')
-        setPhone2('')
-        setDob('')
-        setIdType('')
-        setIdNumber('')
-        setGender('')
-        setMaritalStatus('')
-        setAddress('')
-        setEmail('')
-        setEducation('')
-        setTaxId('')
-        setTaxType('')
-        setCustomerType('')
-        setPayeeType('')
-        setSector('')
-        setSegment('')
-        
+        console.log(res.data);
+        const payee = res.data;
+        const { full_name } = payee;
+        clearFields();
+        swal(`${full_name} `, "has been registered successfully", "success");
         history.push('/payee-table');
     })
     .catch((err) => {

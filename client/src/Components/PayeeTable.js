@@ -5,18 +5,23 @@ import { useHistory } from 'react-router';
 
 
 const PayeeTable = () => {
-    const [payees, setPayees] = useState([{full_name: "Gabriel Ahado",
-    tel: "02768594056, 0244586901",
-    location: "E14 Comm. 4, Tema",
-    last_payment_date: "2021-10-01"}]
-        	);
+    const [payees, setPayees] = useState([]);
     const [data, setData] = useState([]);
-    const [search, setSearch] = useState([]);
+    const [search, setSearch] = useState('');
     const token = JSON.parse(localStorage.getItem('token'));
     const agent = JSON.parse(localStorage.getItem('agent'));
     const {id, name, phone, level, see} = agent;
     const history = useHistory(); 
 
+
+    const searchData = (e) =>{
+        if(e.target.value === ''){
+            setSearch('')
+            setData(payees)
+        }else{
+            setSearch(e.target.value)
+        }
+    }
 
     const payeeLoadout = () =>{
         console.log(id);
@@ -45,7 +50,7 @@ const PayeeTable = () => {
                 const count = clients.length;
                 console.log(count);
                 setPayees(clients);
-                setData(payees)
+                setData(clients)
             }
         })
     }
@@ -88,7 +93,7 @@ const PayeeTable = () => {
                 <form class="form-inline mt-2 ml-2 float-right">
                     <div class="form-group">
                       <input class="myInput form-control" type="text" placeholder="Search" value={search} 
-                        onChange = {e => setSearch(e.target.value)}/>
+                        onChange = {e => searchData(e)}/>
                     </div>
                     <button class="btn btn-sm btn-primary" onClick={FilterData}>
                        

@@ -4,6 +4,7 @@ import axios from 'axios';
 import { useHistory } from 'react-router-dom';
 import {v1 as uuid} from "uuid";
 import moment from 'moment';
+import swal from 'sweetalert';
 
 const Checkout = () => {
   const history = useHistory();
@@ -13,6 +14,11 @@ const Checkout = () => {
   const [payType, setPayType] = useState('')
   const [reason, setReason] = useState('')
   const [amount, setAmount] = useState('')
+
+
+
+
+
 
   const submit = (e) =>{
   e.preventDefault();
@@ -52,12 +58,22 @@ const Checkout = () => {
   axios.post('api/payments/new',newPayment,options).then((res) =>{
     console.log(res.data)
     const payeeData = res.data
-    localStorage.setItem('payeedata',JSON.stringify(payeeData))
+    const {payment_type, payee_name} = payeeData;
 
-    history.push("/paygate");
+    if(payment_type === 'cash'){
+      swal(`${payee_name}'s`," payment has been recorded successfully", "success");
+      history.push("/dashboard")
+    }else{      
+      localStorage.setItem('payeedata',JSON.stringify(payeeData))
+      history.push("/paygate");
+    }
 
   })
   }
+
+
+
+
 
 
     return (
@@ -79,7 +95,7 @@ const Checkout = () => {
 
                       <div className="mb-3">
                       <select className="form-select form-select-sm" value={payType} onChange={e => setPayType(e.target.value)}>
-                            <option selected>Payment Type</option>
+                            <option value="" disabled>Payment Type</option>
                             <option value="cash">Cash</option>
                             <option value="momo">Momo</option>
                             <option value="bank">Bank</option>
@@ -89,7 +105,7 @@ const Checkout = () => {
 
                       <div className="mb-3">
                       <select className="myInput form-select form-select-sm" value={reason} onChange={e => setReason(e.target.value)}>
-                            <option selected>Reason For Payment</option>
+                            <option value="" disabled>Reason For Payment</option>
                             <option value="property-tax">Property Tax</option>
                             <option value="sewage-fee">Sewage Fee</option>
                             <option value="value-added-tax">Value Added Tax</option>

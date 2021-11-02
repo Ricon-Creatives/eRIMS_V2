@@ -69,7 +69,7 @@ router.post('/register', auth, (req, res) => {
         ids,
         email:newPayee.email,
         tin_no:newPayee.tin_no,
-        dob:newPayee.dob,
+        dob:newPayee.dob, 
         gender:newPayee.gender ,
         marital_status: newPayee.maritalstat,
         education_level:newPayee.educ ,
@@ -77,6 +77,7 @@ router.post('/register', auth, (req, res) => {
         market_segment: newPayee.marketseg,
         location: newPayee.address,
         customer_type: newPayee.customertype,
+        last_payment_date: newPayee.date,
         payee_type:newPayee.payee_type,
         agent_id:newPayee.agent_id,
         dob:newPayee.dob    

@@ -6,78 +6,7 @@ import moment, { duration } from 'moment';
 
 
 const PaymentsTable = () => {
-    const [payments, setPayments] = useState([
-        {
-            amount: "89",
-            collector: "Francis Chidi",
-            date: "2021-11-01",
-            email: "",
-            payee_name: "Gifty Ansah",
-            payment_type: "momo",
-            reason: "property-tax",
-            reference_no: "9a611460-3a9e-11ec-bf6f-91384452495f",
-            remark: "pending-payment",
-            tel_no: 244657849,
-            time: "07:02:21 am",
-            transaction_id: 44
-        },
-        {
-            amount: "70",
-            collector: "Francis Chidi",
-            date: "2021-11-01",
-            email: "",
-            payee_name: "Kofi Oklu",
-            payment_type: "momo",
-            reason: "sewage-fee",
-            reference_no: "817f3300-3aa3-11ec-b7d1-a1bc5b6ddc0e",
-            remark: "pending-payment",
-            tel_no: 244589768,
-            time: "07:37:26 am",
-            transaction_id: 45
-        },
-        {
-            amount: "25",
-            collector: "Francis Chidi",
-            date: "2021-11-03",
-            email: "",
-            payee_name: "Jesse Obeng",
-            payment_type: "momo",
-            reason: "value-added-tax",
-            reference_no: "e1c1dec0-3b34-11ec-a72d-b95b3c6b00b0",
-            remark: "pending-payment",
-            tel_no: 277184576,
-            time: "04:58:05 pm",
-            transaction_id: 46
-        },
-        {
-            amount: "20",
-            collector: "Francis Chidi",
-            date: "2021-11-05",
-            email: "",
-            payee_name: "Helen Cooks",
-            payment_type: "momo",
-            reason: "sewage-fee",
-            reference_no: "bdc802f0-3b35-11ec-961a-e3387ce9aed6",
-            remark: "pending-payment",
-            tel_no: 507683240,
-            time: "05:04:14 pm",
-            transaction_id: 47
-        },
-        {
-            amount: "25",
-            collector: "Francis Chidi",
-            date: "2021-10-05",
-            email: "",
-            payee_name: "Helen Cooks",
-            payment_type: "momo",
-            reason: "sewage-fee",
-            reference_no: "ghbdc802f0-3b35-11ec-961a-e3387ce9aed6",
-            remark: "pending-payment",
-            tel_no: 5076832407,
-            time: "05:04:14 pm",
-            transaction_id: 47
-        }
-    ]	);
+    const [payments, setPayments] = useState([]);
     const [data, setData] = useState([]);
     const [curVal, setCurVal] = useState('');
     const [search, setSearch] = useState('');
@@ -85,6 +14,16 @@ const PaymentsTable = () => {
     const agent = JSON.parse(localStorage.getItem('agent'));
     const {id, name, phone, level, see} = agent;
     const history = useHistory(); 
+
+
+    const searchData = (e) =>{
+        if(e.target.value === ''){
+            setSearch('')
+            setData(payments)
+        }else{
+            setSearch(e.target.value)
+        }
+    }
 
 
     const paymentLoadout = () =>{
@@ -111,28 +50,12 @@ const PaymentsTable = () => {
                 const count = dailytrans.length;
                 console.log(count);
                 setPayments(dailytrans)
-                setData(payments)
+                setData(dailytrans)
             }
         })
 
     }
-    const setDate = () =>{
-        let thisMonth = new Date().getMonth() + 1; //months from 1-12
-        let year = new Date().getFullYear();
-
-        let month = year + "-" + thisMonth
-
-        //const month = moment().format("YYYY-MM");//2021/10
-        let  date = new Date(month)
-        let from = new Date(month).toLocaleDateString()
-        let to = new Date(date.getFullYear(),date.getMonth() +1, 0).toLocaleDateString()
-        const range = {
-            from,
-            to
-        }
-        console.log(month);
-        console.log(range);
-    }
+   
 
     const getMonthRevenue = () =>{
         
@@ -215,7 +138,7 @@ const PaymentsTable = () => {
                 <div className="col-sm-6 ">
                 <form className="float-right form-inline mt-2 ml-2">
                     <div className="form-group">
-                      <input type="text" className="myInput form-control" value={search} onChange = {e => setSearch(e.target.value)} 
+                      <input type="text" className="myInput form-control" value={search} onChange = {e => searchData(e)} 
                       placeholder="Search" />
                     </div>
                     <button type="button" className="btn btn-sm btn-primary" onClick={FilterData}>

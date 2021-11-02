@@ -17,6 +17,22 @@ const [device, setDevice] = useState('')
 const [area, setArea] = useState('')
 const [userMessage, setUserMessage] = useState('');
 
+
+const clearFields = () =>{
+    setName('');
+    setPhone('');
+    setDob('');
+    setIdType('');
+    setIdNumber('');
+    setGender('');
+    setDevice('');
+    setArea('');
+}
+
+
+
+
+
 const register = (e) => {
     e.preventDefault();
 
@@ -50,15 +66,7 @@ const register = (e) => {
         if(response.success === false){
           swal("Something went wrong", "please try again later", "warning");
         }else{
-          setName('');
-          setPhone('');
-          setDob('');
-          setIdType('');
-          setIdNumber('');
-          setGender('');
-          setDevice('');
-          setArea('');
-
+          clearFields();
           swal(`${fullname} `, "has been registered successfully", "success");
         }
 
