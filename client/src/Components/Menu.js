@@ -2,7 +2,7 @@ import React from 'react';
 import { useAuth0 } from '@auth0/auth0-react';
 import '../Styles/Menu.css';
 import bars from '../icons8-menu-white.svg'
-import { slide as Menu } from 'react-burger-menu';
+import { scaleRotate as Menu } from 'react-burger-menu';
 import LoginButton from './LoginButton';
 import LogoutButton from './LogoutButton';
 import AdminLoginButtion from './AdminLoginButton'

@@ -40,7 +40,7 @@ router.get('/verify', auth, (req, res) =>{
     response.on('end', () => {
         console.log(data);
         //const tel_no = data.customer.phone;
-        if(data.status === 'success'){
+        if(event === 'charge.success'){
             Payments.update({ remark: "paid" }, {
                 where: {
                   tel_no
