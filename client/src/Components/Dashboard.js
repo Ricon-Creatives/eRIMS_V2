@@ -175,7 +175,7 @@ const Dashboard = () => {
                 
 
                 <div className="row components">
-                        <Jumbotron>
+                        <Jumbotron className="profile-badge">
                             <h1>{`Hello, ${agentName}`}</h1>
                             {/*<p className="">{agentName}</p>*/}
                             

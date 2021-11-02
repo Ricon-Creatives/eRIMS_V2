@@ -1,18 +1,24 @@
 import React from 'react';
-import { Card, Button } from "tabler-react";
+import { Card, Button } from "reactstrap";
 
 
-const MonthlyPaymentsUI = () => {
+const MonthlyPaymentsUI = (props) => {
+    const {apm, apmCount} = props;
+
+
+
     return (
-        <Card>
-            <Card.Header>
-            <Card.Title>Revenue Collected This Month</Card.Title>
-            </Card.Header>
-            <Card.Body>
-            <a href="#"><h1>GH₵ 203</h1></a>
-            <h4>Recorded Transactions </h4>
-            </Card.Body>
-        </Card>
+
+        <div className="card bg-light spacer border-dark mb-3">
+            <div className="card-body">
+                <p className="card-title">Revenue Collected This Month</p>
+                
+                <div className="card-subtitle mb-2 text-muted">
+                    <a href="/payee-table"><h2>GH₵3000</h2></a>
+                </div>
+                <p>Recorded Transactions</p>
+            </div>
+        </div>
     )
 }
 

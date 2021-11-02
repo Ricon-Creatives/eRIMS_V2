@@ -1,5 +1,5 @@
 import React from 'react';
-import { Card, Button } from "tabler-react";
+import { Card, Button } from "reactstrap";
 
 
 
@@ -9,16 +9,16 @@ const PayeeUI = (props) => {
     console.log(payeeCount);
     
     return (
-        <Card>
-            <Card.Header>
-            <Card.Title>Registered Tax Payers</Card.Title>
-            </Card.Header>
-            <Card.Body>
-                <a href="/payee-table"><h1>{payeeCount}</h1></a>
-                <h4>Registered Users</h4>
-            
-            </Card.Body>
-        </Card>
+        <div className="card bg-light spacer border-dark mb-3">
+            <div className="card-body">
+                <p className="card-title">Registered Tax Payers</p>
+                
+                <div className="card-subtitle mb-2 text-muted">
+                    <a href="/payee-table"><h2>{payeeCount}</h2></a>
+                </div>
+                <p>Registered Users</p>
+            </div>
+        </div>
 
     )
 }

@@ -1,22 +1,21 @@
 import React, { Component } from "react";
-import "tabler-react/dist/Tabler.css";
-
-import { Card, Button } from "tabler-react";
+import { Card, Button } from "reactstrap";
 
 const DailyPaymentsUI =(props) => {
   const {apt, aptCount} = props;
   
     return (
-    
-      <Card>
-        <Card.Header>
-          <Card.Title>Amount Payed Today</Card.Title>
-        </Card.Header>
-        <Card.Body>
-            <a href="/payment-table"><h1>GH₵ {aptCount}</h1></a>
-            <h4>Recorded Transactions </h4>
-        </Card.Body>
-      </Card>
+
+      <div className="card spacer bg-light border-dark mb-3" >
+            <div className="card-body">
+                <p className="card-title">Amount Payed Today</p>
+                
+                <div className="card-subtitle mb-2 text-muted">
+                    <a href="/payee-table"><h2>GH₵{aptCount}</h2></a>
+                </div>
+                <p>Recorded Transactions</p>
+            </div>
+        </div>
     );
   
 }
