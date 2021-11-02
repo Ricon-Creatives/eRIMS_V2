@@ -62,7 +62,7 @@ const Checkout = () => {
 
     if(payment_type === 'cash'){
       swal(`${payee_name}'s`," payment has been recorded successfully", "success");
-      history.push("/dashboard")
+      history.push("/payment-table")
     }else{      
       localStorage.setItem('payeedata',JSON.stringify(payeeData))
       history.push("/paygate");

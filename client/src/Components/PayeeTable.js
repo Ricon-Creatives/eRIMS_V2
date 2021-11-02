@@ -90,12 +90,12 @@ const PayeeTable = () => {
                 </div>
 
                 <div className="col-sm-6">
-                <form class="form-inline mt-2 ml-2 float-right">
-                    <div class="form-group">
-                      <input class="myInput form-control" type="text" placeholder="Search" value={search} 
+                <form className="form-inline mt-2 ml-2 float-right">
+                    <div className="form-group">
+                      <input className="myInput form-control" type="text" placeholder="Search" value={search} 
                         onChange = {e => searchData(e)}/>
                     </div>
-                    <button class="btn btn-sm btn-primary" onClick={FilterData}>
+                    <button className="btn btn-sm btn-primary" onClick={FilterData}>
                        
                     Search</button>
                   </form>
@@ -106,7 +106,7 @@ const PayeeTable = () => {
 
             <div className="row">
                 <div className="col-sm-2">
-                    <select class="form-select" aria-label="Default select example">
+                    <select className="form-select" aria-label="Default select example">
                     <option selected disabled>Bulk Action</option>
                         <option value="1">Rename</option>
                         <option value="2">Delete</option>
@@ -142,24 +142,24 @@ const PayeeTable = () => {
             </table>
 
             <nav aria-label="Page navigation example ">
-            <ul class="pagination text-center justify-content-center">
-                <li class="page-item">
-                <a class="page-link" href="#" aria-label="Previous">
+            <ul className="pagination text-center justify-content-center">
+                <li className="page-item">
+                <a className="page-link" href="#" aria-label="Previous">
                     <span aria-hidden="true">&laquo;</span>
                 </a>
                 </li>
-                <li class="page-item"><a class="page-link" href="#">1</a></li>
-                <li class="page-item"><a class="page-link" href="#">2</a></li>
-                <li class="page-item"><a class="page-link" href="#">3</a></li>
-                <li class="page-item"><a class="page-link" href="#">4</a></li>
-                <li class="page-item"><a class="page-link" href="#">5</a></li>
-                <li class="page-item"><a class="page-link" href="#">6</a></li>
-                <li class="page-item"><a class="page-link" href="#">7</a></li>
-                <li class="page-item"><a class="page-link" href="#">8</a></li>
-                <li class="page-item"><a class="page-link" href="#">9</a></li>
-                <li class="page-item"><a class="page-link" href="#">10</a></li>
-                <li class="page-item">
-                <a class="page-link" href="#" aria-label="Next">
+                <li className="page-item"><a className="page-link" href="#">1</a></li>
+                <li className="page-item"><a className="page-link" href="#">2</a></li>
+                <li className="page-item"><a className="page-link" href="#">3</a></li>
+                <li className="page-item"><a className="page-link" href="#">4</a></li>
+                <li className="page-item"><a className="page-link" href="#">5</a></li>
+                <li className="page-item"><a className="page-link" href="#">6</a></li>
+                <li className="page-item"><a className="page-link" href="#">7</a></li>
+                <li className="page-item"><a className="page-link" href="#">8</a></li>
+                <li className="page-item"><a className="page-link" href="#">9</a></li>
+                <li className="page-item"><a className="page-link" href="#">10</a></li>
+                <li className="page-item">
+                <a className="page-link" href="#" aria-label="Next">
                     <span aria-hidden="true">&raquo;</span>
                 </a>
                 </li>

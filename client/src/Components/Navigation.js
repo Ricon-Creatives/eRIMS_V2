@@ -1,10 +1,6 @@
 import { useAuth0 } from '@auth0/auth0-react';
-import React from 'react'
-import LogoMain from '../logoiconic.png'
+import React from 'react';
 import { useState } from 'react';
-import { Collapse, Navbar, NavbarToggler, Nav, NavbarBrand, NavItem, NavLink } from 'reactstrap';
-import Navigate from './Navigate';
-import { slide as Menu } from 'react-burger-menu'
 import Logo from "../logo-02.png";
 
 function Navigation(){ 

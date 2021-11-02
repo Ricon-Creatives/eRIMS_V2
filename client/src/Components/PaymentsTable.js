@@ -190,7 +190,7 @@ const PaymentsTable = () => {
                 </thead>
                 <tbody>
                     {data.map((payment) => (
-                        <tr className="">
+                        <tr key={payment.transaction_id} className="" >
                             <td className="">
                                 <input className="form-check-input" type="checkbox" value="" id="flexCheckDefault" />
                             </td>

@@ -1,5 +1,5 @@
 import React,{useState,useEffect} from 'react'
-import background from '../../background.png'
+import background from '../../background1.jpg'
 import axios from 'axios'
 import { useHistory } from 'react-router-dom';
 import moment from 'moment';

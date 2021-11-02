@@ -4,7 +4,7 @@ const Payments = require('../../models/Payments');
 const Agent = require('../../models/Agents');
 const auth = require('../../middleware/auth');
 
-
+ 
 
 //@route GET api/payments/verify
 //@desc Gets all tax payers registered in the system

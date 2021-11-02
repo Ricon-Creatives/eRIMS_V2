@@ -22,7 +22,7 @@ const MainFormButton = () => {
     return (
         !isAuthenticated && (
             <button className="sleek" onClick = {fire}>
-                Register A Payee
+                Tax Payee Records
             </button>
         )
     )

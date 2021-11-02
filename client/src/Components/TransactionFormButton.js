@@ -22,7 +22,7 @@ const TransactionFormButton = () => {
     return (
         !isAuthenticated && (
             <button className="sleek" onClick = {fire}>
-                Initiate Payment
+                Transactions
             </button>
         )
     )
