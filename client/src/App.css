@@ -1,10 +1,11 @@
 
 .logo {
   height: 70 !important;
+  padding: 2rem;
+  margin-bottom: 2rem;
 }
 .brand{
 height: 90px !important;
-width: 100% !important;
 padding:10px;
 }
 

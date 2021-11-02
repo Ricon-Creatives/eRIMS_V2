@@ -9,59 +9,35 @@ const auth = require('../../middleware/auth');
 //@route GET api/payments/verify
 //@desc Gets all tax payers registered in the system
 //@access Private*
-router.get('/verify', auth, (req, res) =>{
-    const email = req.query.email;
-    const amount = req.query.amount;
-    const phone = req.query.phone;
-    console.log(`${phone},${email},${amount}`)
-    const https = require('https')
-    const params = JSON.stringify({
-        "email": email,
-        "amount": amount,
-        "phone": phone
-    })
-
-    const options = {
-        hostname: 'api.paystack.co',
-        port: 443,
-        path: '/transaction/initialize',
-        method: 'POST',
-        headers: {
-            Authorization: 'sk_live_d8bb05cf25e59800dc656d809d7ee032b722806e',
-            'Content-Type': 'application/json'
-        }
-    }
-
-    const request = https.request(options, response => {
-    let data = ''
-    response.on('data', (chunk) => {
-        data += chunk
-    });
-    response.on('end', () => {
-        console.log(data);
-        //const tel_no = data.customer.phone;
-        if(event === 'charge.success'){
-            Payments.update({ remark: "paid" }, {
-                where: {
-                  tel_no
+router.post('/verify', (req, res) =>{
+    const state = req.body.event;
+    console.log(state)
+    if(state === 'charge.success'){
+        Payments.findAll({
+            where: {
+                remark: "pending-payment"
+            }
+        }).then(res =>{
+            const latest = res[0];
+            const id = latest.transaction_id;
+            console.log(id)
+            Payments.update(
+                {remark: 'paid'},
+                {
+                    where:{ transaction_id:id }
                 }
-            })
-            console.log(JSON.parse(data));
+
+            )
             res.status(200).json({
                 msg:'Payment:successful and remark:Paid',
                 data
             })
-        }else{
-            res.json({
-                msg: 'Payment:Incomplete and remark unchanged'
-            })
-        }
-    })
-    }).on('error', error => {
-        console.error(error)
-    })
-    request.write(params)
-    request.end()
+        })        
+    }else{
+        res.json({
+            msg: 'Payment:Incomplete and remark unchanged'
+        })
+    }
 });
 
 
@@ -129,7 +105,12 @@ router.get('/daily', auth, (req, res) => {
 router.post('/new', auth, (req, res) => {
     const newPayment = req.body;
     const paytype = newPayment.payment_type;
+    const amountLd = newPayment.amount;
+    const amount = amountLd/100
+    console.log(amount);
     console.log(newPayment);
+
+
 
     const momoPayment = {
         date: newPayment.date,
@@ -139,7 +120,7 @@ router.post('/new', auth, (req, res) => {
         payee_name: newPayment.payee_name,
         payment_type:newPayment.payment_type,
         reason:newPayment.reason,
-        amount: newPayment.amount,
+        amount: amount,
         email: newPayment.email,
         collector: newPayment.collector,
         remark: 'pending-payment'
@@ -153,7 +134,7 @@ router.post('/new', auth, (req, res) => {
         payee_name: newPayment.payee_name,
         payment_type:newPayment.payment_type,
         reason:newPayment.reason,
-        amount: newPayment.amount,
+        amount: amount,
         email: newPayment.email,
         collector: newPayment.collector,
         remark: 'paid'

@@ -119,7 +119,7 @@ const PayeeTable = () => {
 
 
             <table className="table table-bordered">
-                <thead className="table-dark">
+                <thead className="table-dark thead-dark">
                     <th></th>
                     <th>FULL NAME</th>
                     <th>TELEPHONE NUMBER</th>

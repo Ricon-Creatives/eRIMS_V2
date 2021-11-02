@@ -10,6 +10,7 @@ import CheckoutPage from './Components/CheckoutPage'
 import Dashboard from './Components/Dashboard';
 import PayeeTable from './Components/PayeeTable';
 import PaymentsTable from './Components/PaymentsTable';
+import '../node_modules/tabler-react/dist/Tabler.css'
 
 function App() {
 

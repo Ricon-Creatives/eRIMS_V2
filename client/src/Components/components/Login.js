@@ -75,12 +75,12 @@ useEffect(() => {
                         <img src={logo} className="logo img-fluid"/>
                         
                       <div className="mb-3">
-                        <input type="tel" value={telNo} placeholder="Number" className="myInput form-control" 
+                        <input type="tel" value={telNo} placeholder="Number" className="myInput form-control spacer" 
                         onChange={e => setTelNo(e.target.value)} required/>
                       </div>
 
                       <div className="mb-3">
-                        <input type="password"  value={pass} className="myInput form-control" placeholder="Password"
+                        <input type="password"  value={pass} className="myInput form-control spacer" placeholder="Password"
                            onChange={e => setPass(e.target.value)} required/>
                       </div>
                      

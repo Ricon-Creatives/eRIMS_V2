@@ -178,8 +178,8 @@ const PaymentsTable = () => {
 
 
             <table className="table table-bordered">
-                <thead className="table-dark">
-                    <th>-</th>
+            <thead className="table-dark thead-dark">
+                    <th></th>
                     <th>FULL NAME</th>
                     <th>AMOUNT</th>
                     <th>TELEPHONE</th>
