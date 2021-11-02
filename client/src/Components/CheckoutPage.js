@@ -2,8 +2,7 @@ import React from 'react';
 import { useEffect, useState } from 'react';
 import { PaystackButton } from 'react-paystack';
 import Logo from '../logo-03.png'
-import '../Styles/FormMain.css'
-import { Col, Form, FormGroup, Label, Input, Container } from 'reactstrap';
+import '../Styles/FormMain.css';
 import axios from 'axios';
 import { useHistory } from 'react-router-dom';
 

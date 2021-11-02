@@ -1,5 +1,6 @@
 const express = require ('express');
-const bp = require('body-parser')
+const bp = require('body-parser');
+const path = require('path');
 const mysql = require ('mysql2');
 
 //Initiate Express
@@ -34,6 +35,17 @@ app.use('/api/payments', payments);
 //app.use('api/location', location);
 app.use('/api/user', user);
 app.use('/api/auth', auth);
+
+
+//Serve static assets when in production
+if(process.env === 'production'){
+    app.use(express.static('client/build'));
+
+    app.get('*', (req,res) =>{
+        res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'))
+    })
+}
+
 
 
 
