@@ -27,7 +27,7 @@ router.get('/verify', auth, (req, res) =>{
         path: '/transaction/initialize',
         method: 'POST',
         headers: {
-            Authorization: 'sk_test_1d93b2656eb99d3c3334977538d638cfe0dab00d',
+            Authorization: 'sk_live_d8bb05cf25e59800dc656d809d7ee032b722806e',
             'Content-Type': 'application/json'
         }
     }

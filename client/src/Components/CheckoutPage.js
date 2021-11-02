@@ -11,7 +11,7 @@ import { useHistory } from 'react-router-dom';
 const CheckoutPage = () => {
     const token = JSON.parse(localStorage.getItem('token'));
     const history = useHistory();
-    const publicKey = "pk_test_ea56daae18789f1cdf60d1e3efeddd18a412b9d8";
+    const publicKey = "pk_live_859e5e52b848e1dc3c36600cdc451fe96b8a1394";
     const currency = 'GHS';
     const channels = ['card', 'bank', 'ussd', 'qr', 'mobile_money', 'bank_transfer']
     const [amount, setAmount] = useState("");

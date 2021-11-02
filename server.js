@@ -38,10 +38,10 @@ app.use('/api/auth', auth);
 
 
 //Serve static assets when in production
-if(process.env === 'production'){
-    app.use(express.static('client/build'));
+if(process.env.NODE.ENV === 'production'){
+    app.use(express.static("build"));
 
-    app.get('*', (req,res) =>{
+    app.get("*", (req,res) =>{
         res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'))
     })
 }
