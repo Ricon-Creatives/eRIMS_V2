@@ -2,6 +2,7 @@ import React,{useState,useEffect} from 'react'
 import background from '../../background.png'
 import axios from 'axios'
 import { useHistory } from 'react-router-dom';
+import swal from 'sweetalert';
 
 
 const PayeeRegister = () => {
@@ -52,8 +53,29 @@ const PayeeRegister = () => {
     axios.post('api/payee/register', data,options)
     .then((res) => {
         console.log(res.data)
-
+        setSurname('')
+        setFirstname('')
+        setPhone1('')
+        setPhone2('')
+        setDob('')
+        setIdType('')
+        setIdNumber('')
+        setGender('')
+        setMaritalStatus('')
+        setAddress('')
+        setEmail('')
+        setEducation('')
+        setTaxId('')
+        setTaxType('')
+        setCustomerType('')
+        setPayeeType('')
+        setSector('')
+        setSegment('')
+        
         history.push('/payee-table');
+    })
+    .catch((err) => {
+      swal("Something went wrong", err.data, "warning");
     })
 
 }

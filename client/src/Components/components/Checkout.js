@@ -69,24 +69,26 @@ const Checkout = () => {
                         <img src={logo} className="logo img-fluid"/>
                         
                       <div className="mb-3">
-                        <input type="text" id="momoNumber" placeholder="Momo Number" name="momoNumber" className="form-control border-0 border-bottom" 
+                        <input type="text" id="momoNumber" placeholder="Momo Number" name="momoNumber" className="myInput form-control" 
                         value={momoNumber} onChange={e =>setMomo(e.target.value)} required/>
                       </div>
                       <div className="mb-3">
-                        <input type="text" id="fullname" placeholder="Full Name" name="fullname" className="form-control border-0 border-bottom" 
+                        <input type="text" id="fullname" placeholder="Full Name" name="myInput fullname" className="myInput form-control" 
                         value={fullname} onChange={e => setFullname(e.target.value)} required/>
                       </div>
 
                       <div className="mb-3">
-                      <select className="form-select form-select-sm border-0 border-bottom" value={payType} onChange={e => setPayType(e.target.value)}>
+                      <select className="form-select form-select-sm" value={payType} onChange={e => setPayType(e.target.value)}>
                             <option selected>Payment Type</option>
                             <option value="cash">Cash</option>
                             <option value="momo">Momo</option>
+                            <option value="bank">Bank</option>
+                            <option value="qr-code">Qr-code</option>
                         </select>
                       </div>
 
                       <div className="mb-3">
-                      <select className="form-select form-select-sm border-0 border-bottom" value={reason} onChange={e => setReason(e.target.value)}>
+                      <select className="myInput form-select form-select-sm" value={reason} onChange={e => setReason(e.target.value)}>
                             <option selected>Reason For Payment</option>
                             <option value="property-tax">Property Tax</option>
                             <option value="sewage-fee">Sewage Fee</option>
@@ -95,7 +97,7 @@ const Checkout = () => {
                       </div>
                      
                       <div className="mb-3">
-                        <input type="text" id="amount" placeholder="Amount" name="amount" value={amount} className="form-control border-0 border-bottom" 
+                        <input type="text" id="amount" placeholder="Amount" name="amount" value={amount} className="myInput form-control" 
                         onChange={e => setAmount(e.target.value)} required/>
                       </div>
                       <div className="card-foter d-grid gap-2">
