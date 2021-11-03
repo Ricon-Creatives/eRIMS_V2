@@ -21,6 +21,11 @@ const Payee = db.define('tax_payee_customer', {
         allowNull: false
     },
 
+    mobile_no:{
+        type:Sequelize.STRING,
+        allowNull: true
+    },
+
     ids:{
         type:Sequelize.STRING,
         allowNull: false

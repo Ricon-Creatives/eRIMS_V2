@@ -23,6 +23,7 @@ router.get('/verify', (req, res) =>{
         )
         .then(res =>{
             res.json({
+                paid: 'true',
                 msg:'Payment:successful and remark:Paid'
             }) 
         })          

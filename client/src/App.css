@@ -202,3 +202,230 @@ form * {
   justify-content: center;
   padding:10px;
 }
+
+/*---------------Table Css From Tabler-React---------------*/
+
+
+table {
+  border-collapse: collapse; }
+
+  
+.table, .markdown table {
+  width: 100%;
+  margin-bottom: 1rem;
+  color: #1C2C41; }
+  .table th, .markdown table th,
+  .table td,
+  .markdown table td {
+    padding: 0.75rem;
+    vertical-align: top;
+    border-top: 1px solid rgba(0, 0, 0, 0.09); }
+  .table thead th, .markdown table thead th {
+    vertical-align: bottom;
+    border-bottom: 2px solid rgba(0, 0, 0, 0.09); }
+  .table tbody + tbody, .markdown table tbody + tbody {
+    border-top: 2px solid rgba(0, 0, 0, 0.09); }
+
+.table-sm th,
+.table-sm td {
+  padding: 0.3rem; }
+
+.table-bordered, .markdown table {
+  border: 1px solid rgba(0, 0, 0, 0.09); }
+  .table-bordered th, .markdown table th,
+  .table-bordered td,
+  .markdown table td {
+    border: 1px solid rgba(0, 0, 0, 0.09); }
+  .table-bordered thead th, .markdown table thead th,
+  .table-bordered thead td,
+  .markdown table thead td {
+    border-bottom-width: 2px; }
+
+
+    .table-borderless th,
+  .table-borderless td,
+  .table-borderless thead th,
+  .table-borderless tbody + tbody {
+    border: 0; }
+  
+  .table-striped tbody tr:nth-of-type(odd) {
+    background-color: rgba(0, 0, 0, 0.05); }
+  
+  .table-hover tbody tr:hover {
+    color: #1C2C41;
+    background-color: rgba(0, 0, 0, 0.075); }
+  
+  .table-primary,
+  .table-primary > th,
+  .table-primary > td {
+    background-color: #c1d6ee; }
+  
+  .table-primary th,
+  .table-primary td,
+  .table-primary thead th,
+  .table-primary tbody + tbody {
+    border-color: #8bb2e0; }
+  
+  .table-hover .table-primary:hover {
+    background-color: #adc9e9; }
+    .table-hover .table-primary:hover > td,
+    .table-hover .table-primary:hover > th {
+      background-color: #adc9e9; }
+
+      .table-secondary,
+      .table-secondary > th,
+      .table-secondary > td {
+        background-color: #dddfe2; }
+      
+      .table-secondary th,
+      .table-secondary td,
+      .table-secondary thead th,
+      .table-secondary tbody + tbody {
+        border-color: #c0c4c8; }
+      
+      .table-hover .table-secondary:hover {
+        background-color: #cfd2d6; }
+        .table-hover .table-secondary:hover > td,
+        .table-hover .table-secondary:hover > th {
+          background-color: #cfd2d6; }
+      
+      .table-success,
+      .table-success > th,
+      .table-success > td {
+        background-color: #d2ecb8; }
+      
+      .table-success th,
+      .table-success td,
+      .table-success thead th,
+      .table-success tbody + tbody {
+        border-color: #abdb7a; }
+      
+      .table-hover .table-success:hover {
+        background-color: #c5e7a4; }
+        .table-hover .table-success:hover > td,
+        .table-hover .table-success:hover > th {
+          background-color: #c5e7a4; }
+      
+      .table-info,
+      .table-info > th,
+      .table-info > td {
+        background-color: #bee5eb; }
+      
+      .table-info th,
+      .table-info td,
+      .table-info thead th,
+      .table-info tbody + tbody {
+        border-color: #86cfda; }
+      
+      .table-hover .table-info:hover {
+        background-color: #abdde5; }
+        .table-hover .table-info:hover > td,
+        .table-hover .table-info:hover > th {
+          background-color: #abdde5; }
+      
+      .table-warning,
+      .table-warning > th,
+      .table-warning > td {
+        background-color: #fbeebc; }
+      
+      .table-warning th,
+      .table-warning td,
+      .table-warning thead th,
+      .table-warning tbody + tbody {
+        border-color: #f8e082; }
+      
+      .table-hover .table-warning:hover {
+        background-color: #fae8a4; }
+        .table-hover .table-warning:hover > td,
+        .table-hover .table-warning:hover > th {
+          background-color: #fae8a4; }
+      
+      .table-danger,
+      .table-danger > th,
+      .table-danger > td {
+        background-color: #fecbcf; }
+      
+      .table-danger th,
+      .table-danger td,
+      .table-danger thead th,
+      .table-danger tbody + tbody {
+        border-color: #fc9fa6; }
+
+
+          
+  .table-hover .table-danger:hover {
+    background-color: #feb2b8; }
+    .table-hover .table-danger:hover > td,
+    .table-hover .table-danger:hover > th {
+      background-color: #feb2b8; }
+  
+  .table-light,
+  .table-light > th,
+  .table-light > td {
+    background-color: #fbfbfc; }
+  
+  .table-light th,
+  .table-light td,
+  .table-light thead th,
+  .table-light tbody + tbody {
+    border-color: #f7f8fa; }
+  
+  .table-hover .table-light:hover {
+    background-color: #ececf1; }
+    .table-hover .table-light:hover > td,
+    .table-hover .table-light:hover > th {
+      background-color: #ececf1; }
+  
+  .table-dark,
+  .table-dark > th,
+  .table-dark > td {
+    background-color: #bfc4ca; }
+  
+  .table-dark th,
+  .table-dark td,
+  .table-dark thead th,
+  .table-dark tbody + tbody {
+    border-color: #89919c; }
+  
+  .table-hover .table-dark:hover {
+    background-color: #b1b7be; }
+    .table-hover .table-dark:hover > td,
+    .table-hover .table-dark:hover > th {
+      background-color: #b1b7be; }
+  
+  .table-active,
+  .table-active > th,
+  .table-active > td {
+    background-color: rgba(0, 0, 0, 0.075); }
+  
+  .table-hover .table-active:hover {
+    background-color: rgba(0, 0, 0, 0.075); }
+    .table-hover .table-active:hover > td,
+    .table-hover .table-active:hover > th {
+      background-color: rgba(0, 0, 0, 0.075); }
+  
+  .table .thead-dark th, .markdown table .thead-dark th {
+    color: #fff;
+    background-color: #343a40;
+    border-color: #454d55; }
+  
+  .table .thead-light th, .markdown table .thead-light th {
+    color: #495057;
+    background-color: #e9ecef;
+    border-color: rgba(0, 0, 0, 0.09); }
+  
+  .table-dark {
+    color: #fff;
+    background-color: #343a40; }
+    .table-dark th,
+    .table-dark td,
+    .table-dark thead th {
+      border-color: #454d55; }
+    .table-dark.table-bordered, .markdown table.table-dark {
+      border: 0; }
+    .table-dark.table-striped tbody tr:nth-of-type(odd) {
+      background-color: rgba(255, 255, 255, 0.05); }
+    .table-dark.table-hover tbody tr:hover {
+      color: #fff;
+      background-color: rgba(255, 255, 255, 0.075); }
+  
