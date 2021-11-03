@@ -56,7 +56,7 @@ const CheckoutPage = () => {
             const payeeData = res.data
             localStorage.setItem('payeedata',JSON.stringify(payeeData))
             alert(msg);
-            history.push("/dasboard");
+            history.push("/dashboard");
         })
 
     }

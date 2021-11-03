@@ -28,7 +28,7 @@ router.post('/verify', (req, res) =>{
                 }
 
             )
-            res.status(200).json({
+            res.json({
                 msg:'Payment:successful and remark:Paid',
                 data
             })
@@ -158,7 +158,37 @@ router.post('/new', auth, (req, res) => {
                 res.status(400).json('payment failed')
                 console.log(entry);
                 }else{
-                res.status(200).json(entry)
+                    const payment = entry.dataValues;
+                    const {
+                        transaction_id, 
+                        date, 
+                        time, 
+                        reference_no, 
+                        tel_no, 
+                        payee_name, 
+                        payment_type, 
+                        reason, 
+                        amount, 
+                        email, 
+                        collector
+                     } = payment
+
+                     const amountPyble = amount*100;
+
+                     const data = {
+                         transaction_id,
+                         date,
+                         time,
+                         reference_no,
+                         tel_no,
+                         payee_name,
+                         payment_type,
+                         reason,
+                         amount:amountPyble,
+                         collector
+                     }
+
+                res.status(200).json(data)
                 console.log(entry);
             }
     })

@@ -58,7 +58,7 @@ const Checkout = () => {
   axios.post('api/payments/new',newPayment,options).then((res) =>{
     console.log(res.data)
     const payeeData = res.data
-    const {payment_type, payee_name} = payeeData;
+    const {payment_type, payee_name, tel_no} = payeeData;
 
     if(payment_type === 'cash'){
       swal(`${payee_name}'s`," payment has been recorded successfully", "success");

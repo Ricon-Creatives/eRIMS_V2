@@ -9,6 +9,7 @@ import AdminLoginButtion from './AdminLoginButton'
 import MainFormButton from './MainFormButton';
 import TransactionFormButton from './TransactionFormButton';
 import ProfileBadge from './ProfileBadge';
+import DashboardButton from './DashboardButton';
 
 
 class MainMenu extends React.Component {
@@ -20,6 +21,7 @@ class MainMenu extends React.Component {
     return (
         <div className="menu_icon">   
             <Menu  right customBurgerIcon={ <img src={bars} /> }>
+                <DashboardButton />
                 <ProfileBadge /><br/>
                 <br/><br/><br/><br/>
                 <MainFormButton /><br/>
