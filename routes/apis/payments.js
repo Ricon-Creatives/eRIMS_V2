@@ -9,34 +9,25 @@ const auth = require('../../middleware/auth');
 //@route GET api/payments/verify
 //@desc Gets all tax payers registered in the system
 //@access Private*
-router.post('/verify', (req, res) =>{
-    const state = req.body.event;
-    console.log(state)
-    if(state === 'charge.success'){
-        Payments.findAll({
-            where: {
-                remark: "pending-payment"
-            }
-        }).then(res =>{
-            const latest = res[0];
-            const id = latest.transaction_id;
-            console.log(id)
-            Payments.update(
-                {remark: 'paid'},
-                {
-                    where:{ transaction_id:id }
-                }
-
-            )
+router.get('/verify', (req, res) =>{
+    const phone = req.query.phone;
+    console.log(phone)
+    if(!phone){
+        res.json({
+            msg: 'Payment Failed: Still pending'
+        })        
+    }else{
+        Payments.update(
+            { remark: 'paid' },
+            { where: { tel_no: phone} }
+        )
+        .then(res =>{
             res.json({
                 msg:'Payment:successful and remark:Paid',
                 data
-            })
-        })        
-    }else{
-        res.json({
-            msg: 'Payment:Incomplete and remark unchanged'
-        })
+            }) 
+        })          
+               
     }
 });
 
