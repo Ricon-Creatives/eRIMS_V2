@@ -41,11 +41,11 @@ const ProfileBadge = () => {
     return (
         isAuthenticated && (
             <div className="row profile-badge">
-                <div className="greeting col-md-7">
-                    <h5>Welcome Back</h5>
+                <div className="greeting col-md-8">
+                    <p>Welcome Back</p>
                     <h4>{name}</h4>
                 </div>
-                <div className="greeting col-md-5">
+                <div className="greeting col-md-4">
                     <a href="javascript:;" class="profile-pic">
                         <img className="profile-pic" alt="" src={profilepic} />
                     </a>
