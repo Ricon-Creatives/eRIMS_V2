@@ -61,11 +61,11 @@ router.post('/register', auth, (req, res) => {
     console.log(newPayee);
     const full_name = newPayee.firstname + ' ' + newPayee.surname;
     console.log(full_name)
-    const tel = newPayee.tel1 + ', ' + newPayee.tel2;
     const ids = `${newPayee.idType} ${newPayee.idNumber}`
     Payee.create({
         full_name,           
-        tel,
+        tel:newPayee.tel1,
+        mobile_no: newPayee.tel2,
         ids,
         email:newPayee.email,
         tin_no:newPayee.tin_no,

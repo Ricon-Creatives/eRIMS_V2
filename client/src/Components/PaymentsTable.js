@@ -135,7 +135,9 @@ const PaymentsTable = () => {
                     </button>
                 </div>
 
-                <div className="col-sm-6 ">
+                <div className="col-sm-3"></div>
+
+                <div className="col-sm-3 ">
                 <form className="float-right form-inline mt-2 ml-2">
                     <div className="form-group">
                       <input type="text" className="myInput form-control" value={search} onChange = {e => searchData(e)} 
