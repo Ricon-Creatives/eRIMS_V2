@@ -5,16 +5,60 @@ import { useHistory } from 'react-router-dom';
 import {v1 as uuid} from "uuid";
 import moment from 'moment';
 import swal from 'sweetalert';
+import { PaystackButton } from 'react-paystack';
+
 
 const Checkout = () => {
-  const history = useHistory();
+  const token = JSON.parse(localStorage.getItem('token'));
+    const history = useHistory();
+    const publicKey = "pk_live_859e5e52b848e1dc3c36600cdc451fe96b8a1394";
+    const currency = 'GHS';
+    const channels = ['card', 'bank', 'ussd', 'qr', 'mobile_money', 'bank_transfer']
+    const [amount, setAmount] = useState("");
+    const [momoNumber, setMomo] = useState("");
+    const [reason, setReason] = useState("");
+    const [fullname, setFullname] = useState("");
+    const [payType, setPayType] = useState("");
 
-  const [momoNumber, setMomo] = useState('')
-  const [fullname, setFullname] = useState('')
-  const [payType, setPayType] = useState('')
-  const [reason, setReason] = useState('')
-  const [amount, setAmount] = useState('')
 
+
+    const completePayment = () =>{
+      submit();
+      alert('Payment Received');
+      history.push("/payment-table")
+    }
+
+
+
+
+
+    useEffect(() =>{
+
+    }, []);
+
+
+
+
+
+    
+    const componentProps = {
+        email:'andreakumah@gmail.com',    
+        amount: amount*100,
+        currency,
+        channels,
+        metadata: {    
+          fullname,    
+          tel_no: momoNumber        
+        },    
+        publicKey,    
+        text: "Pay Now",  
+        className:"btn btn-classic btn-sm my-4",  
+        onSuccess: () => 
+                completePayment(),
+        onClose: () => 
+            alert("Transaction failed, Please try again"),    
+      }
+   
 
 
 
@@ -31,6 +75,7 @@ const Checkout = () => {
 
   const token = JSON.parse(localStorage.getItem('token'))
   const agent = JSON.parse(localStorage.getItem('agent'))
+
   console.log(token)
 
   const collector = agent.name
@@ -43,7 +88,7 @@ const Checkout = () => {
     payment_type:payType,
     ref_no:reference_no,
     reason,
-    amount:validAmount,
+    amount,
     collector
   }
 
@@ -70,7 +115,6 @@ const Checkout = () => {
 
   })
   }
-
 
 
 
@@ -117,7 +161,7 @@ const Checkout = () => {
                         onChange={e => setAmount(e.target.value)} required/>
                       </div>
                       <div className="card-foter d-grid gap-2">
-                        <button type="button" className="btn btn-classic btn-sm my-4" onClick={submit}>Make Payment</button>
+                          <PaystackButton {...componentProps} />
                       </div>
                         </div>
                     </div>

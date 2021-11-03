@@ -89,7 +89,9 @@ const PayeeTable = () => {
                     </button>
                 </div>
 
-                <div className="col-sm-6">
+                <div className="col-sm-3"></div>
+
+                <div className="col-sm-3">
                 <form className="form-inline mt-2 ml-2 float-right">
                     <div className="form-group">
                       <input className="myInput form-control" type="text" placeholder="Search" value={search} 
