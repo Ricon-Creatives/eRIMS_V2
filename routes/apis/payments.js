@@ -97,9 +97,7 @@ router.get('/daily', auth, (req, res) => {
 router.post('/new', auth, (req, res) => {
     const newPayment = req.body;
     const paytype = newPayment.payment_type;
-    const amountLd = newPayment.amount;
-    const amount = amountLd/100
-    console.log(amount);
+    console.log(newPayment.amount);
     console.log(newPayment);
 
 
@@ -112,10 +110,10 @@ router.post('/new', auth, (req, res) => {
         payee_name: newPayment.payee_name,
         payment_type:newPayment.payment_type,
         reason:newPayment.reason,
-        amount: amount,
+        amount: newPayment.amount,
         email: newPayment.email,
         collector: newPayment.collector,
-        remark: 'pending-payment'
+        remark: newPayment.remark
     };
 
     const cashPayment = {
@@ -126,7 +124,7 @@ router.post('/new', auth, (req, res) => {
         payee_name: newPayment.payee_name,
         payment_type:newPayment.payment_type,
         reason:newPayment.reason,
-        amount: amount,
+        amount: newPayment.amount,
         email: newPayment.email,
         collector: newPayment.collector,
         remark: 'paid'
@@ -176,7 +174,7 @@ router.post('/new', auth, (req, res) => {
                          payee_name,
                          payment_type,
                          reason,
-                         amount:amountPyble,
+                         amount,
                          collector
                      }
 

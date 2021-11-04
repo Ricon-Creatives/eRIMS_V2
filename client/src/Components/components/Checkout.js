@@ -23,8 +23,8 @@ const Checkout = () => {
 
     
 
-  const submit = (e) =>{
-    e.preventDefault();  
+  const submit = () =>{
+    console.log('starting submit')
     const today = moment();
     const now = moment(today).format("hh:mm:ss a");
     console.log(`date: ${today} and time: ${now}`)
@@ -55,29 +55,22 @@ const Checkout = () => {
         'x-auth-token':token
       }
     }
-  
-    localStorage.removeItem('payeedata')
-  
+
     axios.post('api/payments/new',newPayment,options).then((res) =>{
       console.log(res.data)
       const payeeData = res.data
+      console.log(payeeData)
       const {payment_type, payee_name, tel_no} = payeeData;
   
-      if(payment_type === 'cash'){
-        swal(`${payee_name}'s`," payment has been received successfully", "success");
-        history.push("/payment-table")
-      }else{      
-        localStorage.setItem('payeedata',JSON.stringify(payeeData))
-        history.push("/paygate");
-      }
-  
+      swal(`${payee_name}'s`," payment has been received successfully", "success");
+      history.push("/payment-table")     
     })
     }
 
 
     const completePayment = () =>{
       submit();
-      history.push("/payment-table")
+      history.push("/")
     }
 
     
