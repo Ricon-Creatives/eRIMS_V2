@@ -26,9 +26,7 @@ const Checkout = () => {
     
 
   const submit = (e) =>{
-    e.preventDefault();
-    const validAmount = amount *100;
-  
+    e.preventDefault();  
     const today = moment();
     const now = moment(today).format("hh:mm:ss a");
     console.log(`date: ${today} and time: ${now}`)
@@ -50,7 +48,8 @@ const Checkout = () => {
       ref_no:reference_no,
       reason,
       amount,
-      collector
+      collector,
+      remark:'paid'
     }
   
     const options = {
@@ -67,7 +66,7 @@ const Checkout = () => {
       const {payment_type, payee_name, tel_no} = payeeData;
   
       if(payment_type === 'cash'){
-        swal(`${payee_name}'s`," payment has been recorded successfully", "success");
+        swal(`${payee_name}'s`," payment has been received successfully", "success");
         history.push("/payment-table")
       }else{      
         localStorage.setItem('payeedata',JSON.stringify(payeeData))
@@ -78,8 +77,14 @@ const Checkout = () => {
     }
 
 
-    
+    const completePayment = () =>{
+      submit();
+      history.push("/payment-table")
+    }
 
+
+
+    
     
     const componentProps = {
       email:'andreakumah@gmail.com',    
@@ -96,17 +101,10 @@ const Checkout = () => {
       onSuccess: () => 
               completePayment(),
       onClose: () => 
-          alert("Transaction failed, Please try again"),    
+              swal("Failed"," Please try making the transaction again ", "error"),    
     }
  
 
-
-
-
-    const completePayment = () =>{
-      alert('Payment Received');
-      history.push("/payment-table")
-    }
 
 
 

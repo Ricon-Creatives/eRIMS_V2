@@ -63,8 +63,7 @@ const Payments = db.define('transactions', {
 
     remark:{
         type:Sequelize.STRING,
-        allowNull: false,
-        defaultValue:"pending-payment"
+        allowNull: false
     }
 
 },
