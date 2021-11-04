@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const Payments = require('../../models/Payments');
 const Agent = require('../../models/Agents');
+const Payee = require('../../models/Payee');
 const auth = require('../../middleware/auth');
 
  
@@ -188,6 +189,34 @@ router.post('/new', auth, (req, res) => {
     
    
 });
+
+
+
+
+//@route GET api/payments/getpayee
+//@desc Gets all tax payers registered in the system
+//@access Private*
+router.get('/getpayee', auth, (req, res) =>{
+    const tel = req.query.phone;
+    Payee.findOne({
+            attributes:['full_name'],
+            where : {
+                tel
+            }
+    }).then((name)=>{
+        console.log(name)
+        if(!name){
+            res.status(200).json({msg:"Unregistered"})
+        }else{
+            res.status(200).json({
+                msg:"Registered",
+                name: name
+            })
+        }
+        
+    })
+
+})
 
 
 

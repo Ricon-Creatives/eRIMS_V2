@@ -10,18 +10,16 @@ import { PaystackButton } from 'react-paystack';
 
 const Checkout = () => {
   const token = JSON.parse(localStorage.getItem('token'));
-    const history = useHistory();
-    const publicKey = "pk_live_859e5e52b848e1dc3c36600cdc451fe96b8a1394";
-    const currency = 'GHS';
-    const channels = ['card', 'bank', 'ussd', 'qr', 'mobile_money', 'bank_transfer']
-    const [amount, setAmount] = useState("");
-    const [momoNumber, setMomo] = useState("");
-    const [reason, setReason] = useState("");
-    const [fullname, setFullname] = useState("");
-    const [payType, setPayType] = useState("");
-    const [isCash, setIsCash] = useState(false);
-
-
+  const history = useHistory();
+  const publicKey = "pk_live_859e5e52b848e1dc3c36600cdc451fe96b8a1394";
+  const currency = 'GHS';
+  const channels = ['card', 'bank', 'ussd', 'qr', 'mobile_money', 'bank_transfer']
+  const [amount, setAmount] = useState("");
+  const [momoNumber, setMomo] = useState("");
+  const [reason, setReason] = useState("");
+  const [fullname, setFullname] = useState("");
+  const [payType, setPayType] = useState("");
+  const [isCash, setIsCash] = useState(false);
 
     
 
@@ -82,8 +80,6 @@ const Checkout = () => {
       history.push("/payment-table")
     }
 
-
-
     
     
     const componentProps = {
@@ -108,10 +104,10 @@ const Checkout = () => {
 
 
 
-
     useEffect(() =>{
 
     }, []);
+
 
 
 
@@ -125,6 +121,29 @@ const Checkout = () => {
 
 
 
+    const verify = () =>{
+      const momo = momoNumber;
+      const options = {
+        params:{
+          phone : momo
+        },
+        headers:{
+          'x-auth-token':token
+        }
+      }
+    
+      axios.get('api/payments/getpayee',options)
+      .then((res) =>{
+        const payee = res.data;
+        const {msg, name} = payee
+        console.log(name);
+        if(msg === 'Registered'){
+            setFullname(name.full_name)
+        }else{
+          setFullname('Unregistered')
+        }       
+      })
+    }
 
 
 
@@ -137,10 +156,16 @@ const Checkout = () => {
                         <div className="card-body text-center">
                         <img src={logo} className="logo img-fluid"/>
                         
-                      <div className="mb-3">
-                        <input type="text" id="momoNumber" placeholder="Momo Number" name="momoNumber" className="myInput form-control" 
-                        value={momoNumber} onChange={e =>setMomo(e.target.value)} required/>
-                      </div>
+                        <div className="row col-md-12">
+                          <div className="col-md-9">
+                            <input type="text" id="momoNumber" placeholder="Momo Number" name="momoNumber" className="myInput form-control" 
+                                value={momoNumber} onChange={e =>setMomo(e.target.value)} required/>
+                          </div>
+                          <div className="col-md-3">
+                                <button className="btn-classicals" onClick={verify}>Verify</button>
+                          </div>
+                        </div>
+
                       <div className="mb-3">
                         <input type="text" id="fullname" placeholder="Full Name" name="myInput fullname" className="myInput form-control" 
                         value={fullname} onChange={e => setFullname(e.target.value)} required/>

@@ -39,6 +39,26 @@ color: #fff !important;
 color: #fff !important;
 }
 
+
+.btn-classicals{
+  color: #fff !important;
+    background-color: #483248 !important;
+    border-color: #483248 !important;
+    width: 4vw;
+    height: 3vh;
+    margin-top: 20px;
+    margin-bottom: 10px;
+    font-size: 12px;
+    padding: auto;
+}
+
+.btn-classicals:active{
+  color: #fff !important;
+}
+.btn-classicals:hover{
+color: #fff !important;
+}
+
 .mytable{
   border: 2px solid gray !important;
   width: 70vw !important;
