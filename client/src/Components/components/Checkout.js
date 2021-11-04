@@ -19,15 +19,94 @@ const Checkout = () => {
     const [reason, setReason] = useState("");
     const [fullname, setFullname] = useState("");
     const [payType, setPayType] = useState("");
+    const [isCash, setIsCash] = useState(false);
+
+
+
+    
+
+  const submit = (e) =>{
+    e.preventDefault();
+    const validAmount = amount *100;
+  
+    const today = moment();
+    const now = moment(today).format("hh:mm:ss a");
+    console.log(`date: ${today} and time: ${now}`)
+    const reference_no = uuid()
+  
+    const token = JSON.parse(localStorage.getItem('token'))
+    const agent = JSON.parse(localStorage.getItem('agent'))
+  
+    console.log(token)
+  
+    const collector = agent.name
+  
+    const newPayment = {
+      date:today,
+      time:now,
+      tel_no:momoNumber,
+      payee_name:fullname,
+      payment_type:payType,
+      ref_no:reference_no,
+      reason,
+      amount,
+      collector
+    }
+  
+    const options = {
+      headers:{
+        'x-auth-token':token
+      }
+    }
+  
+    localStorage.removeItem('payeedata')
+  
+    axios.post('api/payments/new',newPayment,options).then((res) =>{
+      console.log(res.data)
+      const payeeData = res.data
+      const {payment_type, payee_name, tel_no} = payeeData;
+  
+      if(payment_type === 'cash'){
+        swal(`${payee_name}'s`," payment has been recorded successfully", "success");
+        history.push("/payment-table")
+      }else{      
+        localStorage.setItem('payeedata',JSON.stringify(payeeData))
+        history.push("/paygate");
+      }
+  
+    })
+    }
+
+
+    
+
+    
+    const componentProps = {
+      email:'andreakumah@gmail.com',    
+      amount: amount*100,
+      currency,
+      channels,
+      metadata: {    
+        fullname,    
+        tel_no: momoNumber        
+      },    
+      publicKey,    
+      text: "Pay On Digital Portal",  
+      className:"btn btn-classic btn-sm my-4",  
+      onSuccess: () => 
+              completePayment(),
+      onClose: () => 
+          alert("Transaction failed, Please try again"),    
+    }
+ 
+
 
 
 
     const completePayment = () =>{
-      submit();
       alert('Payment Received');
       history.push("/payment-table")
     }
-
 
 
 
@@ -38,83 +117,15 @@ const Checkout = () => {
 
 
 
-
-
-    
-    const componentProps = {
-        email:'andreakumah@gmail.com',    
-        amount: amount*100,
-        currency,
-        channels,
-        metadata: {    
-          fullname,    
-          tel_no: momoNumber        
-        },    
-        publicKey,    
-        text: "Pay Now",  
-        className:"btn btn-classic btn-sm my-4",  
-        onSuccess: () => 
-                completePayment(),
-        onClose: () => 
-            alert("Transaction failed, Please try again"),    
-      }
-   
-
-
-
-
-
-  const submit = (e) =>{
-  e.preventDefault();
-  const validAmount = amount *100;
-
-  const today = moment();
-  const now = moment(today).format("hh:mm:ss a");
-  console.log(`date: ${today} and time: ${now}`)
-  const reference_no = uuid()
-
-  const token = JSON.parse(localStorage.getItem('token'))
-  const agent = JSON.parse(localStorage.getItem('agent'))
-
-  console.log(token)
-
-  const collector = agent.name
-
-  const newPayment = {
-    date:today,
-    time:now,
-    tel_no:momoNumber,
-    payee_name:fullname,
-    payment_type:payType,
-    ref_no:reference_no,
-    reason,
-    amount,
-    collector
-  }
-
-  const options = {
-    headers:{
-      'x-auth-token':token
-    }
-  }
-
-  localStorage.removeItem('payeedata')
-
-  axios.post('api/payments/new',newPayment,options).then((res) =>{
-    console.log(res.data)
-    const payeeData = res.data
-    const {payment_type, payee_name, tel_no} = payeeData;
-
-    if(payment_type === 'cash'){
-      swal(`${payee_name}'s`," payment has been recorded successfully", "success");
-      history.push("/payment-table")
-    }else{      
-      localStorage.setItem('payeedata',JSON.stringify(payeeData))
-      history.push("/paygate");
+    let button;
+    if(isCash === true){
+          button = <button className="btn-classic" onClick={ submit }>Pay Now</button>
+    }else{
+          button =  <PaystackButton {...componentProps} />
     }
 
-  })
-  }
+
+
 
 
 
@@ -140,10 +151,10 @@ const Checkout = () => {
                       <div className="mb-3">
                       <select className="form-select form-select-sm" value={payType} onChange={e => setPayType(e.target.value)}>
                             <option value="" disabled>Payment Type</option>
-                            <option value="cash">Cash</option>
-                            <option value="momo">Momo</option>
-                            <option value="bank">Bank</option>
-                            <option value="qr-code">Qr-code</option>
+                            <option value="cash" onClick={() => setIsCash(true)}>Cash</option>
+                            <option value="momo" onClick={() => setIsCash(false)}>Momo</option>
+                            <option value="bank" onClick={() => setIsCash(false)}>Bank</option>
+                            <option value="qr-code" onClick={() => setIsCash(false)}>Qr-code</option>
                         </select>
                       </div>
 
@@ -160,12 +171,14 @@ const Checkout = () => {
                         <input type="text" id="amount" placeholder="Amount" name="amount" value={amount} className="myInput form-control" 
                         onChange={e => setAmount(e.target.value)} required/>
                       </div>
+
+                      
                       <div className="card-foter d-grid gap-2">
-                          <PaystackButton {...componentProps} />
-                      </div>
-                        </div>
+                        {button}
+                      </div>                      
                     </div>
-                </div>
+                 </div>
+               </div>
             </div>
         </div>
     )

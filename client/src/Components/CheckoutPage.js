@@ -39,21 +39,24 @@ const CheckoutPage = () => {
 
         const options={
             params: {
+                email,
+                amount,
                 phone
             },
             headers:{
                 'x-auth-token':token
             }
         }
+
         axios.get('api/payments/verify', options)
         .then((res) =>{
-            console.log(res)
+            console.log(res.data)
             const msg = res.data.msg;
             console.log(msg)
             const payeeData = res.data
             localStorage.setItem('payeedata',JSON.stringify(payeeData))
             alert(msg);
-            history.push("/dashboard");
+            history.push("/dasboard");
         })
 
     }
