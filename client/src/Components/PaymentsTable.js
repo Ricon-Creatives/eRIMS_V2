@@ -39,13 +39,13 @@ const PaymentsTable = () => {
                 'x-auth-token':token
               }
         }
-        axios.get('api/payments/daily', options)
+        axios.get('api/payments/', options)
         .then(res =>{
-            
+            console.log(res.data);
             if(!res){
                 alert('there was a problem with your request')
             }else{
-                const dailytrans = res.data;
+                const dailytrans = res.data.payments;
                 console.log(dailytrans);
                 const count = dailytrans.length;
                 console.log(count);
@@ -61,6 +61,7 @@ const PaymentsTable = () => {
         
         if (curVal == "today") {
         let  today = new Date().toLocaleDateString()
+        console.log(today);
         let arr = payments.filter((item) => {
             const itemDate = new Date(item.date).toLocaleDateString()
             return itemDate ==  today;
@@ -77,7 +78,7 @@ const PaymentsTable = () => {
                 let  date = new Date(month)
                 let from = new Date(month)
                 let to = new Date(date.getFullYear(),date.getMonth() +1, 0)
-        
+                console.log(`from is ${from}. date is ${date} & to is ${to}`)
                 let arr = payments.filter((item) => {
                     const itemDate = new Date(item.date)
                     return from <= itemDate && itemDate <= to;
