@@ -15,7 +15,15 @@ const AgentButton = () => {
         const {id, full_name, tel_no, level, see} = agent;
         const rank = level;
         console.log(rank)
-        if(!token && rank ==='SuperAgent') setIsAuthenticated(true)
+        if(token && rank ==='SuperAgent') {
+            setIsAuthenticated(true)
+        }else if(token && rank === 'agent'){
+            alert('You are not authorized to view this page')
+            history.push('/dashboard')
+        }else{
+            alert('You are not authorized to view this page')
+            history.push('/dashboard')
+        }
     }, []);
     
     const fire = () =>{
