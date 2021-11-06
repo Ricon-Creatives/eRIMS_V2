@@ -27,10 +27,13 @@ const Dashboard = () => {
     const [payeeCount, setPayeeCount] = useState(''); //state for storing the numbers of said payees
     const [apt, setApt] = useState([]); // state for storing all transaction collented by the current agent today
     const [aptCount, setAptCount] = useState(''); //state for storing the number of said transactions
+    const [aptAmount, setAptAmount] = useState('');// state for storing the total amount received of said transactions
     const [apm, setApm] = useState([]); // state for storing all transaction collected by the current agent this month
     const [apmCount, setApmCount] = useState('');// state for storing the number of said transactions
+    const [apmAmount, setApmAmount] = useState('');// state for storing the total amount received of said transactions
     const [apy, setApy] = useState([]); // state for storing all transactions collected by current agent this year
     const [apyCount, setApyCount] = useState('');// state for storing the number of said transactions
+    const [apyAmount, setApyAmount] = useState('');// state for storing the total amount received of said transactions
 
 
     const agentLoadout = () =>{
@@ -99,9 +102,15 @@ const Dashboard = () => {
                 const dailytrans = res.data;
                 console.log(dailytrans);
                 const count = dailytrans.length;
+                const amountList = dailytrans.map(a => Number(a.amount));
+                const amountRaw = amountList.reduce((a, b) => a + b, 0);
+                const amount = amountRaw.toFixed(2)
+                console.log(amount);
                 console.log(count);
                 setAptCount(count);
-                setApt(dailytrans)
+                setApt(dailytrans);
+                setAptAmount(amount)
+
             }
         })
 
@@ -119,19 +128,28 @@ const Dashboard = () => {
                 id
             }
         }
-        axios.get('api/payments', options)
+        axios.get('api/payments/monthly', options)
         .then(res => {
-            const auth = res.auth;
-            const msg = res.message;
             const mtrevenue = res.data;
-            if(!auth){
+            if(!res){
                 alert('there was a problem with your request')
             }else{
-                console.log(mtrevenue)
+                console.log(mtrevenue);
+                const count = mtrevenue.length;
+                const amountList = mtrevenue.map(a => Number(a.amount))
+                const amountRaw = amountList.reduce((a, b) => a + b, 0);
+                const amount = amountRaw.toFixed(2);
+                console.log(amount);
+                console.log(count);
+                setApmCount(count);
+                setApm(mtrevenue);
+                setApmAmount(amount)
+
             }
         })
 
     }
+
 
 
 
@@ -145,25 +163,39 @@ const Dashboard = () => {
                 id
             }
         }
-        axios.get('api/payments', options)
+        axios.get('api/payments/yearly', options)
         .then(res =>{
             const auth = res.auth;
             const msg = res.message;
             const ytrevenue = res.data;
-            if(!auth){
+            if(!res){
                 alert('there was a problem with your request')
             }else{
                 console.log(ytrevenue)
+                const count = ytrevenue.length;
+                const amountList = ytrevenue.map(a => Number(a.amount))
+                const amountRaw = amountList.reduce((a, b) => a + b, 0);
+                const amount = amountRaw.toFixed(2);
+                console.log(amount);
+                console.log(count);
+                setApyCount(count);
+                setApy(ytrevenue);
+                setApyAmount(amount);
             }
         })
         
     }
 
 
+
+
+
     useEffect(() => {
         agentLoadout();
         payeeLoadout();
         amountTodayLoadout();
+        amountToMonthLoadout();
+        amountToYearLoadout();
     }, [])
 
 
@@ -187,15 +219,15 @@ const Dashboard = () => {
 
 
                             <div className="col-md-3">
-                                <DailyPaymentsUI aptCount = {aptCount} apt ={apt} />
+                                <DailyPaymentsUI aptCount = {aptCount} apt = {apt} aptAmount = {aptAmount} />
                             </div>
 
                             <div className="col-md-3">
-                                <MonthlyPaymentsUI apm= {apm} apmCount= {apmCount}/>
+                                <MonthlyPaymentsUI apm= {apm} apmCount= {apmCount} apmAmount = {apmAmount}/>
                             </div>
 
                             <div className="col-md-3">
-                                <YearlyPaymentsUI apy= {apy} apyCount= {apyCount}/>
+                                <YearlyPaymentsUI apy= {apy} apyCount= {apyCount} apyAmount = {apyAmount}/>
                             </div>
                             
                 </div>

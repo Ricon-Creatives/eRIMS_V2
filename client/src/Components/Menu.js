@@ -10,6 +10,7 @@ import MainFormButton from './MainFormButton';
 import TransactionFormButton from './TransactionFormButton';
 import ProfileBadge from './ProfileBadge';
 import DashboardButton from './DashboardButton';
+import AgentButton from './AgentButton';
 
 
 class MainMenu extends React.Component {
@@ -24,6 +25,7 @@ class MainMenu extends React.Component {
                 <ProfileBadge /><br/>
                 <br/><br/><br/><br/>
                 <DashboardButton /><br/>
+                <AgentButton />
                 <MainFormButton /><br/>
                 <TransactionFormButton /><br/>
                 <LogoutButton /><br/>

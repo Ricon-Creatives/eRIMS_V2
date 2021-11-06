@@ -31,12 +31,18 @@ const Agent = db.define('agent', {
         allowNull: true
     },
 
+    role:{
+        type:Sequelize.STRING,
+        allowNull:false,
+        defaultValue: 'agent'
+    },
+
     gender:{
         type:Sequelize.STRING,
         allowNull: false
     },
 
-    assigned_device:{
+    assigned_areas:{
         type:Sequelize.STRING,
         allowNull: true
     },

@@ -22,7 +22,7 @@ router.get('/', auth, (req, res) => {
 //@access Public*
 router.post('/register', auth, (req, res) => {
     const {fullname, tel_no, dob, idType, idNumber, gender, device, area, superagent} = req.body;
-    console.log(dob)
+    console.log(area)
     //validate input
     if( !fullname || !tel_no || !dob || !idType || !idNumber || !gender || !device || !area || !superagent ){
         return res.status(400).json("Please Provide All Required Registration Details")
@@ -96,7 +96,7 @@ router.post('/register', auth, (req, res) => {
                                 token,
                                 user :{
                                     id:user.user_id,
-                                    name: `${user.first_name} ${user.last_name}`,
+                                    name: user.fullname,
                                     phone: user.tel_no,
                                     userlevel: user.user_rank,
                                     last_seen: user.last_seen                                  

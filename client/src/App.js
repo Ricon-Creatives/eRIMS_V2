@@ -10,6 +10,7 @@ import CheckoutPage from './Components/CheckoutPage'
 import Dashboard from './Components/Dashboard';
 import PayeeTable from './Components/PayeeTable';
 import PaymentsTable from './Components/PaymentsTable';
+import AgentTable from './Components/AgentTable';
 
 function App() {
 
@@ -29,6 +30,7 @@ function App() {
             < Route exact path='/dashboard' component = {Dashboard} />
             < Route exact path='/payee-table' component = {PayeeTable} />
             < Route exact path='/payment-table' component = {PaymentsTable} />
+            < Route exact path='/agent-table' component = {AgentTable} />
             </Switch>
         </main>
       </div>

@@ -3,35 +3,55 @@ import {useState, useEffect} from 'react';
 import axios from 'axios';
 import { useHistory } from 'react-router';
 
-
-const PayeeTable = () => {
-    const [payees, setPayees] = useState([]);
+const AgentTable = () => {
+    const [isAuthorized, setIsAuthorized] = useState(false);
+    const [agents, setAgents] = useState([]);
     const [data, setData] = useState([]);
     const [search, setSearch] = useState('');
     const token = JSON.parse(localStorage.getItem('token'));
-    const agent = JSON.parse(localStorage.getItem('agent'));
-    const {id, name, phone, level, see} = agent;
+    const sAgent = JSON.parse(localStorage.getItem('agent'));
+    const {id, name, phone, user_rank, see} = sAgent;
     const history = useHistory(); 
+
+
+    const Authenticate = () =>{
+        const token = JSON.parse(localStorage.getItem('token'));
+        const agent = JSON.parse(localStorage.getItem('agent'));
+        const {id, full_name, tel_no, level, see} = agent;
+        const rank = level;
+        console.log(rank)
+        if(rank !== 'SuperUser'){
+            history.push('/dashboard')
+        }else if(rank === 'Agent'){
+            alert('You are not authorized to view this page')
+            history.push('/dashboard')
+        }else{
+            setIsAuthorized(true);
+        }
+    }
+
+
 
 
     const searchData = (e) =>{
         if(e.target.value === ''){
             setSearch('')
-            setData(payees)
+            setData(agents)
         }else{
             setSearch(e.target.value)
         }
     }
 
-    const payeeLoadout = () =>{
-        console.log(id);
-        const agent_id = Number(id);
-        console.log(agent_id);
 
+
+
+    const agentLoadout = () =>{
+        console.log(id);
+        const sAgent_id = Number(id);
         const options={ 
             
             params:{
-                agent_id
+                id
             },
 
             headers:{
@@ -39,8 +59,7 @@ const PayeeTable = () => {
               }
         }
 
-
-        axios.get('api/payee/for', options)
+        axios.get('api/agents/', options)
         .then(res =>{
             if(!res){
                 alert('there was a problem with your request')
@@ -49,17 +68,21 @@ const PayeeTable = () => {
                 console.log(clients);
                 const count = clients.length;
                 console.log(count);
-                setPayees(clients);
+                setAgents(clients);
                 setData(clients)
             }
         })
     }
 
+
+
+
+
     const FilterData = (e) => {
         e.preventDefault();
-        let arrData = payees
+        let arrData = agents
         
-        let arr = payees.filter((item) => {
+        let arr = agents.filter((item) => {
             if (search == item.full_name || search ==  item.tel || search == item.tel_no ||search ==  item.location || 
                 search == item.last_payment_date){
                     return item
@@ -68,16 +91,22 @@ const PayeeTable = () => {
             console.log(arr)
             setData(arr)
             if (search =="") setData(arrData)
-  }
-
-
-    useEffect(()=>{
-        payeeLoadout()
-    },[])
-
-    const proceed = () =>{
-        history.push('/payee-register')
     }
+
+
+
+
+  useEffect(() => {
+    Authenticate();
+    agentLoadout();
+  }, [])
+
+  
+    const proceed = () =>{
+        history.push('/agent-register')
+    }
+
+
 
     return (
         <div className="container">
@@ -85,7 +114,7 @@ const PayeeTable = () => {
             <div className="row">
                 <div className="col-sm-6">
                     <button className="btn btn-classic" onClick={proceed}>
-                        Add New Payee
+                        Add New Agent
                     </button>
                 </div>
 
@@ -115,7 +144,10 @@ const PayeeTable = () => {
                         <option value="3">Select</option>
                     </select>
                 </div>
-                <button className="btn btn-sm btn-primary">Apply</button>
+                <div className="col-sm-2">
+                    <button className="btn btn-sm btn-primary">Apply</button>
+                </div>
+                
             </div>
 
 
@@ -126,19 +158,21 @@ const PayeeTable = () => {
                     <th></th>
                     <th>FULL NAME</th>
                     <th>TELEPHONE NUMBER</th>
-                    <th>LOCATION</th>
-                    <th>LAST PAYMENT DATE</th> 
+                    <th>ASSIGNED LOCATION</th>
+                    <th>REGISTERED</th>
+                    <th>ASSIGNED DEVICE</th> 
                 </thead>
                 <tbody>
-                    {data.map((payee) => (
+                    {data.map((agent) => (
                         <tr className="">
                             <td className="">
                                 <input className="form-check-input" type="checkbox" value="" id="flexCheckDefault" />
                             </td>
-                            <td>{payee.full_name}</td>
-                            <td>{payee.tel}</td>
-                            <td>{payee.location}</td>
-                            <td>{payee.last_payment_date}</td>
+                            <td>{agent.full_name}</td>
+                            <td>{agent.tel_no}</td>
+                            <td>{agent.assigned_areas}</td>
+                            <td>{agent.createdAt}</td>
+                            <td>{agent.assigned_device}</td>
                         </tr>
                     ))}
                 </tbody>
@@ -173,4 +207,4 @@ const PayeeTable = () => {
     )
 }
 
-export default PayeeTable
+export default AgentTable

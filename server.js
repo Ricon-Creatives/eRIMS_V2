@@ -30,8 +30,7 @@ const auth = require('./routes/apis/auth');
 //API Endpoints for each Route
 app.use('/api/payee', payee);
 app.use('/api/payments', payments);
-//app.use('/api/history', records);
-//app.use('/api/agent', agents);
+app.use('/api/agents', agents);
 //app.use('api/location', location);
 app.use('/api/user', user);
 app.use('/api/auth', auth);
