@@ -115,7 +115,9 @@ const PayeeTable = () => {
                         <option value="3">Select</option>
                     </select>
                 </div>
-                <button className="btn btn-sm btn-primary">Apply</button>
+                <div className="col-sm-2">
+                    <button className="btn btn-sm btn-primary">Apply</button>
+                </div>
             </div>
 
 
