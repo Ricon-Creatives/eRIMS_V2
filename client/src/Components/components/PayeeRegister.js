@@ -54,8 +54,6 @@ const PayeeRegister = () => {
   }
 
 
-
-
   const register = (e) => {
     e.preventDefault();
     const token = JSON.parse(localStorage.getItem('token'));
@@ -85,9 +83,16 @@ const PayeeRegister = () => {
     .then((res) => {
         console.log(res.data);
         const payee = res.data;
-        const { full_name } = payee;
+        const { full_name,tel } = payee;
+
+        const SMS = `Congratulations! Your account has been registered successfully at`
+        const number = '233'+parseInt(tel, 10)
+        console.log(number)
+      
         clearFields();
         swal(`${full_name} `, "has been registered successfully", "success");
+        axios.post(`http://sms.apavone.com:8080/bulksms/bulksms?username=tsg-teksup&password=Mirlin12&type=0&dlr=0&destination=${number}&source=eRIMS&message=${SMS}`)
+
         history.push('/payee-table');
     })
     .catch((err) => {
@@ -136,11 +141,11 @@ const PayeeRegister = () => {
                     </div>
                     <div className="row mb-3">
                         <div className="col">
-                            <input type="tel" id="phone1" value={phone1} placeholder="(+233) Mobile Number1" className="myInput form-control  border-bottom" 
+                            <input type="tel" id="phone1" value={phone1} placeholder="Mobile Number1" className="myInput form-control  border-bottom" 
                              onChange={e => setPhone1(e.target.value)}/>
                         </div>
                         <div className="col">
-                            <input type="tel" id="phone2" value={phone2} placeholder="(+233) Mobile Number1" className="myInput form-control  border-bottom"
+                            <input type="tel" id="phone2" value={phone2} placeholder="Mobile Number1" className="myInput form-control  border-bottom"
                               onChange={e => setPhone2(e.target.value)}/>
                         </div>
                     </div>

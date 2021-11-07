@@ -20,7 +20,7 @@ const Checkout = () => {
   const [fullname, setFullname] = useState("");
   const [payType, setPayType] = useState("");
   const [isCash, setIsCash] = useState(false);
-
+ 
     
 
   const submit = () =>{
@@ -60,20 +60,29 @@ const Checkout = () => {
       console.log(res.data)
       const payeeData = res.data
       console.log(payeeData)
-      const {payment_type, payee_name, tel_no} = payeeData;
-  
+      const {payment_type, payee_name, tel_no}= payeeData;
       swal(`${payee_name}'s`," payment has been received successfully", "success");
       history.push("/payment-table")     
     })
     }
-
+    
+    const today = moment();
+    const time = moment(today).format("hh:mm:ss a");
+    
+    //SMS message to sender
+    const SMS = `Confirmed.Your payment of GHC ${amount} has been recieved at ${time}`
+    const number = '233'+parseInt(momoNumber, 10)
+   console.log(number)
 
     const completePayment = () =>{
       submit();
       history.push("/")
     }
-
     
+    //Send Receipt 
+    const sendReceipt = () => {
+      axios.post(`http://sms.apavone.com:8080/bulksms/bulksms?username=tsg-teksup&password=Mirlin12&type=0&dlr=0&destination=${number}&source=eRIMS&message=${SMS}`)
+    }
     
     const componentProps = {
       email:'andreakumah@gmail.com',    
@@ -87,8 +96,11 @@ const Checkout = () => {
       publicKey,    
       text: "Pay On Digital Portal",  
       className:"btn btn-classic btn-sm my-4",  
-      onSuccess: () => 
-              completePayment(),
+      onSuccess: () => {
+                  completePayment();
+                  sendReceipt();
+                } 
+              ,
       onClose: () => 
               swal("Failed"," Please try making the transaction again ", "error"),    
     }
@@ -155,7 +167,7 @@ const Checkout = () => {
                                 value={momoNumber} onChange={e =>setMomo(e.target.value)} required/>
                           </div>
                           <div className="col-md-3">
-                                <button className="btn-classicals" onClick={verify}>Verify</button>
+                                <button className="btn btn-sm btn-classic" onClick={verify}>Verify</button>
                           </div>
                         </div>
 
