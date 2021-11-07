@@ -62,6 +62,29 @@ router.get('/', auth, (req, res) => {
 
 
 
+//@route GET api/payments/for
+//@desc Gets all tax payers registered in the system
+//@access Private*
+router.get('/for', auth, (req, res) => {
+    const collector = req.query.name
+    Payments.findAll({
+        where:{
+            collector
+        }
+    })
+    .then(payments=>{
+        if(!payments){
+            res.status(404).json("There was an unknown error")
+        }else{
+            console.log(payments);
+            res.status(200).json({payments})
+        }        
+    })
+   
+});
+
+
+
 
 
 

@@ -12,10 +12,22 @@ const AgentButton = () => {
     useEffect(() => {
         const token = localStorage.getItem('token');
         const agent = JSON.parse(localStorage.getItem('agent'));
-        const {id, full_name, tel_no, level, see} = agent;
-        const rank = level;
-        console.log(rank)
-        if(rank !=='SuperAgent') setIsAuthenticated(true)
+        if(!agent) {
+            history.push('/')
+        }else{
+            const {id, full_name, tel_no, level, see} = agent;
+            const rank = level;
+            console.log(rank)
+            if(rank ==='SuperUser'){
+                setIsAuthenticated(true)
+                console.log('Welcome boss')
+            }else if(rank !== 'SuperAgent'){
+                console.log('you are just an agent')
+            }else{
+                console.log('your user-role could not be determined')
+            }
+        }
+        
     }, []);
     
     const fire = () =>{
@@ -24,7 +36,7 @@ const AgentButton = () => {
 
 
     return (
-        !isAuthenticated && (
+        isAuthenticated && (
             <button className="sleek" onClick = {fire}>
                Agents Records
             </button>

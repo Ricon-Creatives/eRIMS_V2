@@ -2,7 +2,7 @@ import React from 'react';
 import {useState, useEffect} from 'react';
 import axios from 'axios';
 import { useHistory } from 'react-router';
-import moment, { duration } from 'moment';
+import moment from 'moment';
 
 
 const PaymentsTable = () => {
@@ -28,31 +28,51 @@ const PaymentsTable = () => {
 
     const paymentLoadout = () =>{
         const date = moment().format("YYYY-MM-DD");
-        console.log(date);
+        console.log(level);
         const options={
             params:{
                 id,
-                date
+                name
             },
 
             headers:{
                 'x-auth-token':token
               }
         }
-        axios.get('api/payments/', options)
-        .then(res =>{
-            console.log(res.data);
-            if(!res){
-                alert('there was a problem with your request')
-            }else{
-                const dailytrans = res.data.payments;
-                console.log(dailytrans);
-                const count = dailytrans.length;
-                console.log(count);
-                setPayments(dailytrans)
-                setData(dailytrans)
-            }
-        })
+        if(level === 'SuperUser'){
+            axios.get('api/payments/', options)
+            .then(res =>{
+                if(!res){
+                    alert('there was a problem with your request')
+                }else{
+                    const dailytrans = res.data.payments;
+                    console.log(dailytrans);
+                    const count = dailytrans.length;
+                    console.log(count);
+                    setPayments(dailytrans)
+                    setData(dailytrans)
+                }
+            })
+        }else if(level === 'Agent'){
+            axios.get('api/payments/for', options)
+            .then(res =>{
+                console.log(res.data);
+                if(!res){
+                    alert('there was a problem with your request')
+                }else{
+                    const dailytrans = res.data.payments;
+                    console.log(dailytrans);
+                    const count = dailytrans.length;
+                    console.log(count);
+                    setPayments(dailytrans)
+                    setData(dailytrans)
+                }
+            })
+        }else{
+            alert('User role cannot be identified');
+            history.push('/dashboard')
+        }
+        
 
     }
    
