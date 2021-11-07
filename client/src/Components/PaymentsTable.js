@@ -2,8 +2,9 @@ import React from 'react';
 import {useState, useEffect} from 'react';
 import axios from 'axios';
 import { useHistory } from 'react-router';
-import moment, { duration } from 'moment';
+import moment from 'moment';
 import Pagination from './components/Pagination'
+
 
 const PaymentsTable = () => {
     const [payments, setPayments] = useState([]);
@@ -29,31 +30,51 @@ const PaymentsTable = () => {
 
     const paymentLoadout = () =>{
         const date = moment().format("YYYY-MM-DD");
-        console.log(date);
+        console.log(level);
         const options={
             params:{
                 id,
-                date
+                name
             },
 
             headers:{
                 'x-auth-token':token
               }
         }
-        axios.get('api/payments/daily', options)
-        .then(res =>{
-            
-            if(!res){
-                alert('there was a problem with your request')
-            }else{
-                const dailytrans = res.data;
-                console.log(dailytrans);
-                const count = dailytrans.length;
-                console.log(count);
-                setPayments(dailytrans)
-                setData(dailytrans)
-            }
-        })
+        if(level === 'SuperUser'){
+            axios.get('api/payments/', options)
+            .then(res =>{
+                if(!res){
+                    alert('there was a problem with your request')
+                }else{
+                    const dailytrans = res.data.payments;
+                    console.log(dailytrans);
+                    const count = dailytrans.length;
+                    console.log(count);
+                    setPayments(dailytrans)
+                    setData(dailytrans)
+                }
+            })
+        }else if(level === 'Agent'){
+            axios.get('api/payments/for', options)
+            .then(res =>{
+                console.log(res.data);
+                if(!res){
+                    alert('there was a problem with your request')
+                }else{
+                    const dailytrans = res.data.payments;
+                    console.log(dailytrans);
+                    const count = dailytrans.length;
+                    console.log(count);
+                    setPayments(dailytrans)
+                    setData(dailytrans)
+                }
+            })
+        }else{
+            alert('User role cannot be identified');
+            history.push('/dashboard')
+        }
+        
 
     }
    
@@ -62,6 +83,7 @@ const PaymentsTable = () => {
         
         if (curVal == "today") {
         let  today = new Date().toLocaleDateString()
+        console.log(today);
         let arr = payments.filter((item) => {
             const itemDate = new Date(item.date).toLocaleDateString()
             return itemDate ==  today;
@@ -78,7 +100,7 @@ const PaymentsTable = () => {
                 let  date = new Date(month)
                 let from = new Date(month)
                 let to = new Date(date.getFullYear(),date.getMonth() +1, 0)
-        
+                console.log(`from is ${from}. date is ${date} & to is ${to}`)
                 let arr = payments.filter((item) => {
                     const itemDate = new Date(item.date)
                     return from <= itemDate && itemDate <= to;

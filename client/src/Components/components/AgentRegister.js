@@ -6,20 +6,20 @@ import swal from 'sweetalert';
 import moment from 'moment';
 
 const AgentRegister = () => {
-    const history = useHistory();
+  const history = useHistory();
+  const [isAuthorized, setIsAuthorized] = useState(false);
+  const [fullname, setName] = useState('')
+  const [phone, setPhone] = useState('')
+  const [dob, setDob] = useState('')
+  const [idType, setIdType] = useState('')
+  const [idNumber, setIdNumber] = useState('')
+  const [gender, setGender] = useState('')
+  const [device, setDevice] = useState('')
+  const [area, setArea] = useState('')
+  const [userMessage, setUserMessage] = useState('');
 
-const [fullname, setName] = useState('')
-const [phone, setPhone] = useState('')
-const [dob, setDob] = useState('')
-const [idType, setIdType] = useState('')
-const [idNumber, setIdNumber] = useState('')
-const [gender, setGender] = useState('')
-const [device, setDevice] = useState('')
-const [area, setArea] = useState('')
-const [userMessage, setUserMessage] = useState('');
 
-
-const clearFields = () =>{
+  const clearFields = () =>{
     setName('');
     setPhone('');
     setDob('');
@@ -28,13 +28,29 @@ const clearFields = () =>{
     setGender('');
     setDevice('');
     setArea('');
-}
+  }
+
+
+
+  const Authenticate = () =>{
+    const token = JSON.parse(localStorage.getItem('token'));
+    const sAgent = JSON.parse(localStorage.getItem('agent'));
+    const {id, name, phone, level, see} = sAgent;
+    const rank = level;
+    if(rank !== 'SuperUser' && !token){
+        history.push('/dashboard')
+    }else if(rank === 'Agent'){
+        alert('You are not authorized to view this page')
+        history.push('/dashboard')
+    }else{
+        setIsAuthorized(true);
+    }
+  }
 
 
 
 
-
-const register = (e) => {
+  const register = (e) => {
     e.preventDefault();
 
     const token = JSON.parse(localStorage.getItem('token'))
@@ -72,18 +88,28 @@ const register = (e) => {
 
         if(response.success === false){
           swal("Something went wrong", "please try again later", "warning");
+          clearFields();
         }else{
           clearFields();
           swal(`${fullname} `, "has been registered successfully", "success");
           axios.post(`http://sms.apavone.com:8080/bulksms/bulksms?username=tsg-teksup&password=Mirlin12&type=0&dlr=0&destination=${number}&source=eRIMS&message=${SMS}`)
+           history.push('/agent-table')
 
         }
 
     })
 
-}
+  }
 
-    return (
+
+  useEffect(() => {
+    Authenticate()
+  }, [])
+
+
+
+
+  return (
         <div className="container">
           <div className="row justify-content-center align-middle py-5">
 
@@ -178,7 +204,9 @@ const register = (e) => {
 
             </div>
         </div>
-    )
+  )
+
+
 }
 
 export default AgentRegister

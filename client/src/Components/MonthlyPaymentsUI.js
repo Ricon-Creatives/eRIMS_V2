@@ -3,10 +3,10 @@ import { Card, Button } from "reactstrap";
 
 
 const MonthlyPaymentsUI = (props) => {
-    const {apm, apmCount} = props;
+    const {apm, apmCount, apmAmount} = props;
 
 
-
+ 
     return (
 
         <div className="card bg-light spacer border-dark mb-3">
@@ -14,9 +14,9 @@ const MonthlyPaymentsUI = (props) => {
                 <p className="card-title">Revenue Collected This Month</p>
                 
                 <div className="card-subtitle mb-2 text-muted">
-                    <a href="/payment-table"><h2>GH₵3000</h2></a>
+                    <a href="/payment-table"><h2>GH₵{apmAmount}</h2></a>
                 </div>
-                <p>Recorded Transactions</p>
+                <p>Recorded from <bold>{apmCount}</bold> Transactions</p>
             </div>
         </div>
     )

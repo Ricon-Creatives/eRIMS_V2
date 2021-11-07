@@ -1,11 +1,15 @@
 const express = require('express');
+const { Op } = require("sequelize");
 const router = express.Router();
 const Payments = require('../../models/Payments');
 const Agent = require('../../models/Agents');
 const Payee = require('../../models/Payee');
 const auth = require('../../middleware/auth');
 
- 
+
+
+
+
 
 //@route GET api/payments/verify
 //@desc Gets all tax payers registered in the system
@@ -36,6 +40,9 @@ router.get('/verify', (req, res) =>{
 
 
 
+
+
+
 //@route GET api/payments
 //@desc Gets all tax payers registered in the system
 //@access Private*
@@ -51,6 +58,32 @@ router.get('/', auth, (req, res) => {
     })
    
 });
+
+
+
+
+//@route GET api/payments/for
+//@desc Gets all tax payers registered in the system
+//@access Private*
+router.get('/for', auth, (req, res) => {
+    const collector = req.query.name
+    Payments.findAll({
+        where:{
+            collector
+        }
+    })
+    .then(payments=>{
+        if(!payments){
+            res.status(404).json("There was an unknown error")
+        }else{
+            console.log(payments);
+            res.status(200).json({payments})
+        }        
+    })
+   
+});
+
+
 
 
 
@@ -86,6 +119,101 @@ router.get('/daily', auth, (req, res) => {
     })
    
 });
+
+
+
+
+
+
+
+//@route GET api/payments/monthly
+//@desc Gets all transaction registered to a particular Agent for a particular month
+//@access Private*
+router.get('/monthly', auth, (req, res) => {
+    const id = req.query.id;
+    let thisMonth = new Date().getMonth() + 1;
+    let year = new Date().getFullYear();
+        
+    let month = year + "-" + thisMonth
+        
+    let  date = new Date(month)
+    let from = new Date(month)
+    let to = new Date(date.getFullYear(),date.getMonth() +1, 0)
+    console.log(`from is ${from}. date is ${date} & to is ${to}`);
+
+    Agent.findOne({
+        attributes:['full_name'],
+        where:{
+            agent_id : id
+        }
+    }).then(agent =>{
+        const collector = agent.dataValues.full_name
+        console.log(agent.dataValues.full_name)
+        Payments.findAll({
+            where : {
+                [Op.and]:{
+                     date : {[Op.gte]:from, [Op.lte]:to }
+                },
+                collector
+            }
+        })
+        .then(revenue=>{
+            if(!revenue){
+                res.status(404).json("There was an unknown error")
+            }else{
+                console.log(revenue);
+                res.status(200).json(revenue)
+            }        
+        })
+    })
+   
+});
+
+
+
+
+
+
+
+//@route GET api/payments/yearly
+//@desc Gets all transaction registered to a particular Agent for a particular year
+//@access Private*
+router.get('/yearly', auth, (req, res) => {
+    const id = req.query.id;
+    let year = new Date().getFullYear();
+    let from = new Date(year, 0, 1)
+    let to = new Date(year, 11, 31)
+    console.log(`from is ${from} and to is ${to}`);
+    Agent.findOne({
+        attributes:['full_name'],
+        where:{
+            agent_id : id
+        }
+    }).then(agent =>{
+        const collector = agent.dataValues.full_name
+        console.log(agent.dataValues.full_name)
+        Payments.findAll({
+            where : {
+                [Op.and]:{
+                     date : {[Op.gte]:from, [Op.lte]:to }
+                },
+                collector
+            }
+        })
+        .then(revenue=>{
+            if(!revenue){
+                res.status(404).json("There was an unknown error")
+            }else{
+                console.log(revenue);
+                res.status(200).json(revenue)
+            }        
+        })
+    })
+   
+});
+
+
+
 
 
 

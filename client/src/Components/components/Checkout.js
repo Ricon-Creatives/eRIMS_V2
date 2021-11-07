@@ -19,8 +19,9 @@ const Checkout = () => {
   const [reason, setReason] = useState("");
   const [fullname, setFullname] = useState("");
   const [payType, setPayType] = useState("");
-  const [isCash, setIsCash] = useState(false);
+  const [isCash, setIsCash] = useState(true);
  
+
     
 
   const submit = () =>{
@@ -115,11 +116,13 @@ const Checkout = () => {
 
 
 
-
+    
     let button;
     if(isCash === true){
-          button = <button className="btn-classic" onClick={ submit }>Pay Now</button>
-    }else{
+          console.log(payType)
+          button = <button className="btn btn-classic" onClick={ submit }>Pay Now</button>
+    }else if (isCash === false){
+          console.log(payType)
           button =  <PaystackButton {...componentProps} />
     }
 
