@@ -2,6 +2,7 @@ import React from 'react';
 import { useState, useEffect } from 'react';
 import PayeeUI from './PayeeUI';
 import '../Styles/FormMain.css';
+import AgentsUI from './AgentsUI';
 import DailyPaymentsUI from './DailyPaymentsUI';
 import MonthlyPaymentsUI from './MonthlyPaymentsUI';
 import YearlyPaymentsUI from './YearlyPaymentsUI';
@@ -9,6 +10,9 @@ import { useHistory } from 'react-router-dom';
 import axios from 'axios';
 import { Jumbotron } from 'reactstrap';
 import moment from 'moment';
+import AgentPerfromanceChart from './AgentPerfromanceChart';
+import RevenueTracker from './RevenueTracker';
+import GrowthTracker from './GrowthTracker'
 
 
 const Dashboard = () => {
@@ -34,6 +38,8 @@ const Dashboard = () => {
     const [apy, setApy] = useState([]); // state for storing all transactions collected by current agent this year
     const [apyCount, setApyCount] = useState('');// state for storing the number of said transactions
     const [apyAmount, setApyAmount] = useState('');// state for storing the total amount received of said transactions
+    const [collectors, setCollectors] = useState([]);
+    const [collectorNumber, setCollectorNumber] = useState(0)
 
 
     const agentLoadout = () =>{
@@ -42,6 +48,37 @@ const Dashboard = () => {
         setAgentLevel(level)
         setAgentSee(see)
     }
+
+
+
+    const collectorLoadout = () =>{
+        const rank = level;
+        if(rank === 'SuperUser'){
+            const options={ 
+            
+                params:{
+                    id
+                },
+    
+                headers:{
+                    'x-auth-token':token
+                  }
+            }
+            axios.get('api/agents',options)
+            .then((res)=>{
+                const collectors = res.data;
+                const count = collectors.length;
+                console.log(collectors)
+                setCollectors(collectors)
+                setCollectorNumber(count)
+            })
+
+        }else{
+            console.log('You are just a regular agent')
+        }
+    }
+
+    
 
 
     const payeeLoadout = () =>{
@@ -60,20 +97,37 @@ const Dashboard = () => {
               }
         }
 
+        if(level === 'SuperUser'){
+            axios.get('api/payee/', options)
+            .then(res =>{
+                if(!res){
+                    alert('there was a problem with your request')
+                }else{
+                    const clients = res.data;
+                    console.log(clients);
+                    const count = clients.length;
+                    console.log(count);
+                    setPayeeCount(count);
+                    setPayees(clients);
+                }
+            })
+        }else{
+            axios.get('api/payee/for', options)
+            .then(res =>{
+                if(!res){
+                    alert('there was a problem with your request')
+                }else{
+                    const clients = res.data;
+                    console.log(clients);
+                    const count = clients.length;
+                    console.log(count);
+                    setPayeeCount(count);
+                    setPayees(clients);
+                }
+            })
 
-        axios.get('api/payee/for', options)
-        .then(res =>{
-            if(!res){
-                alert('there was a problem with your request')
-            }else{
-                const clients = res.data;
-                console.log(clients);
-                const count = clients.length;
-                console.log(count);
-                setPayeeCount(count);
-                setPayees(clients);
-            }
-        })
+        }
+        
     }
 
 
@@ -192,6 +246,7 @@ const Dashboard = () => {
 
     useEffect(() => {
         agentLoadout();
+        collectorLoadout();
         payeeLoadout();
         amountTodayLoadout();
         amountToMonthLoadout();
@@ -213,26 +268,64 @@ const Dashboard = () => {
                             
                         </Jumbotron>
 
-                            <div className="col-md-3">
-                                <PayeeUI payeeCount= {payeeCount} payees= {payees} />
+                            <div className="row">
+                                <div className="col-md-3">
+                                    <AgentsUI collectors = {collectors} collectorNumber={collectorNumber}/>
+                                </div>
+                            </div>
+
+                            <div className="row">
+                                <div className="col-md-3">
+                                    <PayeeUI payeeCount= {payeeCount} payees= {payees} />
+                                </div>
+
+                                <div className="col-md-3">
+                                    <DailyPaymentsUI aptCount = {aptCount} apt = {apt} aptAmount = {aptAmount} />
+                                </div>
+
+                                <div className="col-md-3">
+                                    <MonthlyPaymentsUI apm= {apm} apmCount= {apmCount} apmAmount = {apmAmount}/>
+                                </div>
+
+                                <div className="col-md-3">
+                                    <YearlyPaymentsUI apy= {apy} apyCount= {apyCount} apyAmount = {apyAmount}/>
+                                </div>
                             </div>
 
 
-                            <div className="col-md-3">
-                                <DailyPaymentsUI aptCount = {aptCount} apt = {apt} aptAmount = {aptAmount} />
+
+                            <div className="row gap">
+
                             </div>
 
-                            <div className="col-md-3">
-                                <MonthlyPaymentsUI apm= {apm} apmCount= {apmCount} apmAmount = {apmAmount}/>
-                            </div>
 
-                            <div className="col-md-3">
-                                <YearlyPaymentsUI apy= {apy} apyCount= {apyCount} apyAmount = {apyAmount}/>
+
+                            <div className="row">
+                                <h3>Data Visualization</h3>
+                                <div className="col-md-4">
+                                    <AgentPerfromanceChart payees={payees} payeeCount={payeeCount} apt={apt} aptCount={aptCount} 
+                                    aptAmount={aptAmount} apm={apm} apmCount={apmCount} apmAmount={apmAmount} apy={apy} 
+                                    apyCount={apyCount} apyAmount={apyAmount} collectors = {collectors} collectorNumber={collectorNumber}/>
+                                    <h4>Registered Tax Payers Per Agent</h4>
+                                </div>
+                         
+                                <div className="col-md-4">
+                                    <RevenueTracker payees={payees} payeeCount={payeeCount} apt={apt} aptCount={aptCount} 
+                                    aptAmount={aptAmount} apm={apm} apmCount={apmCount} apmAmount={apmAmount} apy={apy} 
+                                    apyCount={apyCount} apyAmount={apyAmount} collectors = {collectors} collectorNumber={collectorNumber}/>
+                                    <h4>Revenue Per Month</h4>
+                                </div>
+
+                           
+                                <div className="col-md-4">
+                                    <GrowthTracker payees={payees} payeeCount={payeeCount} apt={apt} aptCount={aptCount} 
+                                    aptAmount={aptAmount} apm={apm} apmCount={apmCount} apmAmount={apmAmount} apy={apy} 
+                                    apyCount={apyCount} apyAmount={apyAmount} collectors = {collectors} collectorNumber={collectorNumber}/>
+                                    <h4>Tax Payer Increase (Monthly)</h4>
+                                </div>
                             </div>
                             
-                </div>
-                
-                
+                </div> 
             </div>
 
         )
