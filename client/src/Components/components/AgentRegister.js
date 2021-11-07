@@ -3,6 +3,7 @@ import background from '../../background.png'
 import axios from 'axios'
 import { useHistory } from 'react-router-dom';
 import swal from 'sweetalert';
+import moment from 'moment';
 
 const AgentRegister = () => {
   const history = useHistory();
@@ -74,6 +75,12 @@ const AgentRegister = () => {
         }
       }
 
+    const time = moment()
+    const SMS = `Congratulations ${fullname}! Your account has been successfully created at ${time}`
+    const number = '233'+parseInt(phone, 10)
+    console.log(number)
+    console.log(SMS)
+
     axios.post('api/user/register', data,options)
     .then((res) => {
         console.log(res.data);
@@ -85,7 +92,9 @@ const AgentRegister = () => {
         }else{
           clearFields();
           swal(`${fullname} `, "has been registered successfully", "success");
-          history.push('/agent-table')
+          axios.post(`http://sms.apavone.com:8080/bulksms/bulksms?username=tsg-teksup&password=Mirlin12&type=0&dlr=0&destination=${number}&source=eRIMS&message=${SMS}`)
+           history.push('/agent-table')
+
         }
 
     })
@@ -132,7 +141,7 @@ const AgentRegister = () => {
                         onChange={e => setDob(e.target.value)} placeholder="Date of Birth"/>
                     </div>
                     <div className="mb-3">
-                        <input type="tel" id="phone" name="phone" value={phone} placeholder="+233" className="myInput form-control border-bottom"
+                        <input type="tel" id="phone" name="phone" value={phone} placeholder="Number" className="myInput form-control border-bottom"
                           onChange={e => setPhone(e.target.value)}/>
                     </div>
                     <div className="row mb-3">

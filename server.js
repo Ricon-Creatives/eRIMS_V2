@@ -2,12 +2,15 @@ const express = require ('express');
 const bp = require('body-parser');
 const path = require('path');
 const mysql = require ('mysql2');
+const cors = require('cors');
 
 //Initiate Express
 const app = express();
 //Initiate body parser
 app.use(bp.json())
 app.use(bp.urlencoded({ extended: true }))
+
+app.use(cors())
 
 const db = require('./config/db.js');
 
