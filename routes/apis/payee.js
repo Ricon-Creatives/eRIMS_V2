@@ -14,7 +14,7 @@ router.get('/', auth, (req, res) => {
             res.status(404).json("There was an unknown error")
         }else{
             console.log(payees);
-            res.status(200).json({payees})
+            res.status(200).json(payees)
         }        
     })
    

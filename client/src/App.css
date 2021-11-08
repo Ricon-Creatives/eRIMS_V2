@@ -15,6 +15,10 @@ padding:10px;
     border-color: #483248 !important;
 }
 
+.gap{
+  margin-bottom: 6rem;
+}
+
 .btn-classic:active{
   color: #fff !important;
 }

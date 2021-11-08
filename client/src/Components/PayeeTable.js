@@ -42,20 +42,36 @@ const PayeeTable = () => {
               }
         }
 
-
-        axios.get('api/payee/for', options)
-        .then(res =>{
-            if(!res){
-                alert('there was a problem with your request')
-            }else{
-                const clients = res.data;
-                console.log(clients);
-                const count = clients.length;
-                console.log(count);
-                setPayees(clients);
-                setData(clients)
-            }
-        })
+        if(level === 'SuperUser'){
+            axios.get('api/payee/', options)
+            .then(res =>{
+                if(!res){
+                    alert('there was a problem with your request')
+                }else{
+                    const clients = res.data;
+                    console.log(clients);
+                    const count = clients.length;
+                    console.log(count);
+                    setPayees(clients);
+                    setData(clients)
+                }
+            })
+        }else{
+            axios.get('api/payee/for', options)
+            .then(res =>{
+                if(!res){
+                    alert('there was a problem with your request')
+                }else{
+                    const clients = res.data;
+                    console.log(clients);
+                    const count = clients.length;
+                    console.log(count);
+                    setPayees(clients);
+                    setData(clients)
+                }
+            })
+        }
+        
     }
 
     const FilterData = (e) => {
@@ -128,6 +144,9 @@ const PayeeTable = () => {
                         <option value="2">Delete</option>
                         <option value="3">Select</option>
                     </select>
+                </div>
+                <div className="col-sm-2">
+                    <button className="btn btn-sm btn-primary">Apply</button>
                 </div>
             </div>
 
