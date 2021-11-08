@@ -54,6 +54,18 @@ const PayeeRegister = () => {
   }
 
 
+    const sendReceipt = (tel) =>{
+      const today = moment();
+      const time = moment(today).format("hh:mm:ss a");
+      //Send Message
+      const SMS = `Congratulations! Your customer account has been registered successfully at ${time}`
+      const number = '233'+parseInt(tel, 10)
+      console.log(number)
+      axios.post(`http://sms.apavone.com:8080/bulksms/bulksms?username=tsg-teksup&password=Mirlin12&type=0&dlr=0&destination=${number}&source=eRIMS&message=${SMS}`)
+
+    }
+
+
   const register = (e) => {
     e.preventDefault();
     const token = JSON.parse(localStorage.getItem('token'));
@@ -72,7 +84,7 @@ const PayeeRegister = () => {
         payee_type:payeeType,     busisect:sector,  
         marketseg:segment
       }
-
+ 
       const options = {
         headers:{
           'x-auth-token':token
@@ -85,14 +97,10 @@ const PayeeRegister = () => {
         const payee = res.data;
         const { full_name,tel } = payee;
 
-        const SMS = `Congratulations! Your account has been registered successfully at`
-        const number = '233'+parseInt(tel, 10)
-        console.log(number)
-      
         clearFields();
-        swal(`${full_name} `, "has been registered successfully", "success");
-        axios.post(`http://sms.apavone.com:8080/bulksms/bulksms?username=tsg-teksup&password=Mirlin12&type=0&dlr=0&destination=${number}&source=eRIMS&message=${SMS}`)
 
+        swal(`${full_name} `, "has been registered successfully", "success");
+        sendReceipt(tel)
         history.push('/payee-table');
     })
     .catch((err) => {

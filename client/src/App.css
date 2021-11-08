@@ -51,11 +51,13 @@ color: #fff !important;
 }
 
 .footsie{
-  height: 6rem;
+  height: 50px;
   width:inherit;
   justify-content:center;
   text-align: center;
   background-color:#483248;
+  color:white;
+  padding-top: 15px;
 }
 
 .btn-classical:active{

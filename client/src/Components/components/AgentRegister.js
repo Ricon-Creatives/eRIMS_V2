@@ -27,7 +27,7 @@ const AgentRegister = () => {
     setIdNumber('');
     setGender('');
     setDevice('');
-    setArea('');
+    setArea(''); 
   }
 
 
@@ -38,7 +38,7 @@ const AgentRegister = () => {
     const time = moment(today).format("hh:mm:ss a");
     
     //SMS message to sender
-    const SMS = `Congratulations ${fullname}! Your eRIMS account has been successfully created at ${time}`
+    const SMS = `Congratulations ${fullname}! Your eRIMS Agent account has been successfully created at ${time}`
     const number = '233'+parseInt(phone, 10)
     console.log(number)
     console.log(SMS)

@@ -310,6 +310,9 @@ const Dashboard = () => {
                                 </div>
                          
                                 <div className="col-md-4">
+
+                                    <div className="row gap"></div>
+                                    
                                     <RevenueTracker payees={payees} payeeCount={payeeCount} apt={apt} aptCount={aptCount} 
                                     aptAmount={aptAmount} apm={apm} apmCount={apmCount} apmAmount={apmAmount} apy={apy} 
                                     apyCount={apyCount} apyAmount={apyAmount} collectors = {collectors} collectorNumber={collectorNumber}/>
@@ -318,6 +321,9 @@ const Dashboard = () => {
 
                            
                                 <div className="col-md-4">
+
+                                    <div className="row gap"></div>
+
                                     <GrowthTracker payees={payees} payeeCount={payeeCount} apt={apt} aptCount={aptCount} 
                                     aptAmount={aptAmount} apm={apm} apmCount={apmCount} apmAmount={apmAmount} apy={apy} 
                                     apyCount={apyCount} apyAmount={apyAmount} collectors = {collectors} collectorNumber={collectorNumber}/>

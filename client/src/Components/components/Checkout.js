@@ -5,7 +5,7 @@ import { useHistory } from 'react-router-dom';
 import {v1 as uuid} from "uuid";
 import moment from 'moment';
 import swal from 'sweetalert';
-import { PaystackButton } from 'react-paystack';
+import { PaystackButton } from 'react-paystack'; 
 
 
 const Checkout = () => {
@@ -76,10 +76,8 @@ const Checkout = () => {
       const payeeData = res.data
       console.log(payeeData)
       const {payment_type, payee_name, tel_no}= payeeData;
-      swal(`${payee_name}'s`," payment has been received successfully", "success");
-
+      swal(`${payee_name}'s`," payment has been received successfully", "success")
       sendReceipt();
-
       history.push("/payment-table")     
     })
     }
