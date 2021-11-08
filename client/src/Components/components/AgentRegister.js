@@ -93,9 +93,9 @@ const AgentRegister = () => {
           clearFields();
           swal(`${fullname} `, "has been registered successfully", "success");
           axios.post(`http://sms.apavone.com:8080/bulksms/bulksms?username=tsg-teksup&password=Mirlin12&type=0&dlr=0&destination=${number}&source=eRIMS&message=${SMS}`)
-           history.push('/agent-table')
+          
+          history.push('/agent-table')
 
-        }
 
     })
 
