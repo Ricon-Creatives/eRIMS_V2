@@ -6,6 +6,7 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const config = require('config');
 const moment = require('moment');
+const auth = require('../../middleware/auth');
 
 
 //@route POST api/user/register
@@ -49,7 +50,7 @@ router.post('/', (req, res) => {
             jwt.sign(
                 {id:user.user_id},
                 config.get('jwtSecret'),
-                {expiresIn: 86400},
+                {expiresIn: 3600},
                 (err, token) =>{
                     if(err) throw err;
                     res.status(200).json({
@@ -73,6 +74,20 @@ router.post('/', (req, res) => {
     })
    
 });
+
+
+//@route POST api/auth/verify-token
+//@desc validates user tokens
+//@access Public*
+router.get('/verify-token', auth, (req, res) => {
+    const checking = req.query.msg
+    if(checking === 'clear'){
+        res.json('Copy, still valid champ')
+        console.log('Users token is still valid')
+    }else{
+        console.log('Something crazy is going on with this users token')
+    }
+})
 
 
 

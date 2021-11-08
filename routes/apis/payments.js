@@ -47,7 +47,11 @@ router.get('/verify', (req, res) =>{
 //@desc Gets all tax payers registered in the system
 //@access Private*
 router.get('/', auth, (req, res) => {
-    Payments.findAll()
+    Payments.findAll({
+        order: [
+            ['transaction_id', 'DESC']
+        ],
+    })
     .then(payments=>{
         if(!payments){
             res.status(404).json("There was an unknown error")

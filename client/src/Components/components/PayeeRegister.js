@@ -210,15 +210,23 @@ const PayeeRegister = () => {
                     <div className="col">
                       <select className="form-select form-select-sm" value={customerType} onChange={e => setCustomerType(e.target.value)}>
                         <option value="" disabled>Customer Type</option>
-                        <option value="1">Male</option>
-                        <option value="2">Female</option>
+                        <option value="market-woman">Market woman</option>
+                        <option value="property-owner">Property owner</option>
+                        <option value="landlord">Landlord</option>
+                        <option value="store-or-table-top">Store/table top</option>
+                        <option value="lumbering">Tree felling</option>
+                        <option value="chop-bar">Chop bar</option>
+                        <option value="car-owner">Car owner</option>
                       </select>
                     </div>
                     <div className="col">
                     <select className="form-select form-select-sm" value={payeeType} onChange={e => setPayeeType(e.target.value)}>
                         <option value="" disabled>Payee Type</option>
-                        <option value="1">Male</option>
-                        <option value="2">Female</option>
+                        <option value="ground-rent">Ground rent</option>
+                        <option value="sewage">sewage</option>
+                        <option value="land-maintenance">Land maintenance</option>
+                        <option value="property">Property</option>
+                        <option value="facility-usage">Facility usage</option>
                       </select>
                     </div>
                     </div>
@@ -226,15 +234,19 @@ const PayeeRegister = () => {
                     <div className="col">
                       <select className="form-select form-select-sm" value={sector} onChange={e => setSector(e.target.value)}>
                         <option value="" disabled>Business Sector</option>
-                        <option value="1">Male</option>
-                        <option value="2">Female</option>
+                        <option value="agriculture">Agriculture</option>
+                        <option value="industrial-production">Industrial Production</option>
+                        <option value="mobile-money-vendor">Mobile Money Vendor</option>
+                        <option value="transport">Transport</option>
+                        <option value="restaurants-and-eateries">Restaurants And Eateries</option>
                       </select>
                     </div>
                     <div className="col">
                     <select className="form-select form-select-sm" value={segment} onChange={e => setSegment(e.target.value)}>
                         <option value="" disabled>Market Segment</option>
-                        <option value="1">Male</option>
-                        <option value="2">Female</option>
+                        <option value="individual">Individual</option>
+                        <option value="sme">SME</option>
+                        <option value="corporatives">Corporatives</option>
                       </select>
                     </div>
                     </div>

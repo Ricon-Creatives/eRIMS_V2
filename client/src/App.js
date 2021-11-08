@@ -11,6 +11,8 @@ import Dashboard from './Components/Dashboard';
 import PayeeTable from './Components/PayeeTable';
 import PaymentsTable from './Components/PaymentsTable';
 import AgentTable from './Components/AgentTable';
+import Footer from './Components/Footer';
+
 
 function App() {
 
@@ -33,6 +35,8 @@ function App() {
             < Route exact path='/agent-table' component = {AgentTable} />
             </Switch>
         </main>
+        <Footer />
+
       </div>
 
     </div>

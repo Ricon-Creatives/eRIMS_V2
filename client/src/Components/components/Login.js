@@ -1,70 +1,111 @@
 import React,{useState,useEffect} from 'react';
 import logo from "../../logo-03.png";
-import axios from 'axios'
 import { useHistory } from 'react-router-dom';
+import axios from 'axios';
+import swal from 'sweetalert';
 
 const Login = () => {
-  const history = useHistory();
-  const [queryMessage, setQueryMessage] = useState('');
+    const history = useHistory();
+    const [queryMessage, setQueryMessage] = useState('');
+    const [telNo, setTelNo] = useState('')
+    const [pass, setPass] = useState('')
+    const [authenticated, setAuthenticated] = useState(false);
 
-const [telNo, setTelNo] = useState('')
-const [pass, setPass] = useState('')
+    const refresh = () =>{  
+      window.location.reload(false)
+    }
 
-const [authenticated, setAuthenticated] = useState(false);
+    
+    const resumer = () =>{
+      const token = JSON.parse(localStorage.getItem('token'));
+      const agent = JSON.parse(localStorage.getItem('agent'));
+      if(!agent && !token){
+        console.log('Good to see you today, please login to begin')
+      }else if(!token){
+        console.log('No token found please log in')
+      }else{
+        console.log(agent);
+        console.log(token);
 
-const refresh = () =>{  
-  window.location.reload(false)
-}
+        const options = {
+          params:{
+            msg: 'clear'
+          },
 
-useEffect(() => {
+          headers:{
+            'x-auth-token':token
+          }
+        }
+        axios.get('api/auth/verify-token',options)
+        .then((res)=>{
+          if(!res){
+            console.log('logged you out token expired');
+            swal("Please Log In", "You were logged out because your token expired", "error");
+          }else{
+            console.log('Welcome back, please head on to your dashboard')
+            swal(`${agent.name} `, "Already Logged In: Welcome Back", "success");
+            history.push("/dashboard")
+          }
+        })
+        
+      }
+    }
 
-}, []);
 
+    const login = (e) =>{
+      e.preventDefault();
+      console.log(`${telNo},${pass}`)
 
-
- const login = (e) =>{
-   e.preventDefault();
-   console.log(`${telNo},${pass}`)
-
-   const data = {
-     tel_no:telNo,
-     password:pass
-   }
-
-    axios.post('api/auth', data)
-    .then((res) => {
-
-      const loggedUser = res.data
-      const {token, user,message,auth}  = loggedUser
-      const {id,name,phone,userlevel,last_seen} = user
-
-     const agent = {
-       id:id,
-      name:name,
-      phone:phone,
-      level:userlevel,
-      see:last_seen
-    }  
-
-      
-      if(auth == true){
-        setAuthenticated(true)
-        localStorage.setItem('token', JSON.stringify(token))
-        localStorage.setItem('agent', JSON.stringify(agent))
-  
-        const checker = localStorage.getItem('agent')
-        console.log(checker)
-
-        history.push("/dashboard");
-        window.location.reload(false)
-      } 
-
-      else{
-          setQueryMessage(message)
+      const data = {
+        tel_no:telNo,
+        password:pass
       }
 
-    })
- }
+        axios.post('api/auth', data)
+        .then((res) => {
+
+          const loggedUser = res.data
+          const {token, user,message,auth}  = loggedUser
+          const {id,name,phone,userlevel,last_seen} = user
+
+        const agent = {
+          id:id,
+          name:name,
+          phone:phone,
+          level:userlevel,
+          see:last_seen
+        }  
+
+          
+          if(auth == true){
+            setAuthenticated(true)
+            localStorage.setItem('token', JSON.stringify(token))
+            localStorage.setItem('agent', JSON.stringify(agent))
+      
+            const checker = localStorage.getItem('agent')
+            console.log(checker)
+
+            history.push("/dashboard");
+            window.location.reload(false)
+          } 
+
+          else{
+              setQueryMessage(message)
+          }
+
+        })
+    }
+
+
+ 
+    useEffect(() => {
+      resumer()
+    }, []);
+
+
+
+
+
 
     return (
         <div className="container">

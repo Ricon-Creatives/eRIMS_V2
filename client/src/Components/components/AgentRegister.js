@@ -32,6 +32,23 @@ const AgentRegister = () => {
 
 
 
+  //Send SMS Receipt 
+  const sendReceipt = () => {
+    const today = moment();
+    const time = moment(today).format("hh:mm:ss a");
+    
+    //SMS message to sender
+    const SMS = `Congratulations ${fullname}! Your eRIMS account has been successfully created at ${time}`
+    const number = '233'+parseInt(phone, 10)
+    console.log(number)
+    console.log(SMS)
+
+    axios.post(`http://sms.apavone.com:8080/bulksms/bulksms?username=tsg-teksup&password=Mirlin12&type=0&dlr=0&destination=${number}&source=eRIMS&message=${SMS}`)
+           
+ }
+
+
+
   const Authenticate = () =>{
     const token = JSON.parse(localStorage.getItem('token'));
     const sAgent = JSON.parse(localStorage.getItem('agent'));
@@ -75,12 +92,6 @@ const AgentRegister = () => {
         }
       }
 
-    const time = moment()
-    const SMS = `Congratulations ${fullname}! Your account has been successfully created at ${time}`
-    const number = '233'+parseInt(phone, 10)
-    console.log(number)
-    console.log(SMS)
-
     axios.post('api/user/register', data,options)
     .then((res) => {
         console.log(res.data);
@@ -92,14 +103,14 @@ const AgentRegister = () => {
         }else{
           clearFields();
           swal(`${fullname} `, "has been registered successfully", "success");
-          axios.post(`http://sms.apavone.com:8080/bulksms/bulksms?username=tsg-teksup&password=Mirlin12&type=0&dlr=0&destination=${number}&source=eRIMS&message=${SMS}`)
-          
+          sendReceipt();
           history.push('/agent-table')
-
-
+        }
     })
 
   }
+
+
 
 
   useEffect(() => {
