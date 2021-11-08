@@ -19,10 +19,24 @@ const Checkout = () => {
   const [reason, setReason] = useState("");
   const [fullname, setFullname] = useState("");
   const [payType, setPayType] = useState("");
-  const [isCash, setIsCash] = useState(false);
+  const [isCash, setIsCash] = useState(true);
  
     
+   //Send Receipt 
+   const sendReceipt = () => {
+    const today = moment();
+    const time = moment(today).format("hh:mm:ss a");
+    
+    //SMS message to sender
+    const SMS = `Confirmed.Your payment of GHC ${amount} has been recieved at ${time}`
+    const number = '233'+parseInt(momoNumber, 10)
+    console.log(number)
 
+    axios.post(`http://sms.apavone.com:8080/bulksms/bulksms?username=tsg-teksup&password=Mirlin12&type=0&dlr=0&destination=${number}&source=eRIMS&message=${SMS}`)
+  }
+  
+
+ //
   const submit = () =>{
     console.log('starting submit')
     const today = moment();
@@ -62,28 +76,21 @@ const Checkout = () => {
       console.log(payeeData)
       const {payment_type, payee_name, tel_no}= payeeData;
       swal(`${payee_name}'s`," payment has been received successfully", "success");
+
+      sendReceipt();
+
       history.push("/payment-table")     
     })
     }
     
-    const today = moment();
-    const time = moment(today).format("hh:mm:ss a");
     
-    //SMS message to sender
-    const SMS = `Confirmed.Your payment of GHC ${amount} has been recieved at ${time}`
-    const number = '233'+parseInt(momoNumber, 10)
-   console.log(number)
 
     const completePayment = () =>{
       submit();
       history.push("/")
     }
     
-    //Send Receipt 
-    const sendReceipt = () => {
-      axios.post(`http://sms.apavone.com:8080/bulksms/bulksms?username=tsg-teksup&password=Mirlin12&type=0&dlr=0&destination=${number}&source=eRIMS&message=${SMS}`)
-    }
-    
+   //
     const componentProps = {
       email:'andreakumah@gmail.com',    
       amount: amount*100,
@@ -98,7 +105,6 @@ const Checkout = () => {
       className:"btn btn-classic btn-sm my-4",  
       onSuccess: () => {
                   completePayment();
-                  sendReceipt();
                 } 
               ,
       onClose: () => 

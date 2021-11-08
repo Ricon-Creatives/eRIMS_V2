@@ -2,7 +2,7 @@ import React from 'react';
 import {useState, useEffect} from 'react';
 import axios from 'axios';
 import { useHistory } from 'react-router';
-import moment, { duration } from 'moment';
+import moment from 'moment';
 import Pagination from './components/Pagination'
 
 const PaymentsTable = () => {
