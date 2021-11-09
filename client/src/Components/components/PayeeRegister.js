@@ -54,16 +54,36 @@ const PayeeRegister = () => {
   }
 
 
+
+
+
     const sendReceipt = (tel) =>{
-      const today = moment();
-      const time = moment(today).format("hh:mm:ss a");
-      //Send Message
-      const SMS = `Congratulations! Your customer account has been registered successfully at ${time}`
+      console.log('receipt started')
+      const token = JSON.parse(localStorage.getItem('token'));
+      const agent = JSON.parse(localStorage.getItem('agent'));
+      const {id, name, phone, level, see} = agent;
       const number = '233'+parseInt(tel, 10)
       console.log(number)
-      axios.post(`http://sms.apavone.com:8080/bulksms/bulksms?username=tsg-teksup&password=Mirlin12&type=0&dlr=0&destination=${number}&source=eRIMS&message=${SMS}`)
+
+      const options = {
+        params:{
+          num: number
+        },
+        headers:{
+          'x-auth-token' : token
+        }
+      }     
+      //Send Message
+      axios.get('api/payee/sms',options)
+      .then((res)=>{
+        console.log('sms fired')
+      })
 
     }
+
+
+
+
 
 
   const register = (e) => {

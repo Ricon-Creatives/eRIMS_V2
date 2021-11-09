@@ -1,12 +1,20 @@
 import React from 'react';
 import { Card, Button } from "reactstrap";
+import { useHistory } from 'react-router';
 
 
 
 
 const AgentsUI = (props) => {
     const { collectors, collectorNumber } = props;
-    console.log(collectors);
+    const history = useHistory();
+    
+    if(collectors.msg === 'token is not valid'){
+        console.log('your token has expired please login once more');
+        history.push('/')
+    }else{
+        console.log(collectors);
+    }
     
     return (
         <div className="card bg-light spacer border-dark mb-3">

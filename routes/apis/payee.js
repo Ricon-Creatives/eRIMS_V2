@@ -2,6 +2,35 @@ const express = require('express');
 const router = express.Router();
 const Payee = require('../../models/Payee');
 const auth = require('../../middleware/auth');
+const cors = require('cors')
+const axios = require('axios')
+const moment = require('moment');
+
+
+//@route GET api/payee/sms
+//@desc Send Sms when payee is registered
+//@access Private*
+router.get('/sms', auth, async function (req, res){
+    try{
+        const today = moment();
+        const time = moment(today).format("hh:mm:ss a");
+        const number = req.query.num;
+
+        const SMS = `Congratulations! Your customer account has been registered successfully at ${time}`;
+
+        await axios.get(`http://sms.apavone.com:8080/bulksms/bulksms?username=tsg-teksup&password=Mirlin12&type=0&dlr=0&destination=${number}&source=eRIMS&message=${SMS}`)
+            .then(response =>{
+                console.log(response);
+                res.json('Check for message')
+            })
+    }catch(err){
+        console.log(err)
+    }
+});
+
+
+
+
 
 
 //@route GET api/payee

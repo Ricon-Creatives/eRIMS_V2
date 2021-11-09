@@ -69,8 +69,12 @@ const Dashboard = () => {
                 const collectors = res.data;
                 const count = collectors.length;
                 console.log(collectors)
-                setCollectors(collectors)
-                setCollectorNumber(count)
+                if(collectors.msg === 'token is not valid'){
+                    history.push('/')
+                }else{
+                    setCollectors(collectors)
+                    setCollectorNumber(count)
+                }                
             })
 
         }else{
@@ -100,8 +104,12 @@ const Dashboard = () => {
         if(level === 'SuperUser'){
             axios.get('api/payee/', options)
             .then(res =>{
+                const payees = res.data
                 if(!res){
                     alert('there was a problem with your request')
+                }else if(payees.msg === 'token is not valid'){
+                    history.push('/')
+                    console.log('Your token has expired, please log in once more')
                 }else{
                     const clients = res.data;
                     console.log(clients);
@@ -114,8 +122,12 @@ const Dashboard = () => {
         }else{
             axios.get('api/payee/for', options)
             .then(res =>{
+                const payees = res.data
                 if(!res){
                     alert('there was a problem with your request')
+                }else if(payees.msg === 'token is not valid'){
+                    history.push('/')
+                    console.log('Your token has expired, please log in once more')
                 }else{
                     const clients = res.data;
                     console.log(clients);
@@ -149,9 +161,12 @@ const Dashboard = () => {
         }
         axios.get('api/payments/daily', options)
         .then(res =>{
-            
+            const transactions = res.data;
             if(!res){
                 alert('there was a problem with your request')
+            }else if(transactions.msg === 'token is not valid'){
+                history.push('/')
+                console.log('Your token is expired, please log in once more')
             }else{
                 const dailytrans = res.data;
                 console.log(dailytrans);
@@ -187,6 +202,9 @@ const Dashboard = () => {
             const mtrevenue = res.data;
             if(!res){
                 alert('there was a problem with your request')
+            }else if(mtrevenue.msg === 'token is not valid'){
+                history.push('/')
+                console.log('Your token is expired, please log in once more')
             }else{
                 console.log(mtrevenue);
                 const count = mtrevenue.length;
@@ -224,6 +242,9 @@ const Dashboard = () => {
             const ytrevenue = res.data;
             if(!res){
                 alert('there was a problem with your request')
+            }else if(ytrevenue.msg === 'token is not valid'){
+                history.push('/');
+                console.log('Your token is expired, please log in once more')
             }else{
                 console.log(ytrevenue)
                 const count = ytrevenue.length;
@@ -270,12 +291,6 @@ const Dashboard = () => {
 
                             <div className="row">
                                 <div className="col-md-3">
-                                    <AgentsUI collectors = {collectors} collectorNumber={collectorNumber}/>
-                                </div>
-                            </div>
-
-                            <div className="row">
-                                <div className="col-md-3">
                                     <PayeeUI payeeCount= {payeeCount} payees= {payees} />
                                 </div>
 
@@ -294,20 +309,12 @@ const Dashboard = () => {
 
 
 
-                            <div className="row gap">
-
-                            </div>
-
-
-
                             <div className="row">
-                                <h3>Data Visualization</h3>
                                 <div className="col-md-4">
-                                    <AgentPerfromanceChart payees={payees} payeeCount={payeeCount} apt={apt} aptCount={aptCount} 
-                                    aptAmount={aptAmount} apm={apm} apmCount={apmCount} apmAmount={apmAmount} apy={apy} 
-                                    apyCount={apyCount} apyAmount={apyAmount} collectors = {collectors} collectorNumber={collectorNumber}/>
-                                    <h4>Registered Tax Payers Per Agent</h4>
+                                    <div className="row gap"></div>
+                                    <AgentsUI collectors = {collectors} collectorNumber={collectorNumber}/>
                                 </div>
+                                
                          
                                 <div className="col-md-4">
 
@@ -316,7 +323,7 @@ const Dashboard = () => {
                                     <RevenueTracker payees={payees} payeeCount={payeeCount} apt={apt} aptCount={aptCount} 
                                     aptAmount={aptAmount} apm={apm} apmCount={apmCount} apmAmount={apmAmount} apy={apy} 
                                     apyCount={apyCount} apyAmount={apyAmount} collectors = {collectors} collectorNumber={collectorNumber}/>
-                                    <h4>Revenue Per Month</h4>
+                                    <h4></h4>
                                 </div>
 
                            
@@ -327,7 +334,19 @@ const Dashboard = () => {
                                     <GrowthTracker payees={payees} payeeCount={payeeCount} apt={apt} aptCount={aptCount} 
                                     aptAmount={aptAmount} apm={apm} apmCount={apmCount} apmAmount={apmAmount} apy={apy} 
                                     apyCount={apyCount} apyAmount={apyAmount} collectors = {collectors} collectorNumber={collectorNumber}/>
-                                    <h4>Tax Payer Increase (Monthly)</h4>
+                                    <h4></h4>
+                                </div>
+                            </div>
+
+
+
+
+                            <div className="row">
+                                <div className="col-md-4">
+                                    <AgentPerfromanceChart payees={payees} payeeCount={payeeCount} apt={apt} aptCount={aptCount} 
+                                    aptAmount={aptAmount} apm={apm} apmCount={apmCount} apmAmount={apmAmount} apy={apy} 
+                                    apyCount={apyCount} apyAmount={apyAmount} collectors = {collectors} collectorNumber={collectorNumber}/>
+                                    
                                 </div>
                             </div>
                             

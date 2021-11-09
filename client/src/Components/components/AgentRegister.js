@@ -3,7 +3,6 @@ import background from '../../background.png'
 import axios from 'axios'
 import { useHistory } from 'react-router-dom';
 import swal from 'sweetalert';
-import moment from 'moment';
 
 const AgentRegister = () => {
   const history = useHistory();
@@ -34,17 +33,28 @@ const AgentRegister = () => {
 
   //Send SMS Receipt 
   const sendReceipt = () => {
-    const today = moment();
-    const time = moment(today).format("hh:mm:ss a");
-    
-    //SMS message to sender
-    const SMS = `Congratulations ${fullname}! Your eRIMS Agent account has been successfully created at ${time}`
-    const number = '233'+parseInt(phone, 10)
-    console.log(number)
-    console.log(SMS)
+    console.log('receipt started')
+    const token = JSON.parse(localStorage.getItem('token'));
+    const agent = JSON.parse(localStorage.getItem('agent'));
 
-    axios.post(`http://sms.apavone.com:8080/bulksms/bulksms?username=tsg-teksup&password=Mirlin12&type=0&dlr=0&destination=${number}&source=eRIMS&message=${SMS}`)
-           
+    const number = '233'+parseInt(phone, 10)
+    console.log(number)  
+    //SMS message to sender
+    const options = {
+      params:{
+        uname: phone,
+        num: number,
+        name: fullname
+      },
+      headers:{
+        'x-auth-token' : token
+      }
+    }     
+    //Send Message
+    axios.get('api/agents/sms',options)
+    .then((res)=>{
+      console.log('sms fired')
+    })         
  }
 
 

@@ -25,15 +25,26 @@ const Checkout = () => {
     
    //Send Receipt 
    const sendReceipt = () => {
-    const today = moment();
-    const time = moment(today).format("hh:mm:ss a");
-    
-    //SMS message to sender
-    const SMS = `Confirmed.Your payment of GHC ${amount} has been recieved at ${time}`
+    console.log('receipt started')
+    const token = JSON.parse(localStorage.getItem('token'));
     const number = '233'+parseInt(momoNumber, 10)
-    console.log(number)
 
-    axios.post(`http://sms.apavone.com:8080/bulksms/bulksms?username=tsg-teksup&password=Mirlin12&type=0&dlr=0&destination=${number}&source=eRIMS&message=${SMS}`)
+    console.log(number)  
+    //SMS message to sender
+    const options = {
+      params:{
+        num: number,
+        amount: amount
+      },
+      headers:{
+        'x-auth-token' : token
+      }
+    }     
+    //Send Message
+    axios.get('api/payments/sms',options)
+    .then((res)=>{
+      console.log('sms fired')
+    })         
   }
   
 

@@ -61,15 +61,18 @@ const AgentTable = () => {
 
         axios.get('api/agents/', options)
         .then(res =>{
+            const agents = res.data
             if(!res){
                 alert('there was a problem with your request')
+            }else if(agents.msg === 'token is not valid'){
+                history.push('/');
+                console.log('Your token is expired, please log in once more')
             }else{
-                const clients = res.data;
-                console.log(clients);
-                const count = clients.length;
+                console.log(agents);
+                const count = agents.length;
                 console.log(count);
-                setAgents(clients);
-                setData(clients)
+                setAgents(agents);
+                setData(agents)
             }
         })
     }

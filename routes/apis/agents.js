@@ -2,13 +2,45 @@ const express = require('express');
 const router = express.Router();
 const Agents = require('../../models/Agents');
 const auth = require('../../middleware/auth');
+const axios = require('axios')
+const moment = require('moment')
+
+
+
+//@route GET api/agent/sms
+//@desc Send Sms when payee is registered
+//@access Private*
+router.get('/sms', auth, async function (req, res){
+    try{
+        const today = moment();
+        const time = moment(today).format("hh:mm:ss a");
+        const number = req.query.num;
+        const fullname = req.query.name;
+        const username = req.query.uname;
+
+        const SMS = `Congratulations ${fullname}! Your eRIMS Agent account has been successfully created at ${time}. 
+        Your Username is ${username} and your password is '12345'`;
+
+        await axios.get(`http://sms.apavone.com:8080/bulksms/bulksms?username=tsg-teksup&password=Mirlin12&type=0&dlr=0&destination=${number}&source=eRIMS&message=${SMS}`)
+            .then(response =>{
+                console.log(response);
+                res.json('Check for message')
+            })
+    }catch(err){
+        console.log(err)
+    }
+});
+
+
+
+
 
 
 //@route GET api/agents
 //@desc Gets all tax agents registered in the system
 //@access Private*
 router.get('/', auth, (req, res) => {
-        Agents.findAll({
+        Agents.findAll({ 
             where:{
                 role:'agent'
             }

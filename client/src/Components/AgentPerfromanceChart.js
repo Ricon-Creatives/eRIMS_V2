@@ -70,7 +70,18 @@ const AgentPerfromanceChart = (props) => {
     return (
         <Pie data={data} 
         options={{
-            responsive : true
+            responsive : true,
+            plugins:{
+                legend:{
+                    display: true,
+                    position: 'left'
+                },
+                title: {
+                    display: true,
+                    text: 'Tax-Payers Per Agent',
+                    position:'top'
+                }
+            }
         }}/>
     )
 

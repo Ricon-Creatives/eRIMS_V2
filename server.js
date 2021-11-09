@@ -10,7 +10,9 @@ const app = express();
 app.use(bp.json())
 app.use(bp.urlencoded({ extended: true }))
 
-app.use(cors())
+app.use(cors({
+    origin:"*"
+}))
 
 const db = require('./config/db.js');
 

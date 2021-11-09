@@ -5,6 +5,33 @@ const Payments = require('../../models/Payments');
 const Agent = require('../../models/Agents');
 const Payee = require('../../models/Payee');
 const auth = require('../../middleware/auth');
+const axios = require('axios')
+const moment = require('moment')
+
+
+
+//@route GET api/payments/sms
+//@desc Send Sms when payee is registered
+//@access Private*
+router.get('/sms', auth, async function (req, res){
+    try{
+        const today = moment();
+        const time = moment(today).format("hh:mm:ss a");
+        const number = req.query.num;
+        const amount = req.query.amount;
+        console.log(number);
+
+        const SMS = `Confirmed.Your payment of GHC ${amount} has been recieved at ${time}`
+        //SMS message to sender     
+        await axios.post(`http://sms.apavone.com:8080/bulksms/bulksms?username=tsg-teksup&password=Mirlin12&type=0&dlr=0&destination=${number}&source=eRIMS&message=${SMS}`)
+        .then(response =>{
+            console.log(response);
+            res.json('Check for message')
+        })
+    }catch(err){
+        console.log(err)
+    }
+});
 
 
 
@@ -14,7 +41,7 @@ const auth = require('../../middleware/auth');
 //@route GET api/payments/verify
 //@desc Gets all tax payers registered in the system
 //@access Private*
-router.get('/verify', (req, res) =>{
+router.get('/verify', (req, res) =>{ 
     const phone = req.query.phone;
     console.log(phone)
     if(!phone){
