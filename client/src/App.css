@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Lato:wght@400;700&display=swap');
+
 .App{
   min-height: 100%;
   margin-bottom: 0px;
@@ -5,7 +7,7 @@
 
 body {
   background-color: #F5F6F9 !important;
-}
+  font-family: ‘Lato’, sans-serif;}
 
 .neg-bottom{
   margin-bottom: -40px;
@@ -81,6 +83,10 @@ color: #fff !important;
 color: #fff !important;
 }
 
+a{
+  color:#1B8697;
+  text-decoration: none;
+}
 
 .btn-classicals{
   color: #fff !important;
@@ -207,6 +213,8 @@ input.myInputSearch{
 
 .profile-badge{
   margin-bottom: 5rem;
+  font-weight: 700;
+  color: #1B8697;
 }
 
 .greeting {
