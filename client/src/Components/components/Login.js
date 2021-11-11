@@ -4,6 +4,14 @@ import { useHistory } from 'react-router-dom';
 import axios from 'axios';
 import swal from 'sweetalert';
 
+
+
+
+const refresh = () =>{  
+  window.location.reload(false)
+}
+
+
 const Login = () => {
     const history = useHistory();
     const [queryMessage, setQueryMessage] = useState('');
@@ -11,9 +19,13 @@ const Login = () => {
     const [pass, setPass] = useState('')
     const [authenticated, setAuthenticated] = useState(false);
 
-    const refresh = () =>{  
-      window.location.reload(false)
+
+    const Logout =() =>{
+      localStorage.removeItem('agent');
+      localStorage.removeItem('token');
+      refresh();
     }
+    
 
     
     const resumer = () =>{
@@ -42,16 +54,19 @@ const Login = () => {
           console.log(res)
           if(!res){
             console.log('logged you out token expired');
+            Logout()
             swal("Please Log In", "You were logged out because your token expired", "error");
           }else if(message === 'token is not valid'){
-            history.push("/")
+            Logout()
+            swal("Please Log In", "You were logged out because your token expired", "error");
             console.log('your token has expired try logging in again')
           }else if(message === 'Copy, still valid champ'){
             console.log('Welcome back, please head on to your dashboard')
             swal(`${agent.name} `, "Already Logged In: Welcome Back", "success");
             history.push("/dashboard")
           }else{
-            history.push("/")
+            Logout()
+            swal("Please Log In", "You were logged out because your token expired", "error");
             console.log('dunnoe wats wrong but just login again to fix it aiit')
           }
         })

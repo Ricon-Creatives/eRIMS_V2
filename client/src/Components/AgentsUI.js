@@ -22,7 +22,7 @@ const AgentsUI = (props) => {
                 <p className="card-title">Registered Agents</p>
                 
                 <div className="card-subtitle mb-2 text-muted">
-                    <a href="/payee-table"><h2>{collectorNumber}</h2></a>
+                    <a href="/agent-table"><h2>{collectorNumber}</h2></a>
                 </div>
                 <p>Registered Agents on the system</p>
             </div>

@@ -23,9 +23,8 @@ class MainMenu extends React.Component {
         <div className="menu_icon">   
             <Menu  right customBurgerIcon={ <img src={bars} /> }>
                 <ProfileBadge /><br/>
-                <br/><br/><br/><br/>
                 <DashboardButton /><br/>
-                <AgentButton />
+                <AgentButton /><br/>
                 <MainFormButton /><br/>
                 <TransactionFormButton /><br/>
                 <LogoutButton /><br/>

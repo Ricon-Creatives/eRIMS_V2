@@ -2,6 +2,7 @@ import React from 'react';
 import {useState, useEffect} from 'react';
 import axios from 'axios';
 import { useHistory } from 'react-router';
+import swal from 'sweetalert';
 
 const AgentTable = () => {
     const [isAuthorized, setIsAuthorized] = useState(false);
@@ -10,23 +11,27 @@ const AgentTable = () => {
     const [search, setSearch] = useState('');
     const token = JSON.parse(localStorage.getItem('token'));
     const sAgent = JSON.parse(localStorage.getItem('agent'));
-    const {id, name, phone, user_rank, see} = sAgent;
     const history = useHistory(); 
 
 
     const Authenticate = () =>{
         const token = JSON.parse(localStorage.getItem('token'));
         const agent = JSON.parse(localStorage.getItem('agent'));
-        const {id, full_name, tel_no, level, see} = agent;
-        const rank = level;
-        console.log(rank)
-        if(rank !== 'SuperUser'){
-            history.push('/dashboard')
-        }else if(rank === 'Agent'){
-            alert('You are not authorized to view this page')
-            history.push('/dashboard')
+        if(!agent || !token ||!agent && !token || agent && !token || !agent && token){
+            history.push('/');
+            swal("Please Log In", "You were logged out because your token expired", "error");
         }else{
-            setIsAuthorized(true);
+            const {id, full_name, tel_no, level, see} = agent;
+            const rank = level;
+            console.log(rank)
+            if(rank !== 'SuperUser'){
+                history.push('/dashboard')
+            }else if(rank === 'Agent'){
+                alert('You are not authorized to view this page')
+                history.push('/dashboard')
+            }else{
+                setIsAuthorized(true);
+            }
         }
     }
 
@@ -46,35 +51,42 @@ const AgentTable = () => {
 
 
     const agentLoadout = () =>{
-        console.log(id);
-        const sAgent_id = Number(id);
-        const options={ 
+        if(!sAgent || !token ||!sAgent && !token || sAgent && !token || !sAgent && token){
+            history.push('/');
+            swal("Please Log In", "You were logged out because your token expired", "error");
+        }else{
             
-            params:{
-                id
-            },
+            const {id, name, phone, user_rank, see} = sAgent;
+            console.log(id);
+            const sAgent_id = Number(id);
+            const options={ 
+                
+                params:{
+                    id
+                },
 
-            headers:{
-                'x-auth-token':token
-              }
-        }
-
-        axios.get('api/agents/', options)
-        .then(res =>{
-            const agents = res.data
-            if(!res){
-                alert('there was a problem with your request')
-            }else if(agents.msg === 'token is not valid'){
-                history.push('/');
-                console.log('Your token is expired, please log in once more')
-            }else{
-                console.log(agents);
-                const count = agents.length;
-                console.log(count);
-                setAgents(agents);
-                setData(agents)
+                headers:{
+                    'x-auth-token':token
+                }
             }
-        })
+
+            axios.get('api/agents/', options)
+            .then(res =>{
+                const agents = res.data
+                if(!res){
+                    alert('there was a problem with your request')
+                }else if(agents.msg === 'token is not valid'){
+                    history.push('/');
+                    console.log('Your token is expired, please log in once more')
+                }else{
+                    console.log(agents);
+                    const count = agents.length;
+                    console.log(count);
+                    setAgents(agents);
+                    setData(agents)
+                }
+            })
+        }
     }
 
 

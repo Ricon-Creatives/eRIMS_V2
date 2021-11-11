@@ -2,7 +2,8 @@ import React from 'react';
 import {useState, useEffect} from 'react';
 import axios from 'axios';
 import { useHistory } from 'react-router';
-import Pagination from './components/Pagination'
+import Pagination from './components/Pagination';
+import swal from 'sweetalert';
 
 
 const PayeeTable = () => {
@@ -11,7 +12,6 @@ const PayeeTable = () => {
     const [search, setSearch] = useState('');
     const token = JSON.parse(localStorage.getItem('token'));
     const agent = JSON.parse(localStorage.getItem('agent'));
-    const {id, name, phone, level, see} = agent;
     const history = useHistory(); 
     const [currentPage, setcurrentPage] = useState(1)
     const [postPerPage, setPostPerPage] = useState(10)
@@ -26,53 +26,66 @@ const PayeeTable = () => {
         }
     }
 
+
+
+
     const payeeLoadout = () =>{
-        console.log(id);
-        const agent_id = Number(id);
-        console.log(agent_id);
-
-        const options={ 
-            
-            params:{
-                agent_id
-            },
-
-            headers:{
-                'x-auth-token':token
-              }
-        }
-
-        if(level === 'SuperUser'){
-            axios.get('api/payee/', options)
-            .then(res =>{
-                if(!res){
-                    alert('there was a problem with your request')
-                }else{
-                    const clients = res.data;
-                    console.log(clients);
-                    const count = clients.length;
-                    console.log(count);
-                    setPayees(clients);
-                    setData(clients)
-                }
-            })
+        if(!agent || !token ||!agent && !token || agent && !token || !agent && token){
+            history.push('/');
+            swal("Please Log In", "You were logged out because your token expired", "error");
         }else{
-            axios.get('api/payee/for', options)
-            .then(res =>{
-                if(!res){
-                    alert('there was a problem with your request')
-                }else{
-                    const clients = res.data;
-                    console.log(clients);
-                    const count = clients.length;
-                    console.log(count);
-                    setPayees(clients);
-                    setData(clients)
+            
+            const {id, name, phone, level, see} = agent;
+            console.log(id);
+            const agent_id = Number(id);
+            console.log(agent_id);
+
+            const options={ 
+                
+                params:{
+                    agent_id
+                },
+
+                headers:{
+                    'x-auth-token':token
                 }
-            })
+            }
+
+            if(level === 'SuperUser'){
+                axios.get('api/payee/', options)
+                .then(res =>{
+                    if(!res){
+                        alert('there was a problem with your request')
+                    }else{
+                        const clients = res.data;
+                        console.log(clients);
+                        const count = clients.length;
+                        console.log(count);
+                        setPayees(clients);
+                        setData(clients)
+                    }
+                })
+            }else{
+                axios.get('api/payee/for', options)
+                .then(res =>{
+                    if(!res){
+                        alert('there was a problem with your request')
+                    }else{
+                        const clients = res.data;
+                        console.log(clients);
+                        const count = clients.length;
+                        console.log(count);
+                        setPayees(clients);
+                        setData(clients)
+                    }
+                })
+            }
         }
-        
     }
+
+
+
+
 
     const FilterData = (e) => {
         e.preventDefault();

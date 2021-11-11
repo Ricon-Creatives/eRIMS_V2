@@ -28,7 +28,7 @@ padding:10px;
 
 .btn-classic{
   color: #fff !important;
-    background-color: #483248 !important;
+    background-color: #0F6475 !important;
     border-color: #483248 !important;
 }
 
@@ -69,7 +69,7 @@ color: #fff !important;
   width:inherit;
   justify-content:center;
   text-align: center;
-  background-color:#483248;
+  background-color:#003345;
   color:white;
   padding-top: 15px;
 }
@@ -156,7 +156,7 @@ opacity: 0.9 !important;
 }
 
 .bg-classic{
-  background-color: #483248 !important;
+  background-color: #003345 !important;
   color: #fff !important;
 }
 .form-control:focus{
@@ -229,6 +229,10 @@ input.myInputSearch{
 table {
   border-collapse: collapse;
   width: 100%;
+}
+
+th{
+  background-color: #0F6475 !important
 }
 
 thead,

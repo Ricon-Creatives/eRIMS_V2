@@ -62,15 +62,20 @@ const AgentRegister = () => {
   const Authenticate = () =>{
     const token = JSON.parse(localStorage.getItem('token'));
     const sAgent = JSON.parse(localStorage.getItem('agent'));
-    const {id, name, phone, level, see} = sAgent;
-    const rank = level;
-    if(rank !== 'SuperUser' && !token){
-        history.push('/dashboard')
-    }else if(rank === 'Agent'){
-        alert('You are not authorized to view this page')
-        history.push('/dashboard')
+    if(!sAgent || !token ||!sAgent && !token || sAgent && !token || !sAgent && token){
+      history.push('/');
+      swal("Please Log In", "You were logged out because your token expired", "error");
     }else{
-        setIsAuthorized(true);
+        const {id, name, phone, level, see} = sAgent;
+        const rank = level;
+        if(rank !== 'SuperUser' && !token){
+            history.push('/dashboard')
+        }else if(rank === 'Agent'){
+            alert('You are not authorized to view this page')
+            history.push('/dashboard')
+        }else{
+            setIsAuthorized(true);
+        }
     }
   }
 
