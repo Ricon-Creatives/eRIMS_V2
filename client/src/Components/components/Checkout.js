@@ -185,7 +185,7 @@ const Checkout = () => {
                                 value={momoNumber} onChange={e =>setMomo(e.target.value)} required/>
                           </div>
                           <div className="col-md-3">
-                                <button className="btn btn-sm btn-classic" onClick={verify}>Verify</button>
+                                <button className="btn btn-sm btn-classics" onClick={verify}>Verify</button>
                           </div>
                         </div>
 

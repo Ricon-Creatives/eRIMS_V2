@@ -50,15 +50,15 @@ const Login = () => {
         }
         axios.get('api/auth/verify-token',options)
         .then((res)=>{
-          const message = res.msg
+          const message = res.data
           console.log(res)
-          if(!res){
+          if(!message){
             console.log('logged you out token expired');
             Logout()
-            swal("Please Log In", "You were logged out because your token expired", "error");
+            swal("Please Log In", "Your prvious session expired", "error");
           }else if(message === 'token is not valid'){
             Logout()
-            swal("Please Log In", "You were logged out because your token expired", "error");
+            swal("Please Log In", "Your prvious session expired", "error");
             console.log('your token has expired try logging in again')
           }else if(message === 'Copy, still valid champ'){
             console.log('Welcome back, please head on to your dashboard')
@@ -66,7 +66,7 @@ const Login = () => {
             history.push("/dashboard")
           }else{
             Logout()
-            swal("Please Log In", "You were logged out because your token expired", "error");
+            swal("Please Log In", "Your prvious session expired", "error");
             console.log('dunnoe wats wrong but just login again to fix it aiit')
           }
         })

@@ -337,10 +337,8 @@ const Dashboard = () => {
                 
 
                 <div className="row components">
-                        <Jumbotron className="profile-badge">
-                            <h1>{`Hello, ${agentName}`}</h1>
-                            {/*<p className="">{agentName}</p>*/}
-                            
+                        <Jumbotron>
+                            <h1 className="profile-badge">{`Hello, ${agentName}`}</h1>                            
                         </Jumbotron>
 
                             <div className="row">
