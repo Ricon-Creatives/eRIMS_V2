@@ -17,15 +17,20 @@ router.get('/sms', auth, async function (req, res){
     try{
         const today = moment();
         const time = moment(today).format("hh:mm:ss a");
+        const day = moment(today).format('dddd');
+        const date = moment().format("DD/MM/YYYY")
         const number = req.query.num;
         const amount = req.query.amount;
-        console.log(number);
-
-        const SMS = `Confirmed.Your payment of GHC ${amount} has been recieved at ${time}`
+        const reason = req.query.reason;
+        
+        const SMS = `Confirmed.Your payment of GHC${amount}, for the purpose of ${reason} has been recieved on ${day} the ${date} at ${time}`
         //SMS message to sender     
         await axios.post(`http://sms.apavone.com:8080/bulksms/bulksms?username=tsg-teksup&password=Mirlin12&type=0&dlr=0&destination=${number}&source=eRIMS&message=${SMS}`)
         .then(response =>{
-            console.log(response);
+            console.log(number);
+            console.log(today);
+            console.log(time);
+            console.log(reason);
             res.json('Check for message')
         })
     }catch(err){

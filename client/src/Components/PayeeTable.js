@@ -54,8 +54,13 @@ const PayeeTable = () => {
             if(level === 'SuperUser'){
                 axios.get('api/payee/', options)
                 .then(res =>{
+                    const reply = res.data;
                     if(!res){
                         alert('there was a problem with your request')
+                    }
+                    else if(reply.msg === 'token is not valid'){
+                        history.push('/');
+                        swal("Please Log In", "You were logged out because your token expired", "error");
                     }else{
                         const clients = res.data;
                         console.log(clients);

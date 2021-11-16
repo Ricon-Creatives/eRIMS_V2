@@ -14,9 +14,11 @@ router.get('/sms', auth, async function (req, res){
     try{
         const today = moment();
         const time = moment(today).format("hh:mm:ss a");
+        const date = moment().format("DD/MM/YYYY")
+        const day = moment(today).format('dddd');
         const number = req.query.num;
 
-        const SMS = `Congratulations! Your customer account has been registered successfully at ${time}`;
+        const SMS = `Congratulations! Your customer account has been registered successfully on ${day} the ${date} at ${time}`;
 
         await axios.get(`http://sms.apavone.com:8080/bulksms/bulksms?username=tsg-teksup&password=Mirlin12&type=0&dlr=0&destination=${number}&source=eRIMS&message=${SMS}`)
             .then(response =>{

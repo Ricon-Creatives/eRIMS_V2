@@ -14,11 +14,13 @@ router.get('/sms', auth, async function (req, res){
     try{
         const today = moment();
         const time = moment(today).format("hh:mm:ss a");
+        const day = moment(today).format('dddd');
+        const date = moment().format("DD/MM/YYYY");
         const number = req.query.num;
         const fullname = req.query.name;
         const username = req.query.uname;
 
-        const SMS = `Congratulations ${fullname}! Your eRIMS Agent account has been successfully created at ${time}. 
+        const SMS = `Congratulations ${fullname}! Your eRIMS Agent account has been successfully created on ${day} the ${date} at ${time}. 
         Your Username is ${username} and your password is '12345'`;
 
         await axios.get(`http://sms.apavone.com:8080/bulksms/bulksms?username=tsg-teksup&password=Mirlin12&type=0&dlr=0&destination=${number}&source=eRIMS&message=${SMS}`)

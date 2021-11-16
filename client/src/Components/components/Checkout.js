@@ -13,13 +13,15 @@ const Checkout = () => {
   const history = useHistory();
   const publicKey = "pk_live_859e5e52b848e1dc3c36600cdc451fe96b8a1394";
   const currency = 'GHS';
-  const channels = ['card', 'bank', 'ussd', 'qr', 'mobile_money', 'bank_transfer']
-  const [amount, setAmount] = useState("");
+  const channels = ['card', 'bank', 'ussd', 'qr', 'mobile_money', 'bank_transfer'];
+  const paytypes = ['Payment-Type', 'Cash', 'Momo', 'Bank-Transfer', 'Qr'];
+  let [payButton, setPayButton] = useState()
+  const [amount, setAmount] = useState(0);
   const [momoNumber, setMomo] = useState("");
   const [reason, setReason] = useState("");
   const [fullname, setFullname] = useState("");
   const [payType, setPayType] = useState("");
-  const [isCash, setIsCash] = useState(true);
+  const [isCash, setIsCash] = useState(false);
  
 
     
@@ -28,13 +30,15 @@ const Checkout = () => {
     console.log('receipt started')
     const token = JSON.parse(localStorage.getItem('token'));
     const number = '233'+parseInt(momoNumber, 10)
-
+    console.log(reason)
+    console.log(amount) 
     console.log(number)  
     //SMS message to sender
     const options = {
       params:{
         num: number,
-        amount: amount
+        amount: amount,
+        reason: reason
       },
       headers:{
         'x-auth-token' : token
@@ -45,11 +49,13 @@ const Checkout = () => {
     .then((res)=>{
       console.log('sms fired')
     })         
-  }
+  } 
   
 
  //
   const submit = () =>{
+    console.log(amount)
+    console.log(reason)
     console.log('starting submit')
     const today = moment();
     const now = moment(today).format("hh:mm:ss a");
@@ -120,26 +126,42 @@ const Checkout = () => {
       onClose: () => 
               swal("Failed"," Please try making the transaction again ", "error"),    
     }
- 
 
 
 
-
-    useEffect(() =>{
-
-    }, []);
-
+    const setPaymentButton = (e) =>{
+      setPayType(e.target.value)
+      console.log(payType)
+      console.log(amount)
+      console.log(reason)
+    }
 
 
     
-    let button;
-    if(isCash === true){
+    
+    
+    useEffect(() =>{
+      if(isCash === true){
           console.log(payType)
-          button = <button className="btn btn-classic" onClick={ submit }>Pay Now</button>
-    }else if (isCash === false){
-          console.log(payType)
-          button =  <PaystackButton {...componentProps} />
-    }
+            setPayButton(<button className="btn btn-classic" onClick={ submit }>Pay Now</button>)
+      }else if (isCash === false){
+            console.log(payType)
+            setPayButton(<PaystackButton {...componentProps} />)
+      }
+    }, [isCash, amount, reason])
+
+    
+    
+
+    
+    useEffect(() =>{
+      if(payType === 'Cash'){
+        setIsCash(true)
+      }else{
+        setIsCash(false)
+      }
+    }, [payType, amount, reason]);
+
 
 
 
@@ -195,12 +217,12 @@ const Checkout = () => {
                       </div>
 
                       <div className="mb-3">
-                      <select className="form-select form-select-sm" value={payType} onChange={e => setPayType(e.target.value)}>
-                            <option value="" disabled>Payment Type</option>
-                            <option value="cash" onClick={() => setIsCash(true)}>Cash</option>
-                            <option value="momo" onClick={() => setIsCash(false)}>Momo</option>
-                            <option value="bank" onClick={() => setIsCash(false)}>Bank</option>
-                            <option value="qr-code" onClick={() => setIsCash(false)}>Qr-code</option>
+                      <select className="form-select form-select-sm" value={payType} onChange={e => setPaymentButton(e)}>
+                            {
+                              paytypes.map(paytype=>
+                                <option value={paytype}>{paytype}</option>
+                              )
+                            }
                         </select>
                       </div>
 
@@ -220,7 +242,7 @@ const Checkout = () => {
 
                       
                       <div className="card-foter d-grid gap-2">
-                        {button}
+                        {payButton}
                       </div>                      
                     </div>
                  </div>
