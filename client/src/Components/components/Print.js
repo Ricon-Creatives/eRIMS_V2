@@ -67,7 +67,7 @@ const Print = () => {
                     Krachi Nchumuru District Assembly
                 </h4>
                     <span style={{ marginRight:5 }}>Date: </span>
-                    <span className="blue">{today}</span>
+                    <span className="blue">{payee.date}</span>
       </div>
 
       <div className="col-2"></div>
