@@ -82,13 +82,13 @@ let ghCedi = Intl.NumberFormat("en-GH", {
               <span style={{ marginRight:10 }}>Customer Name: </span>
               <span>{payee.payee_name}</span>
                                     </li>
+                                    <li style={{display:'flex', justifyContent:'space-between'}}>
+                                        <span style={{ marginRight:10 }}>Location</span>
+                    <span>{payee.location}</span>
+                                    </li>
                                  {/*   <li style={{display:'flex', justifyContent:'space-between'}}>
                 <span style={{ marginRight:10 }}>Customer Code:</span>
                   <span>56656</span>
-                                    </li>
-                                    <li style={{display:'flex', justifyContent:'space-between'}}>
-                                        <span style={{ marginRight:10 }}>Location</span>
-                  <span>Mike Free</span>
                                     </li>
                                     <li style={{display:'flex', justifyContent:'space-between'}}>
                 <span style={{ marginRight:10 }}>Business Type</span>

@@ -277,7 +277,8 @@ router.post('/new', auth, (req, res) => {
         amount: newPayment.amount,
         email: newPayment.email,
         collector: newPayment.collector,
-        remark: newPayment.remark
+        remark: newPayment.remark,
+        location:newPayment.location
     };
 
     const cashPayment = {
@@ -291,6 +292,7 @@ router.post('/new', auth, (req, res) => {
         amount: newPayment.amount,
         email: newPayment.email,
         collector: newPayment.collector,
+        location:newPayment.location,
         remark: 'paid'
     };
 
@@ -333,7 +335,8 @@ router.post('/new', auth, (req, res) => {
                         reason, 
                         amount, 
                         email, 
-                        collector
+                        collector,
+                        location,
                      } = payment
 
                      const amountPyble = amount*100;
@@ -348,6 +351,7 @@ router.post('/new', auth, (req, res) => {
                          payment_type,
                          reason,
                          amount,
+                         location,
                          collector
                      }
 

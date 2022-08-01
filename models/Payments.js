@@ -64,8 +64,11 @@ const Payments = db.define('transactions', {
     remark:{
         type:Sequelize.STRING,
         allowNull: false
-    }
-
+    },
+    location:{
+        type:Sequelize.STRING,
+        allowNull: true
+    },
 },
 {
     freezeTableName: true,
