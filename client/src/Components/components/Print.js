@@ -7,6 +7,8 @@ const Print = () => {
     const [payee, setPayee] = useState("");
     const [billed, setBilled] = useState();
     const [balance, setBalance] = useState();
+    const [receipt_no, setReciept] = useState();
+
 
 
     const location = useLocation();
@@ -32,6 +34,8 @@ const Print = () => {
         const todayDate = new Date().toDateString();
         setToday(todayDate);
         setPayee(location.state)
+      //  let rec_no = payee.reference_no.split("-").shift().toUpperCase()
+       // setReciept(rec_no)
       }, [])
 
   return (
@@ -44,7 +48,7 @@ const Print = () => {
     <div className='row align-middle'>
             <div className="col-5" style={{ float:'left' }}>
             <p className="widget-title grey lighter">
-                   Receipt No. #{ payee.reference_no.split("-").shift().toUpperCase() }
+                   Receipt No. #{ receipt_no }
              </p>
 
                 <h4 className="widget-title grey lighter">
