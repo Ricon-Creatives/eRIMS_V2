@@ -36,16 +36,18 @@ const Print = () => {
      }
 
      const getReciptNo = (str) => {
-      let rec_no = str//.split("-").shift().toUpperCase()
+      if (payee?.length !== 0) {
+      let rec_no = str.split("-").shift().toUpperCase()
        console.log(rec_no)
-      return rec_no;
+       setReciept(rec_no)
+
+      }
      }
      useEffect(() =>{
         const todayDate = new Date().toDateString();
         setToday(todayDate);
         setPayee(location.state)
-       let reciept_no  =  getReciptNo(payee.reference_no)
-       // setReciept(reciept_no)
+       getReciptNo(payee.reference_no)
       }, [billed,payee])
 
   return (
