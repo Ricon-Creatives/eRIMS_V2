@@ -68,7 +68,14 @@ const Checkout = () => {
     console.log(token)
   
     const collector = agent.name
-  
+
+    const formatter = new Intl.NumberFormat('en-US', {
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2,
+    });
+    
+    let paidAmount = formatter.format(amount)
+
     const newPayment = {
       date:today,
       time:now,
@@ -77,7 +84,7 @@ const Checkout = () => {
       payment_type:payType,
       ref_no:reference_no,
       reason,
-      amount,
+      amount:paidAmount,
       collector,
       remark:'paid'
     }

@@ -9,11 +9,15 @@ const Print = () => {
     const [balance, setBalance] = useState(0.00);
     const [receipt_no, setReciept] = useState();
 
-
-
     const location = useLocation();
      console.log(location.state);
     
+     // Format the price above to USD, INR, EUR using their locales.
+let ghCedi = Intl.NumberFormat("en-GH", {
+  style: "currency",
+  currency: "GHS",
+});
+
 
     const openPrint = () => {
         var divContents = document.getElementById(`receipt`).innerHTML;
@@ -26,7 +30,6 @@ const Print = () => {
      const getBilled = (value) => {
       let bilingAmount = value
       setBilled(bilingAmount)
-       getBalance()
      }
 
      const getBalance = () => {
@@ -121,7 +124,7 @@ const Print = () => {
         <input type="number" name="billed"
         style={{ width:'20%',resize:'vertical',boxSizing:'border-box', border:'none',borderBottomWidth: 1,
         borderBottomColor:'black',padding:4, borderBottomStyle:'dashed',backgroundColor:'unset'}}
-         value={billed} onChange={e => getBilled(e.target.value)} step="any" placeholder='0.00'/>
+         value={billed} onChange={e => setBilled(e.target.value)} step="any" placeholder='0.00'/>
         
          <label style={{ marginRight:3 ,marginLeft:10, width:'15%'}}>
           Amount Paid:
@@ -141,7 +144,7 @@ const Print = () => {
         <input type="number" name="balance"
         style={{ width:'20%',resize:'vertical',boxSizing:'border-box', border:'none',borderBottomWidth: 1,
         borderBottomColor:'black',padding:4,borderBottomStyle:'dashed',backgroundColor:'unset'}} 
-        value={balance} placeholder="0.00"/>
+        value={balance} placeholder="0.00" onChange={e => setBalance(e.target.value)}/>
     
       </div>
 
