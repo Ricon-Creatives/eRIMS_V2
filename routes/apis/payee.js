@@ -107,6 +107,7 @@ router.post('/register', auth, (req, res) => {
         business_sector:newPayee.busisect,
         market_segment: newPayee.marketseg,
         location: newPayee.address,
+        location2:newPayee.location,
         customer_type: newPayee.customertype,
         last_payment_date: newPayee.date,
         payee_type:newPayee.payee_type,

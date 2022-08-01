@@ -28,6 +28,8 @@ const PayeeRegister = () => {
   const [payeeType, setPayeeType] = useState('')
   const [sector, setSector] = useState('')
   const [segment, setSegment] = useState('')
+  const [location, setLocation] = useState('')
+
 
 
 
@@ -50,6 +52,7 @@ const PayeeRegister = () => {
       setPayeeType('')
       setSector('')
       setSegment('')
+      setLocation('')
       
   }
 
@@ -241,13 +244,22 @@ const PayeeRegister = () => {
                     <div className="col">
                       <select className="form-select form-select-sm" value={customerType} onChange={e => setCustomerType(e.target.value)}>
                         <option value="" disabled>Customer Type</option>
-                        <option value="market-woman">Market woman</option>
                         <option value="property-owner">Property owner</option>
                         <option value="landlord">Landlord</option>
                         <option value="store-or-table-top">Store/table top</option>
                         <option value="lumbering">Tree felling</option>
                         <option value="chop-bar">Chop bar</option>
                         <option value="car-owner">Car owner</option>
+                        <option value="car-owner">Pharmacy Shop</option>
+                        <option value="car-owner">Fuel Station</option>
+                        <option value="car-owner">Provision Shop</option>
+                        <option value="car-owner">Business Operating Permit</option>
+                        <option value="car-owner">Fees -Motor Stickers,Vehicle</option>
+                        <option value="car-owner">Quarry Site</option>
+                        <option value="car-owner">Licenses</option>
+                        <option value="car-owner">Sand Wining</option>
+                        <option value="car-owner">Private Schools Establishment</option>
+                        <option value="car-owner">Market Tolls</option>
                       </select>
                     </div>
                     <div className="col">
@@ -278,6 +290,19 @@ const PayeeRegister = () => {
                         <option value="individual">Individual</option>
                         <option value="sme">SME</option>
                         <option value="corporatives">Corporatives</option>
+                      </select>
+                    </div>
+                    </div>
+
+                    <div className="row mb-3">
+                    <div className="col">
+                      <select className="form-select form-select-sm" value={location} onChange={e => setLocation(e.target.value)}>
+                        <option value="" disabled>Location</option>
+                        <option value="agriculture">Chinderi</option>
+                        <option value="industrial-production">Banda</option>
+                        <option value="mobile-money-vendor">Borae No.2</option>
+                        <option value="transport">Bejamse</option>
+                        <option value="restaurants-and-eateries">Zongo Macheri</option>
                       </select>
                     </div>
                     </div>

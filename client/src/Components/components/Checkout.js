@@ -6,6 +6,7 @@ import {v1 as uuid} from "uuid";
 import moment from 'moment';
 import swal from 'sweetalert';
 import { PaystackButton } from 'react-paystack'; 
+import { border } from '@mui/system';
 
 
 const Checkout = () => {
@@ -13,8 +14,8 @@ const Checkout = () => {
   const history = useHistory();
   const publicKey = "pk_live_859e5e52b848e1dc3c36600cdc451fe96b8a1394";
   const currency = 'GHS';
-  const channels = ['card', 'bank', 'ussd', 'qr', 'mobile_money', 'bank_transfer'];
-  const paytypes = ['Payment-Type', 'Cash', 'Momo', 'Bank-Transfer', 'Qr'];
+  const channels = ['card', 'bank', 'ussd', 'qr', 'mobile_money'];
+  const paytypes = ['Payment-Type', 'Cash', 'Momo', 'Qr'];
   let [payButton, setPayButton] = useState()
   const [amount, setAmount] = useState(0);
   const [momoNumber, setMomo] = useState("");
@@ -22,9 +23,7 @@ const Checkout = () => {
   const [fullname, setFullname] = useState("");
   const [payType, setPayType] = useState("");
   const [isCash, setIsCash] = useState(false);
- 
 
-    
    //Send Receipt 
    const sendReceipt = () => {
     console.log('receipt started')
@@ -61,7 +60,7 @@ const Checkout = () => {
     const now = moment(today).format("hh:mm:ss a");
     console.log(`date: ${today} and time: ${now}`)
     const reference_no = uuid()
-  
+  console.log(reference_no);
     const token = JSON.parse(localStorage.getItem('token'))
     const agent = JSON.parse(localStorage.getItem('agent'))
   
@@ -87,15 +86,18 @@ const Checkout = () => {
         'x-auth-token':token
       }
     }
-
-    axios.post('api/payments/new',newPayment,options).then((res) =>{
-      console.log(res.data)
+    if(!newPayment.payee_name || !newPayment.amount || !newPayment.tel_no) return false;
+    
+    axios.post('api/payments/new',newPayment,options)
+    .then((res) =>{
+      console.log(res.status)
       const payeeData = res.data
       console.log(payeeData)
-      const {payment_type, payee_name, tel_no}= payeeData;
+      const {payment_type, payee_name, tel_no,amount,}= payeeData;
       swal(`${payee_name}'s`," payment has been received successfully", "success")
-      sendReceipt();
-      history.push("/payment-table")     
+      sendReceipt();     
+      history.push("/print",payeeData);
+
     })
     }
     
@@ -141,6 +143,7 @@ const Checkout = () => {
     
     
     useEffect(() =>{
+  
       if(isCash === true){
           console.log(payType)
             setPayButton(<button className="btn btn-classic" onClick={ submit }>Pay Now</button>)
@@ -163,9 +166,6 @@ const Checkout = () => {
     }, [payType, amount, reason]);
 
 
-
-
-
     const verify = () =>{
       const momo = momoNumber;
       const options = {
@@ -181,7 +181,7 @@ const Checkout = () => {
       .then((res) =>{
         const payee = res.data;
         const {msg, name} = payee
-        console.log(name);
+        console.log(payee);
         if(msg === 'Registered'){
             setFullname(name.full_name)
         }else{
@@ -229,9 +229,22 @@ const Checkout = () => {
                       <div className="mb-3">
                       <select className="myInput form-select form-select-sm" value={reason} onChange={e => setReason(e.target.value)}>
                             <option value="" disabled>Reason For Payment</option>
-                            <option value="property-tax">Property Tax</option>
-                            <option value="sewage-fee">Sewage Fee</option>
-                            <option value="value-added-tax">Value Added Tax</option>
+                            <option value="property-owner">Property owner</option>
+                        <option value="landlord">Landlord</option>
+                        <option value="store-or-table-top">Store/table top</option>
+                        <option value="lumbering">Tree felling</option>
+                        <option value="chop-bar">Chop bar</option>
+                        <option value="car-owner">Car owner</option>
+                        <option value="car-owner">Pharmacy Shop</option>
+                        <option value="car-owner">Fuel Station</option>
+                        <option value="car-owner">Provision Shop</option>
+                        <option value="car-owner">Business Operating Permit</option>
+                        <option value="car-owner">Fees -Motor Stickers,Vehicle</option>
+                        <option value="car-owner">Quarry Site</option>
+                        <option value="car-owner">Licenses</option>
+                        <option value="car-owner">Sand Wining</option>
+                        <option value="car-owner">Private Schools Establishment</option>
+                        <option value="car-owner">Market Tolls</option>
                         </select>
                       </div>
                      
@@ -248,6 +261,8 @@ const Checkout = () => {
                  </div>
                </div>
             </div>
+            {/*** */}
+
         </div>
     )
 }

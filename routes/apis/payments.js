@@ -27,10 +27,10 @@ router.get('/sms', auth, async function (req, res){
         //SMS message to sender     
         await axios.post(`http://sms.apavone.com:8080/bulksms/bulksms?username=tsg-teksup&password=Mirlin12&type=0&dlr=0&destination=${number}&source=eRIMS&message=${SMS}`)
         .then(response =>{
-            console.log(number);
+          /*  console.log(number);
             console.log(today);
             console.log(time);
-            console.log(reason);
+            console.log(reason);*/
             res.json('Check for message')
         })
     }catch(err){
@@ -48,7 +48,7 @@ router.get('/sms', auth, async function (req, res){
 //@access Private*
 router.get('/verify', (req, res) =>{ 
     const phone = req.query.phone;
-    console.log(phone)
+   // console.log(phone)
     if(!phone){
         res.json({
             msg: 'Payment Failed: Still pending'
@@ -112,7 +112,7 @@ router.get('/for', auth, (req, res) => {
         if(!payments){
             res.status(404).json("There was an unknown error")
         }else{
-            console.log(payments);
+            //console.log(payments);
             res.status(200).json({payments})
         }        
     })
@@ -137,7 +137,7 @@ router.get('/daily', auth, (req, res) => {
         }
     }).then(agent =>{
         const collector = agent.dataValues.full_name
-        console.log(agent.dataValues.full_name)
+        //console.log(agent.dataValues.full_name)
         Payments.findAll({
             where : {
                 date,
@@ -148,7 +148,7 @@ router.get('/daily', auth, (req, res) => {
             if(!revenue){
                 res.status(404).json("There was an unknown error")
             }else{
-                console.log(revenue);
+              //  console.log(revenue);
                 res.status(200).json(revenue)
             }        
         })
@@ -175,7 +175,7 @@ router.get('/monthly', auth, (req, res) => {
     let  date = new Date(month)
     let from = new Date(month)
     let to = new Date(date.getFullYear(),date.getMonth() +1, 0)
-    console.log(`from is ${from}. date is ${date} & to is ${to}`);
+   // console.log(`from is ${from}. date is ${date} & to is ${to}`);
 
     Agent.findOne({
         attributes:['full_name'],
@@ -184,7 +184,7 @@ router.get('/monthly', auth, (req, res) => {
         }
     }).then(agent =>{
         const collector = agent.dataValues.full_name
-        console.log(agent.dataValues.full_name)
+      //  console.log(agent.dataValues.full_name)
         Payments.findAll({
             where : {
                 [Op.and]:{
@@ -219,7 +219,7 @@ router.get('/yearly', auth, (req, res) => {
     let year = new Date().getFullYear();
     let from = new Date(year, 0, 1)
     let to = new Date(year, 11, 31)
-    console.log(`from is ${from} and to is ${to}`);
+   // console.log(`from is ${from} and to is ${to}`);
     Agent.findOne({
         attributes:['full_name'],
         where:{
@@ -227,7 +227,7 @@ router.get('/yearly', auth, (req, res) => {
         }
     }).then(agent =>{
         const collector = agent.dataValues.full_name
-        console.log(agent.dataValues.full_name)
+       // console.log(agent.dataValues.full_name)
         Payments.findAll({
             where : {
                 [Op.and]:{
@@ -240,7 +240,7 @@ router.get('/yearly', auth, (req, res) => {
             if(!revenue){
                 res.status(404).json("There was an unknown error")
             }else{
-                console.log(revenue);
+             //   console.log(revenue);
                 res.status(200).json(revenue)
             }        
         })
@@ -261,8 +261,8 @@ router.get('/yearly', auth, (req, res) => {
 router.post('/new', auth, (req, res) => {
     const newPayment = req.body;
     const paytype = newPayment.payment_type;
-    console.log(newPayment.amount);
-    console.log(newPayment);
+    //console.log(newPayment.amount);
+   // console.log(newPayment);
 
 
 
@@ -295,16 +295,25 @@ router.post('/new', auth, (req, res) => {
     };
 
     if(paytype === 'cash'){
-        Payments.create(cashPayment)
-        .then( entry => {
-            if(!entry){
-                res.status(400).json('payment failed')
-                console.log(entry);
-                }else{
-                res.status(200).json(entry)
-                console.log(entry);
-            }
-        })
+        console.log('cash payment')
+        if(!newPayment.payee_name || !newPayment.amount || !newPayment.tel_no){
+            res.status(400).json('please fill all the forms')
+            console.log('details wre absent')
+        }
+        else{
+            console.log('details wre prsent')
+            Payments.create(cashPayment)
+            .then( entry => {
+                        if(!entry){
+                            res.status(400).json('payment failed')
+                            console.log(entry);
+                            }else{
+                            res.status(200).json(entry)
+                            console.log(entry);
+                        }
+                    })
+        }
+     
     }else{
         Payments.create(momoPayment)
         .then( entry => {
@@ -366,7 +375,7 @@ router.get('/getpayee', auth, (req, res) =>{
                 tel
             }
     }).then((name)=>{
-        console.log(name)
+      //  console.log(name)
         if(!name){
             res.status(200).json({msg:"Unregistered"})
         }else{

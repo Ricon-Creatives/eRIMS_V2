@@ -74,7 +74,11 @@ const Payee = db.define('tax_payee_customer', {
     },
 
     location:{
-        type:Sequelize.INTEGER,
+        type:Sequelize.STRING,
+        allowNull: false
+    },
+    location2:{
+        type:Sequelize.STRING,
         allowNull: false
     },
 

@@ -6,6 +6,7 @@ import Login from './Components/components/Login'
 import AgentRegister from './Components/components/AgentRegister'
 import PayeeRegister from './Components/components/PayeeRegister'
 import Checkout from './Components/components/Checkout'
+import PrintForm from './Components/components/Print'
 import CheckoutPage from './Components/CheckoutPage'
 import Dashboard from './Components/Dashboard';
 import PayeeTable from './Components/PayeeTable';
@@ -33,6 +34,8 @@ function App() {
             < Route exact path='/payee-table' component = {PayeeTable} />
             < Route exact path='/payment-table' component = {PaymentsTable} />
             < Route exact path='/agent-table' component = {AgentTable} />
+            < Route exact path='/print' component = {PrintForm} />
+
             </Switch>
         </main>
         <Footer />
