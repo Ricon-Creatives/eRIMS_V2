@@ -5,8 +5,8 @@ import { useHistory ,useLocation} from 'react-router-dom';
 const Print = () => {
     const [today, setToday] = useState("");
     const [payee, setPayee] = useState("");
-    const [billed, setBilled] = useState();
-    const [balance, setBalance] = useState();
+    const [billed, setBilled] = useState(0.00);
+    const [balance, setBalance] = useState(0.00);
     const [receipt_no, setReciept] = useState();
 
 
@@ -23,20 +23,30 @@ const Print = () => {
         prnt .print();
        // history.push("/payment-table")
      }
-     const getBalance = (e) => {
-        setBilled(e.target.value)
-       let bal = billed - payee.amount
-       setBalance(bal)
-       setBilled(e.target.value)
+     const getBilled = (value) => {
+      let bilingAmount = value
+      setBilled(bilingAmount)
+       getBalance()
      }
 
+     const getBalance = () => {
+       let bal =  billed - payee.amount
+       //console.log(billed)
+       setBalance(bal.toFixed(2))
+     }
+
+     const getReciptNo = (str) => {
+      let rec_no = str//.split("-").shift().toUpperCase()
+       console.log(rec_no)
+      return rec_no;
+     }
      useEffect(() =>{
         const todayDate = new Date().toDateString();
         setToday(todayDate);
         setPayee(location.state)
-      //  let rec_no = payee.reference_no.split("-").shift().toUpperCase()
-       // setReciept(rec_no)
-      }, [])
+       let reciept_no  =  getReciptNo(payee.reference_no)
+       // setReciept(reciept_no)
+      }, [billed,payee])
 
   return (
     <div className='container'>
@@ -94,7 +104,7 @@ const Print = () => {
       clear:'both',display:'block',margin:5}}>
         <label style={{ marginRight:5 ,width:'20%'}}>For Payment Of: </label>
         <input type="text" name="payment_type" placeholder="Payment Type.."
-        style={{ width:'75%',resize:'vertical',boxSizing:'border-box', border:'none',borderBottomWidth: 1,
+        style={{ width:'50%',resize:'vertical',boxSizing:'border-box', border:'none',borderBottomWidth: 1,
         borderBottomColor:'black',padding:4, borderBottomStyle:'dashed',backgroundColor:'unset'}} 
         value={payee.reason}/>
       </div>
@@ -107,16 +117,16 @@ const Print = () => {
           </label>
           GHC
         <input type="number" name="billed"
-        style={{ width:'28%',resize:'vertical',boxSizing:'border-box', border:'none',borderBottomWidth: 1,
+        style={{ width:'20%',resize:'vertical',boxSizing:'border-box', border:'none',borderBottomWidth: 1,
         borderBottomColor:'black',padding:4, borderBottomStyle:'dashed',backgroundColor:'unset'}}
-         value={billed} onChange={e => getBalance(e)}/>
+         value={billed} onChange={e => getBilled(e.target.value)} step="any" placeholder='0.00'/>
         
          <label style={{ marginRight:3 ,marginLeft:10, width:'15%'}}>
           Amount Paid:
            </label>
            GHC
         <input type="number" name="paid"
-        style={{ width:'25%',resize:'vertical',boxSizing:'border-box', border:'none', borderBottomWidth: 1,
+        style={{ width:'20%',resize:'vertical',boxSizing:'border-box', border:'none', borderBottomWidth: 1,
         borderBottomColor:'black',padding:4,borderBottomStyle:'dashed',backgroundColor:'unset'}} 
         value={payee.amount}/>
         
@@ -127,9 +137,9 @@ const Print = () => {
         <label  style={{ marginRight:10 ,width:'20%'}}>Balance: </label>
         GHC
         <input type="number" name="balance"
-        style={{ width:'30%',resize:'vertical',boxSizing:'border-box', border:'none',borderBottomWidth: 1,
+        style={{ width:'20%',resize:'vertical',boxSizing:'border-box', border:'none',borderBottomWidth: 1,
         borderBottomColor:'black',padding:4,borderBottomStyle:'dashed',backgroundColor:'unset'}} 
-        value={balance}/>
+        value={balance} placeholder="0.00"/>
     
       </div>
 

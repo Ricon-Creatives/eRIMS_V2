@@ -23,6 +23,7 @@ const Checkout = () => {
   const [fullname, setFullname] = useState("");
   const [payType, setPayType] = useState("");
   const [isCash, setIsCash] = useState(false);
+  const [today, setToday] = useState("");
 
    //Send Receipt 
    const sendReceipt = () => {
@@ -56,11 +57,11 @@ const Checkout = () => {
     console.log(amount)
     console.log(reason)
     console.log('starting submit')
-    const today = moment();
-    const now = moment(today).format("hh:mm:ss a");
-    console.log(`date: ${today} and time: ${now}`)
+    const todayTime = moment();
+   const now = moment(todayTime).format("hh:mm:ss a");
+   // console.log(`date: ${today} and time: ${now}`)
     const reference_no = uuid()
-  console.log(reference_no);
+  console.log(today);
     const token = JSON.parse(localStorage.getItem('token'))
     const agent = JSON.parse(localStorage.getItem('agent'))
   
@@ -202,6 +203,12 @@ const Checkout = () => {
                         <img src={logo} className="logo img-fluid"/>
                         
                         <div className="row col-md-12">
+
+                        <div className="mb-3">
+                        <input type="date" id="fullname" placeholder="Full Name" name="myInput fullname" className="myInput form-control" 
+                        value={today} onChange={e => setToday(e.target.value)} required/>
+                      </div>
+
                           <div className="col-md-9">
                             <input type="text" id="momoNumber" placeholder="Momo Number" name="momoNumber" className="myInput form-control" 
                                 value={momoNumber} onChange={e =>setMomo(e.target.value)} required/>
@@ -249,8 +256,8 @@ const Checkout = () => {
                       </div>
                      
                       <div className="mb-3">
-                        <input type="text" id="amount" placeholder="Amount" name="amount" value={amount} className="myInput form-control" 
-                        onChange={e => setAmount(e.target.value)} required/>
+                        <input type="text" id="amount" placeholder="0.00" name="amount" value={amount} className="myInput form-control" 
+                        onChange={e => setAmount(e.target.value)} step="any" required/>
                       </div>
 
                       
