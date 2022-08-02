@@ -5,7 +5,7 @@ import { useHistory ,useLocation} from 'react-router-dom';
 const Print = () => {
     const [today, setToday] = useState("");
     const [payee, setPayee] = useState("");
-    const [billed, setBilled] = useState(0.00);
+    const [billed, setBilled] = useState();
     const [balance, setBalance] = useState(0.00);
     const [receipt_no, setReciept] = useState();
 
@@ -53,7 +53,7 @@ const Print = () => {
         setToday(todayDate);
         setPayee(location.state)
        getReciptNo(payee.reference_no)
-      }, [billed,payee])
+      }, [payee])
 
   return (
     <div className='container my-4'>
@@ -126,7 +126,7 @@ const Print = () => {
         <input type="number" name="billed"
         style={{ width:'20%',resize:'vertical',boxSizing:'border-box', border:'none',borderBottomWidth: 1,
         borderBottomColor:'black',padding:4, borderBottomStyle:'dashed',backgroundColor:'unset'}}
-         value={billed} onChange={e => getBilled(e.target.value)} step="any" placeholder='0.00'/>
+         value={billed} onBlur={e => setBilled(e.target.value)} step="any" placeholder='0.00'/>
         
          <label style={{ marginRight:3 ,marginLeft:10, width:'15%'}}>
           Amount Paid:
@@ -146,7 +146,7 @@ const Print = () => {
         <input type="number" name="balance"
         style={{ width:'20%',resize:'vertical',boxSizing:'border-box', border:'none',borderBottomWidth: 1,
         borderBottomColor:'black',padding:4,borderBottomStyle:'dashed',backgroundColor:'unset'}} 
-        value={balance} placeholder="0.00" />
+        value={balance} onChange={e=> setBalance(e.target.value)} placeholder="0.00" />
     
       </div>
 
