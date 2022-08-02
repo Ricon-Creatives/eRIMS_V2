@@ -10,24 +10,24 @@ const PayeeRegister = () => {
   const history = useHistory();
   const today = moment();
   const now = moment(today).format("hh:mm:ss a");
-  const [surname, setSurname] = useState('')
-  const [firstname, setFirstname] = useState('')
-  const [phone1, setPhone1] = useState('')
-  const [phone2, setPhone2] = useState('')
-  const [dob, setDob] = useState('')
-  const [idType, setIdType] = useState('')
-  const [idNumber, setIdNumber] = useState('')
-  const [gender, setGender] = useState('')
-  const [maritalStatus, setMaritalStatus] = useState('')
-  const [address, setAddress] = useState('')
-  const [email, setEmail] = useState('')
-  const [education, setEducation] = useState('')
-  const [taxId, setTaxId] = useState('')
-  const [taxType, setTaxType] = useState('')
-  const [customerType, setCustomerType] = useState('')
-  const [payeeType, setPayeeType] = useState('')
-  const [sector, setSector] = useState('')
-  const [segment, setSegment] = useState('')
+  const [surname, setSurname] = useState('');
+  const [firstname, setFirstname] = useState('');
+  const [phone1, setPhone1] = useState('');
+  const [phone2, setPhone2] = useState('');
+  const [dob, setDob] = useState('');
+  const [idType, setIdType] = useState('');
+  const [idNumber, setIdNumber] = useState('');
+  const [gender, setGender] = useState('');
+  const [maritalStatus, setMaritalStatus] = useState('');
+  const [address, setAddress] = useState('');
+  const [email, setEmail] = useState('');
+  const [education, setEducation] = useState('');
+  const [taxId, setTaxId] = useState('');
+  const [taxType, setTaxType] = useState('');
+  const [customerType, setCustomerType] = useState('');
+  const [payeeType, setPayeeType] = useState('');
+  const [sector, setSector] = useState('');
+  const [segment, setSegment] = useState('');
   const [location, setLocation] = useState('')
 
 
@@ -105,7 +105,8 @@ const PayeeRegister = () => {
         gender,                   tin_no: taxId, 
         customertype:customerType, date:today,
         payee_type:payeeType,     busisect:sector,  
-        marketseg:segment
+        marketseg:segment,
+        location
       }
  
       const options = {
