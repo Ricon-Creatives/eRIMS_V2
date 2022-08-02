@@ -32,9 +32,12 @@ const Print = () => {
 
      const getBalance = () => {
       let bilingAmount = formatter.format(billed)
-       let bal =  bilingAmount - payee.amount
-       console.log(bal)
-       setBalance(formatter.format(bal))
+      let bal = 0.00
+       if(bilingAmount.length >= 4){
+         bal =  bilingAmount - payee.amount
+        console.log(bal)
+      }
+      setBalance(formatter.format(bal))
      }
 
      const getReciptNo = (str) => {
