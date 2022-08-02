@@ -245,32 +245,32 @@ const PayeeRegister = () => {
                     <div className="col">
                       <select className="form-select form-select-sm" value={customerType} onChange={e => setCustomerType(e.target.value)}>
                         <option value="" disabled>Customer Type</option>
-                        <option value="property-owner">Property owner</option>
+                        <option value="Property owner">Property owner</option>
                         <option value="landlord">Landlord</option>
-                        <option value="store-or-table-top">Store/table top</option>
-                        <option value="lumbering">Tree felling</option>
-                        <option value="chop-bar">Chop bar</option>
-                        <option value="car-owner">Car owner</option>
-                        <option value="car-owner">Pharmacy Shop</option>
-                        <option value="car-owner">Fuel Station</option>
-                        <option value="car-owner">Provision Shop</option>
-                        <option value="car-owner">Business Operating Permit</option>
-                        <option value="car-owner">Fees -Motor Stickers,Vehicle</option>
-                        <option value="car-owner">Quarry Site</option>
-                        <option value="car-owner">Licenses</option>
-                        <option value="car-owner">Sand Wining</option>
-                        <option value="car-owner">Private Schools Establishment</option>
-                        <option value="car-owner">Market Tolls</option>
+                        <option value="Store/table top">Store/table top</option>
+                        <option value="Lumbering">Tree felling</option>
+                        <option value="Chop bar">Chop bar</option>
+                        <option value="Car Owner">Car owner</option>
+                        <option value="Pharmacy Shop">Pharmacy Shop</option>
+                        <option value="Fuel Station">Fuel Station</option>
+                        <option value="Provision Shop">Provision Shop</option>
+                        <option value="Business Operating Permit">Business Operating Permit</option>
+                        <option value="Fees -Motor Stickers,Vehicle">Fees -Motor Stickers,Vehicle</option>
+                        <option value="Quarry Site">Quarry Site</option>
+                        <option value="Licenses">Licenses</option>
+                        <option value="Sand Wining">Sand Wining</option>
+                        <option value="Private Schools Establishment">Private Schools Establishment</option>
+                        <option value="Market Tolls">Market Tolls</option>
                       </select>
                     </div>
                     <div className="col">
                     <select className="form-select form-select-sm" value={payeeType} onChange={e => setPayeeType(e.target.value)}>
                         <option value="" disabled>Payee Type</option>
-                        <option value="ground-rent">Ground rent</option>
-                        <option value="sewage">sewage</option>
-                        <option value="land-maintenance">Land maintenance</option>
-                        <option value="property">Property</option>
-                        <option value="facility-usage">Facility usage</option>
+                        <option value="Chinderi">Chinderi</option>
+                        <option value="Banda">Banda</option>
+                        <option value="Borae No.2">Borae No.2</option>
+                        <option value="Bejamse">Bejamse</option>
+                        <option value="Zongo Macheri">Zongo Macheri</option>
                       </select>
                     </div>
                     </div>

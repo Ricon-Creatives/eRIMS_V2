@@ -246,11 +246,11 @@ const Checkout = () => {
                       <div className="mb-3">
                       <select className="myInput form-select form-select-sm" value={reason} onChange={e => setReason(e.target.value)}>
                             <option value="" disabled>Reason For Payment</option>
-                            <option value="property-owner">Property owner</option>
+                            <option value="Property owner">Property owner</option>
                         <option value="landlord">Landlord</option>
-                        <option value="store-or-table-top">Store/table top</option>
-                        <option value="lumbering">Tree felling</option>
-                        <option value="chop-bar">Chop bar</option>
+                        <option value="Store/table top">Store/table top</option>
+                        <option value="Lumbering">Tree felling</option>
+                        <option value="Chop bar">Chop bar</option>
                         <option value="Car Owner">Car owner</option>
                         <option value="Pharmacy Shop">Pharmacy Shop</option>
                         <option value="Fuel Station">Fuel Station</option>

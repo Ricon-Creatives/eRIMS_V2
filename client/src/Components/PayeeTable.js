@@ -187,7 +187,7 @@ const PayeeTable = () => {
                             </td>
                             <td>{payee.full_name}</td>
                             <td>{payee.tel}</td>
-                            <td>{payee.location}</td>
+                            <td>{payee.location2}</td>
                             <td>{payee.last_payment_date}</td>
                         </tr>
                     ))}
