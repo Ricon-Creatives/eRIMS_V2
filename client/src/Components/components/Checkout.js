@@ -97,7 +97,7 @@ const Checkout = () => {
         'x-auth-token':token
       }
     }
-    if(!newPayment.payee_name || !newPayment.amount || !newPayment.tel_no) return false;
+    if(!newPayment.payee_name || !newPayment.amount || !newPayment.tel_no ||!newPayment.date) return false;
     
     axios.post('api/payments/new',newPayment,options)
     .then((res) =>{
@@ -215,7 +215,7 @@ const Checkout = () => {
                         <div className="row col-md-12">
 
                         <div className="mb-3">
-                        <input type="date" id="fullname" placeholder="Full Name" name="myInput fullname" className="myInput form-control" 
+                        <input type="date" name="date" className="myInput form-control" 
                         value={today} onChange={e => setToday(e.target.value)} required/>
                       </div>
 
