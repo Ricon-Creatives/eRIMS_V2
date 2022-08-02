@@ -12,13 +12,10 @@ const Print = () => {
     const location = useLocation();
      console.log(location.state);
     
-     // Format the price above to USD, INR, EUR using their locales.
-let ghCedi = Intl.NumberFormat("en-GH", {
-  style: "currency",
-  currency: "GHS",
-});
-
-
+ const formatter = new Intl.NumberFormat('en-US', {
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2,
+    });
     const openPrint = () => {
         var divContents = document.getElementById(`receipt`).innerHTML;
         var prnt = window.open('', '', 'height=400, width=300');
@@ -27,15 +24,17 @@ let ghCedi = Intl.NumberFormat("en-GH", {
         prnt .print();
        // history.push("/payment-table")
      }
+
      const getBilled = (value) => {
-      let bilingAmount = value
-      setBilled(bilingAmount)
+      setBilled(value)
+      getBalance();
      }
 
      const getBalance = () => {
-       let bal =  billed - payee.amount
-       //console.log(billed)
-       setBalance(bal.toFixed(2))
+      let bilingAmount = formatter.format(billed)
+       let bal =  bilingAmount - payee.amount
+       console.log(bal)
+       setBalance(formatter.format(bal))
      }
 
      const getReciptNo = (str) => {
@@ -124,7 +123,7 @@ let ghCedi = Intl.NumberFormat("en-GH", {
         <input type="number" name="billed"
         style={{ width:'20%',resize:'vertical',boxSizing:'border-box', border:'none',borderBottomWidth: 1,
         borderBottomColor:'black',padding:4, borderBottomStyle:'dashed',backgroundColor:'unset'}}
-         value={billed} onChange={e => setBilled(e.target.value)} step="any" placeholder='0.00'/>
+         value={billed} onChange={e => getBilled(e.target.value)} step="any" placeholder='0.00'/>
         
          <label style={{ marginRight:3 ,marginLeft:10, width:'15%'}}>
           Amount Paid:
@@ -144,7 +143,7 @@ let ghCedi = Intl.NumberFormat("en-GH", {
         <input type="number" name="balance"
         style={{ width:'20%',resize:'vertical',boxSizing:'border-box', border:'none',borderBottomWidth: 1,
         borderBottomColor:'black',padding:4,borderBottomStyle:'dashed',backgroundColor:'unset'}} 
-        value={balance} placeholder="0.00" onChange={e => setBalance(e.target.value)}/>
+        value={balance} placeholder="0.00" />
     
       </div>
 
