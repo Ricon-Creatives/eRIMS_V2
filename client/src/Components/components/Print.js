@@ -54,10 +54,10 @@ let ghCedi = Intl.NumberFormat("en-GH", {
       }, [billed,payee])
 
   return (
-    <div className='container'>
+    <div className='container my-4'>
     <button type="button" className="btn btn-classic btn-sm my-4 me-5 align-self-end" onClick={openPrint}
     style={{ width:'10%' }}>Print</button>
-  <div className="row justify-content-center align-middle py-5" id='receipt' 
+  <div className="row justify-content-center align-middle py-5 border" id='receipt' 
         style={{ justifyContent:'center',verticalAlign:'middle',padding:6 }}>
     <div className="col-sm-9 col-sm-offset-2">
     <div className='row align-middle'>
